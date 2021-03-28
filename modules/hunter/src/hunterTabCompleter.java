@@ -1,5 +1,3 @@
-package fabaindaiz.modulator.core.main;
-
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.config.languageLoader;
 import org.bukkit.command.Command;
@@ -11,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class modulatorTabCompleter implements TabCompleter {
+public class hunterTabCompleter implements TabCompleter {
     static final ArrayList<String> emptyList = new ArrayList<>();
-    final String[] modules1 = {"help", "modules", "reload"};
+    final String[] modules1 = {"help"};
     private final Modulator plugin;
     private final languageLoader lang;
 
-    protected modulatorTabCompleter(Modulator modulator) {
+    protected hunterTabCompleter(Modulator modulator) {
 
         this.plugin = modulator;
         this.lang = modulator.getConfiguration().getMainLang();
@@ -27,7 +25,7 @@ public class modulatorTabCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("modulator") && args.length <= 1) {
+            if (command.getName().equalsIgnoreCase("hunter") && args.length <= 1) {
                 return Arrays.asList(modules1);
             }
 

@@ -1,0 +1,12 @@
+version: 0.4.0
+# Modulator plugin configuration file
+
+# Languages: ES, EN
+language: ES
+
+# Hunter settings
+hunter:
+  # Enable and disable hunter module
+  enable: true
+  # Hunted player dont lose inventory
+  keepinventory: true

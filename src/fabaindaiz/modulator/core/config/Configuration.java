@@ -1,19 +1,19 @@
 package fabaindaiz.modulator.core.config;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.module.IModule;
+import fabaindaiz.modulator.modules.AModule;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.Arrays;
 
-public class Configuration implements IModule {
+public class Configuration extends AModule {
 
     final String[] languages = {"ES"};
     private final Modulator plugin;
 
     private FileConfiguration mainConfiguration;
     private languageLoader languageConfiguration;
-
+    public String lang;
 
     public Configuration(Modulator modulator) {
         this.plugin = modulator;
@@ -27,19 +27,20 @@ public class Configuration implements IModule {
         this.mainConfiguration = plugin.getConfig();
 
         // Carga el archivo de idioma
-        String lang = mainConfiguration.getString("language");
-        lang = Arrays.asList(languages).contains(lang) ? lang : "ES";
-        languageConfiguration = new languageLoader(plugin, "language" + lang + ".yml");
+        this.lang = mainConfiguration.getString("language");
+        this.lang = Arrays.asList(languages).contains(lang) ? lang : "ES";
+        languageConfiguration = new languageLoader(plugin, "lang" + lang + ".yml");
     }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+    }
 
     public FileConfiguration getConfig() {
         return this.mainConfiguration;
     }
 
-    public languageLoader getLang() {
+    public languageLoader getMainLang() {
         return this.languageConfiguration;
     }
 

@@ -3,11 +3,11 @@ main: fabaindaiz.modulator.Modulator
 description: Load plugin modules in Server
 version: 0.3.2
 api-version: 1.14
-authors: [fabaindaiz, benjujo]
+authors: [ fabaindaiz, benjujo ]
 website: uchilecraft.cl
 load: POSTWORLD
-softdepend: [Vault]
-loadbefore: [Vault]
+softdepend: [ Vault ]
+loadbefore: [ Vault ]
 commands:
   modulator:
     description: Main command

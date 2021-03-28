@@ -1,20 +1,18 @@
 package fabaindaiz.modulator.core.main;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.module.IModule;
 import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.modules.AModule;
 import org.bukkit.Bukkit;
 
-import java.util.ArrayList;
-
-public class modulator implements IModule {
+public class modulator extends AModule {
 
     private final Modulator plugin;
     private languageLoader lang;
 
     public modulator(Modulator modulator) {
         this.plugin = modulator;
-        this.lang = plugin.getConfiguration().getLang();
+        this.lang = plugin.getConfiguration().getMainLang();
     }
 
     @Override
