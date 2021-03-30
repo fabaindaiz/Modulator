@@ -8,8 +8,11 @@ import fabaindaiz.modulator.modules.IModule;
 import fabaindaiz.modulator.modules.modinput.modinput;
 import fabaindaiz.modulator.modules.modtask.modtask;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -19,6 +22,7 @@ public class Modulator extends JavaPlugin {
     private Configuration configModule;
     private vaultHandler vaultHandler;
     private moduleLoader moduleLoader;
+    private static CommandMap cMap;
 
     @Override
     public void onLoad() {
@@ -57,7 +61,7 @@ public class Modulator extends JavaPlugin {
 
     public void setLoadModules(LinkedHashMap<String, IModule> loadModules) {
         loadModules.forEach((key, value) ->
-            this.modules.merge( key, value, (v1, v2) -> v1.equals(v2) ? v1 : v2)
+                this.modules.merge(key, value, (v1, v2) -> v1.equals(v2) ? v1 : v2)
         );
     }
 
@@ -71,6 +75,20 @@ public class Modulator extends JavaPlugin {
 
     public Set<String> getModuleNames() {
         return this.modules.keySet();
+    }
+
+    private void setupCommandMap() {
+        try {
+            Field field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            field.setAccessible(true);
+            cMap = (CommandMap) field.get(Bukkit.getServer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registerCommand(Command command) {
+        cMap.register(command.getName(), command);
     }
 
 }

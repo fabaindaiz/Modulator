@@ -1,6 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -11,7 +10,8 @@ public class zanakikListener implements Listener {
 
     private final Modulator plugin;
     private final IModule module;
-    private final moduleLang lang;
+    private final langLoader lang;
+    private final String key = "zanakik.listener";
 
     protected zanakikListener(Modulator modulator, IModule module) {
 
@@ -26,7 +26,7 @@ public class zanakikListener implements Listener {
         int onlineplayers = Bukkit.getServer().getOnlinePlayers().size();
         if (onlineplayers < maxplayers) return;
 
-        Bukkit.broadcastMessage(lang.get("zanakik.fullserver"));
+        Bukkit.broadcastMessage(lang.get(key, "fullserver"));
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "zanakik");
     }
 }

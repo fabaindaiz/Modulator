@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class testTabCompleter implements TabCompleter {
+public class updaterTabCompleter implements TabCompleter {
     static final ArrayList<String> emptyList = new ArrayList<>();
     final String[] modules1 = {"help"};
     private final Modulator plugin;
     private final IModule module;
 
-    protected testTabCompleter(Modulator modulator, IModule module) {
+    protected updaterTabCompleter(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
     }

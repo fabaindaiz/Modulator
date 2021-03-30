@@ -1,12 +1,12 @@
 package fabaindaiz.modulator.modules;
 
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import org.bukkit.configuration.file.FileConfiguration;
 
-public abstract class AModule implements IModule{
+public abstract class AModule implements IModule {
 
     private FileConfiguration config;
-    private moduleLang lang;
+    private langLoader lang;
     public String jarName;
 
     @Override
@@ -15,8 +15,12 @@ public abstract class AModule implements IModule{
     }
 
     @Override
-    public void setConfig(FileConfiguration config, moduleLang lang) {
+    public void setConfig(FileConfiguration config) {
         this.config = config;
+    }
+
+    @Override
+    public void setLang(langLoader lang) {
         this.lang = lang;
     }
 
@@ -26,7 +30,7 @@ public abstract class AModule implements IModule{
     }
 
     @Override
-    public moduleLang getLang() {
+    public langLoader getLang() {
         return lang;
     }
 

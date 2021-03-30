@@ -1,22 +1,27 @@
 # Modulator plugin spanish language file
 # Delete some key may cause errors
 
-error: "Clave no encontrada en el idioma"
+error:
+  nokey: "Clave no encontrada en el idioma"
+  noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 zanakik:
-  fullserver: "¡Servidor lleno! Proceder\u00e1 un zanakik"
-  kikmessage1: " ser\u00e1 zanakikeadx. El kick durar\u00e1 30 segundos"
-  kikmessage2: "Zanakikeaste a "
-  disable1: "\u00A7eEl m\u00f3dulo zkik esta desactivado"
-  help1: "\u00A76Comandos zanakik"
-  help2: "\u00A7e/zkik \u00A7fZanakikea un jugador aleatorio"
-  help3: "\u00A7e/zkik <player> \u00A7fZanakikea un jugador"
-  lore1: "Fuiste seleccionadx aleatoriamente"
-  lore2: "para ser kickeadx."
-  lore3: "Nada personal..."
-  lore4: "Guarda este ítem para poder canjearlo."
-  lore5: "Ve a \u00A74/warp dinero \u00A75para más info."
-  error1: "Argumentos incorrectos para zkik"
-  error2: "Ning\u00fan jugador puede ser zanakikeadx"
-  error3: "El jugador no existe o no esta conectado"
-  error4: "El jugador no puede ser zanakikeado"
-  error5: "Solo la consola puede zanakikear jugadores"
+  command:
+    kikmessage1: " ser\u00e1 zanakikeadx. El kick durar\u00e1 30 segundos"
+    kikmessage2: "Zanakikeaste a "
+    disable1: "\u00A7eEl m\u00f3dulo zkik esta desactivado"
+    help1: "\u00A76Comandos zanakik"
+    help2: "\u00A7e/zkik \u00A7fZanakikea un jugador aleatorio"
+    help3: "\u00A7e/zkik <player> \u00A7fZanakikea un jugador"
+    error1: "Argumentos incorrectos para zkik"
+    error2: "Ning\u00fan jugador puede ser zanakikeadx"
+    error3: "El jugador no existe o no esta conectado"
+    error4: "El jugador no puede ser zanakikeado"
+    error5: "Solo la consola puede zanakikear jugadores"
+  listener:
+    fullserver: "¡Servidor lleno! Proceder\u00e1 un zanakik"
+  util:
+    lore1: "Fuiste seleccionadx aleatoriamente"
+    lore2: "para ser kickeadx."
+    lore3: "Nada personal..."
+    lore4: "Guarda este ítem para poder canjearlo."
+    lore5: "Ve a \u00A74/warp dinero \u00A75para más info."

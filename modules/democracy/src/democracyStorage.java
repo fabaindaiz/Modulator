@@ -1,5 +1,4 @@
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -9,14 +8,15 @@ import java.util.ArrayList;
 
 public class democracyStorage {
 
-    private final moduleLang lang;
+    private final langLoader lang;
+    private final String key = "democracy.storage";
     private final String question;
     private final int[] votes = {0, 0};
     private final ArrayList<String> voteName = new ArrayList<>();
     private final CommandSender sender;
     private int answers = -1;
 
-    protected democracyStorage(CommandSender sender, String question, moduleLang lang) {
+    protected democracyStorage(CommandSender sender, String question, langLoader lang) {
         this.question = question;
         this.sender = sender;
         this.lang = lang;
@@ -32,7 +32,7 @@ public class democracyStorage {
         votes[option]++;
         this.voteName.add(voteName);
 
-        BaseComponent message1 = new TextComponent(this.voteName.size() + lang.get("democracy.click3"));
+        BaseComponent message1 = new TextComponent(this.voteName.size() + lang.get(key, "click0"));
         message1.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/democracy done"));
         sender.spigot().sendMessage(message1);
 

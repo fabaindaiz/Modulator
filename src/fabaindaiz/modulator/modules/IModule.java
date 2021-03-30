@@ -1,6 +1,6 @@
 package fabaindaiz.modulator.modules;
 
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import org.bukkit.configuration.file.FileConfiguration;
 
 //Interface represent a loadable module
@@ -15,9 +15,11 @@ public interface IModule {
     // Jar Name
     void setJarName(String name);
 
-    void setConfig(FileConfiguration config, moduleLang lang);
+    void setConfig(FileConfiguration config);
+
+    void setLang(langLoader lang);
 
     FileConfiguration getConfig();
 
-    moduleLang getLang();
+    langLoader getLang();
 }

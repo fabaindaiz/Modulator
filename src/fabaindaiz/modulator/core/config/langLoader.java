@@ -8,19 +8,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class languageLoader {
+public class langLoader {
 
-    private final FileConfiguration languageConfig;
+    private final FileConfiguration lang;
 
-    // Carga un archivo de idiomas
-    protected languageLoader(Modulator modulator, String fileName) {
+    public langLoader(FileConfiguration lang) {
+        this.lang = lang;
+    }
+
+    protected langLoader(Modulator modulator, String fileName) {
         InputStream languageFile = modulator.getResource(fileName);
         Reader configStream = new InputStreamReader(languageFile);
-        languageConfig = YamlConfiguration.loadConfiguration(configStream);
+        lang = YamlConfiguration.loadConfiguration(configStream);
     }
 
     // Retorna una clave de idioma
     public String get(String key) {
-        return languageConfig.getString(key, languageConfig.getString("modulator.error3"));
+        return lang.getString(key, lang.getString("error.nokey"));
+    }
+
+    public String get(String parentKey, String key) {
+        return lang.getString(parentKey + "." + key, lang.getString("error.nokey"));
     }
 }

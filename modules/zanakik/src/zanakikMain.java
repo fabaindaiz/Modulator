@@ -1,16 +1,13 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.modules.AModule;
 import fabaindaiz.modulator.core.loader.moduleConfig;
+import fabaindaiz.modulator.modules.AModule;
 
 public class zanakikMain extends AModule {
     private final Modulator plugin;
     private moduleConfig moduleConfig;
-    private languageLoader lang;
 
     public zanakikMain(Modulator modulator) {
         this.plugin = modulator;
-        this.lang = plugin.getConfiguration().getMainLang();
     }
 
     @Override
@@ -19,7 +16,7 @@ public class zanakikMain extends AModule {
 
         plugin.getCommand("zanakik").setExecutor(new zanakikCommand(plugin, this));
         plugin.getCommand("zanakik").setTabCompleter(new zanakikTabCompleter(plugin, this));
-        plugin.getCommand("zanakik").setPermissionMessage(lang.get("modulator.error2"));
+        plugin.getCommand("zanakik").setPermissionMessage(getLang().get("error.noper"));
 
         plugin.getServer().getPluginManager().registerEvents(new zanakikListener(plugin, this), plugin);
     }

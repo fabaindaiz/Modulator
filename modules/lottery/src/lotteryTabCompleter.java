@@ -1,5 +1,4 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,13 +14,10 @@ public class lotteryTabCompleter implements TabCompleter {
     final String[] modules1 = {"help", "buy", "collect", "results"};
     private final Modulator plugin;
     private final IModule module;
-    private final languageLoader lang;
 
     protected lotteryTabCompleter(Modulator modulator, IModule module) {
-
         this.plugin = modulator;
         this.module = module;
-        this.lang = modulator.getConfiguration().getMainLang();
     }
 
     @Override

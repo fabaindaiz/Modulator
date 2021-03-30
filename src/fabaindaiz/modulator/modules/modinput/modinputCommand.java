@@ -1,7 +1,8 @@
 package fabaindaiz.modulator.modules.modinput;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.config.langLoader;
+import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,12 +10,13 @@ import org.bukkit.command.CommandSender;
 
 public class modinputCommand implements CommandExecutor {
     private final Modulator plugin;
-    private final languageLoader lang;
+    private final IModule module;
+    private final langLoader lang;
 
-    public modinputCommand(Modulator modulator) {
-
+    public modinputCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
-        this.lang = modulator.getConfiguration().getMainLang();
+        this.module = module;
+        this.lang = module.getLang();
 
     }
 

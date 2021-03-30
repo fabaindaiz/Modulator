@@ -1,17 +1,16 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.modules.AModule;
 import fabaindaiz.modulator.core.loader.moduleConfig;
+import fabaindaiz.modulator.modules.AModule;
+import org.bukkit.command.Command;
 
 public class democracyMain extends AModule {
     private final Modulator plugin;
     private moduleConfig moduleConfig;
-    private languageLoader mainLang;
+    private Command command;
 
     // Democracy depends on modinput module
     public democracyMain(Modulator modulator) {
         this.plugin = modulator;
-        this.mainLang = plugin.getConfiguration().getMainLang();
     }
 
     @Override
@@ -20,7 +19,7 @@ public class democracyMain extends AModule {
 
         plugin.getCommand("democracy").setExecutor(new democracyCommand(plugin, this));
         plugin.getCommand("democracy").setTabCompleter(new democracyTabCompleter(plugin, this));
-        plugin.getCommand("democracy").setPermissionMessage(mainLang.get("modulator.error2"));
+        plugin.getCommand("democracy").setPermissionMessage(getLang().get("error.noper"));
     }
 
     @Override

@@ -1,6 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import fabaindaiz.modulator.modules.IModule;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -17,7 +16,8 @@ public class lotteryStorage implements Listener {
     final HashMap<String, int[]> numbers = new HashMap<>();
     private final Modulator plugin;
     private final IModule module;
-    private final moduleLang lang;
+    private final langLoader lang;
+    private final String key = "lottery.storage";
     private final boolean usevault;
     private final boolean novalid;
     private int price = 1000;
@@ -25,12 +25,12 @@ public class lotteryStorage implements Listener {
     ArrayList<Integer> winner = lotteryUtil.setWinner();
     String winnerCode = lotteryUtil.arrayToCode(winner);
 
-    protected lotteryStorage(Modulator plugin, moduleLang lang, IModule module) {
+    protected lotteryStorage(Modulator plugin, IModule module) {
         this.usevault = module.getConfig().getBoolean("lottery.usevault");
         this.novalid = module.getConfig().getBoolean("lottery.novalid");
         this.plugin = plugin;
         this.module = module;
-        this.lang = lang;
+        this.lang = module.getLang();
     }
 
     protected void drawWinner() {
@@ -45,10 +45,10 @@ public class lotteryStorage implements Listener {
             return;
         }
 
-        Inventory inventory = Bukkit.createInventory(null, 18, lang.get("lottery.info3"));
+        Inventory inventory = Bukkit.createInventory(null, 18, lang.get(key, "info3"));
 
         inventory.setItem(8, lotteryUtil.getWhiteGlass(lang, 0));
-        inventory.setItem(17, lotteryUtil.getRedWool(lang.get("lottery.give3")));
+        inventory.setItem(17, lotteryUtil.getRedWool(lang.get(key, "give3")));
 
         for (int i = 0; i < 7; i++) {
             inventory.setItem(i, lotteryUtil.getRedWool(String.valueOf(i + 1)));
@@ -80,7 +80,7 @@ public class lotteryStorage implements Listener {
                     numbers.get(senderName)[number] = 1;
 
                     if (selected == 7) {
-                        playerInv.setItem(17, lotteryUtil.getGreenWool(lang.get("lottery.give3")));
+                        playerInv.setItem(17, lotteryUtil.getGreenWool(lang.get(key, "give3")));
                     }
                     return;
                 } else {
@@ -89,7 +89,7 @@ public class lotteryStorage implements Listener {
                     numbers.get(senderName)[number] = 0;
 
                     if (selected == 8) {
-                        playerInv.setItem(17, lotteryUtil.getRedWool(lang.get("lottery.give3")));
+                        playerInv.setItem(17, lotteryUtil.getRedWool(lang.get(key, "give3")));
                     }
                     return;
                 }
@@ -109,22 +109,22 @@ public class lotteryStorage implements Listener {
 
         ArrayList<String> lore = getLore(senderName);
         if (lore.get(1).equals(winnerCode)) {
-            player.sendMessage(lang.get("lottery.error2"));
+            player.sendMessage(lang.get(key, "error2"));
             return;
         }
 
         if (this.novalid) {
-            lore.set(1, lore.get(1) + lang.get("lottery.error3"));
+            lore.set(1, lore.get(1) + lang.get(key, "error3"));
         }
         if (this.usevault) {
             EconomyResponse response = plugin.getVault().getEconomy().withdrawPlayer(player, price);
             if (!response.transactionSuccess()) {
-                player.sendMessage(lang.get("lottery.error4"));
+                player.sendMessage(lang.get(key, "error4"));
                 return;
             }
         }
 
-        player.sendMessage(lang.get("lottery.give2"));
+        player.sendMessage(lang.get(key, "give2"));
         player.getInventory().addItem(lotteryUtil.getLotteryTicker(lang, senderName, lore));
     }
 
@@ -142,7 +142,7 @@ public class lotteryStorage implements Listener {
 
         StringBuilder lotteryLore = new StringBuilder();
         StringBuilder lotteryCode = new StringBuilder();
-        lotteryLore.append(lang.get("lottery.give1"));
+        lotteryLore.append(lang.get(key, "give1"));
 
         for (int i = 0; i < 14; i++) {
             if (playerNumbers[i] == 1) {

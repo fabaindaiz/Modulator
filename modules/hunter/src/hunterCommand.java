@@ -1,17 +1,20 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.config.langLoader;
+import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class hunterCommand implements CommandExecutor {
     private final Modulator plugin;
-    private final languageLoader lang;
+    private final IModule module;
+    private final langLoader lang;
+    private final String key = "hunter.command";
 
-    protected hunterCommand(Modulator modulator) {
-
+    protected hunterCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
-        this.lang = modulator.getConfiguration().getMainLang();
+        this.module = module;
+        this.lang = module.getLang();
     }
 
     @Override
@@ -19,8 +22,8 @@ public class hunterCommand implements CommandExecutor {
 
         switch (args.length) {
             case 0:
-                sender.sendMessage(lang.get("hunter.info1"));
-                sender.sendMessage(lang.get("hunter.info2"));
+                sender.sendMessage(lang.get(key, "info1"));
+                sender.sendMessage(lang.get(key, "info2"));
                 return true;
             case 1:
                 switch (args[0]) {
@@ -28,19 +31,19 @@ public class hunterCommand implements CommandExecutor {
                         this.help(sender);
                         return true;
                     default:
-                        sender.sendMessage(lang.get("hunter.error1"));
+                        sender.sendMessage(lang.get(key, "error1"));
                         return true;
                 }
             default:
-                sender.sendMessage(lang.get("hunter.error1"));
+                sender.sendMessage(lang.get(key, "error1"));
                 return true;
         }
     }
 
     private void help(CommandSender sender) {
-        sender.sendMessage(lang.get("hunter.help1"));
-        sender.sendMessage(lang.get("hunter.help2"));
-        sender.sendMessage(lang.get("hunter.help3"));
+        sender.sendMessage(lang.get(key, "help1"));
+        sender.sendMessage(lang.get(key, "help2"));
+        sender.sendMessage(lang.get(key, "help3"));
     }
 
 

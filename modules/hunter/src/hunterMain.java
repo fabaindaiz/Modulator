@@ -1,22 +1,22 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.loader.moduleConfig;
 import fabaindaiz.modulator.modules.AModule;
 
 public class hunterMain extends AModule {
     private final Modulator plugin;
-    private languageLoader lang;
+    private moduleConfig moduleConfig;
 
     public hunterMain(Modulator modulator) {
-
         this.plugin = modulator;
-        this.lang = plugin.getConfiguration().getMainLang();
     }
 
     @Override
     public void onEnable() {
-        plugin.getCommand("hunter").setExecutor(new hunterCommand(plugin));
-        plugin.getCommand("hunter").setTabCompleter(new hunterTabCompleter(plugin));
-        plugin.getCommand("hunter").setPermissionMessage(lang.get("modulator.error2"));
+        moduleConfig = new moduleConfig(plugin, this, "hunter", jarName);
+
+        plugin.getCommand("hunter").setExecutor(new hunterCommand(plugin, this));
+        plugin.getCommand("hunter").setTabCompleter(new hunterTabCompleter(plugin, this));
+        plugin.getCommand("hunter").setPermissionMessage(getLang().get("error.nopem"));
     }
 
     @Override

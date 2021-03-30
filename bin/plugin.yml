@@ -1,4 +1,4 @@
-name: Modulator
+name: modulator
 main: fabaindaiz.modulator.Modulator
 description: Load plugin modules in Server
 version: 0.3.2
@@ -36,6 +36,10 @@ commands:
     description: Buy a lottery ticket
     permission: modulator.lottery
     usage: /<command>
+  updater:
+    description: Update register plugin
+    permission: modulator.updater
+    usage: /<command>
   zanakik:
     description: Zanakik a player
     permission: modulator.zanakik
@@ -53,7 +57,7 @@ commands:
     permission: modulator.modtask
     usage: /<command>
 permissions:
-  #Command permissions
+  #moduleCommand permissions
   modulator.command:
     description: Grants access to base command
     default: op
@@ -72,6 +76,9 @@ permissions:
   modulator.lottery:
     description: Use lottery module
     default: true
+  modulator.updater:
+    description: Use updater module
+    default: op
   modulator.zkik:
     description: Use zanakik module
     default: op

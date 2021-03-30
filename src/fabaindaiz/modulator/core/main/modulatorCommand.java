@@ -1,7 +1,8 @@
 package fabaindaiz.modulator.core.main;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.config.langLoader;
+import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,12 +11,13 @@ import java.util.Set;
 
 public class modulatorCommand implements CommandExecutor {
     private final Modulator plugin;
-    private final languageLoader lang;
+    private final IModule module;
+    private final langLoader lang;
 
-    protected modulatorCommand(Modulator modulator) {
-
+    protected modulatorCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
-        this.lang = modulator.getConfiguration().getMainLang();
+        this.module = module;
+        this.lang = module.getLang();
     }
 
     @Override

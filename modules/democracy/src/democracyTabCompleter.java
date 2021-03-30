@@ -1,5 +1,4 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.loader.moduleLang;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,12 +14,10 @@ public class democracyTabCompleter implements TabCompleter {
     final String[] modules1 = {"help", "create", "done", "cancel"};
     private final Modulator plugin;
     private final IModule module;
-    private final moduleLang lang;
 
     protected democracyTabCompleter(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
     }
 
     @Override

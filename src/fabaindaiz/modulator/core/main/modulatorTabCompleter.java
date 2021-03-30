@@ -1,7 +1,7 @@
 package fabaindaiz.modulator.core.main;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -15,12 +15,11 @@ public class modulatorTabCompleter implements TabCompleter {
     static final ArrayList<String> emptyList = new ArrayList<>();
     final String[] modules1 = {"help", "modules", "reload"};
     private final Modulator plugin;
-    private final languageLoader lang;
+    private final IModule module;
 
-    protected modulatorTabCompleter(Modulator modulator) {
-
+    protected modulatorTabCompleter(Modulator modulator, IModule module) {
         this.plugin = modulator;
-        this.lang = modulator.getConfiguration().getMainLang();
+        this.module = module;
     }
 
     @Override

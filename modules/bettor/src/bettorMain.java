@@ -1,21 +1,22 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.loader.moduleConfig;
 import fabaindaiz.modulator.modules.AModule;
 
 public class bettorMain extends AModule {
     private final Modulator plugin;
-    private languageLoader lang;
+    private moduleConfig moduleConfig;
 
     public bettorMain(Modulator modulator) {
         this.plugin = modulator;
-        this.lang = plugin.getConfiguration().getMainLang();
     }
 
     @Override
     public void onEnable() {
-        plugin.getCommand("bettor").setExecutor(new bettorCommand(plugin));
-        plugin.getCommand("bettor").setTabCompleter(new bettorTabCompleter(plugin));
-        plugin.getCommand("bettor").setPermissionMessage(lang.get("modulator.error2"));
+        moduleConfig = new moduleConfig(plugin, this, "bettor", jarName);
+
+        plugin.getCommand("bettor").setExecutor(new bettorCommand(plugin, this));
+        plugin.getCommand("bettor").setTabCompleter(new bettorTabCompleter(plugin, this));
+        plugin.getCommand("bettor").setPermissionMessage(getLang().get("error.noper"));
     }
 
     @Override

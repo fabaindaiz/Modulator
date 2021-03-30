@@ -1,5 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.config.langLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public class zanakikUtil {
+
+    private static String key = "zanakik.util";
 
     static protected Player[] getKickablePlayers(Modulator modulator) {
         ArrayList<Player> playerList = new ArrayList<>();
@@ -27,18 +29,18 @@ public class zanakikUtil {
     }
 
     static protected ItemStack getZanakik(Modulator modulator, int num) {
-        languageLoader lang = modulator.getConfiguration().getMainLang();
+        langLoader lang = modulator.getConfiguration().getMainLang();
 
         ItemStack carrot = new ItemStack(Material.CARROT, num);
         ItemMeta meta = carrot.getItemMeta();
         meta.setDisplayName("Zanakik");
 
         List<String> loresList = new ArrayList<>();
-        loresList.add(lang.get("zanakik.lore1"));
-        loresList.add(lang.get("zanakik.lore2"));
-        loresList.add(lang.get("zanakik.lore3"));
-        loresList.add(lang.get("zanakik.lore4"));
-        loresList.add(lang.get("zanakik.lore5"));
+        loresList.add(lang.get(key, "lore1"));
+        loresList.add(lang.get(key, "lore2"));
+        loresList.add(lang.get(key, "lore3"));
+        loresList.add(lang.get(key, "lore4"));
+        loresList.add(lang.get(key, "lore5"));
         meta.setLore(loresList);
 
         carrot.setItemMeta(meta);

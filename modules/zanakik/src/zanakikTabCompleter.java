@@ -1,6 +1,4 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.core.loader.moduleLang;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,13 +16,10 @@ public class zanakikTabCompleter implements TabCompleter {
     final String[] modules1 = {"getzkik", "help"};
     private final Modulator plugin;
     private final IModule module;
-    private final moduleLang lang;
 
     protected zanakikTabCompleter(Modulator modulator, IModule module) {
-
         this.plugin = modulator;
         this.module = module;
-        this.lang =module.getLang();
     }
 
     @Override

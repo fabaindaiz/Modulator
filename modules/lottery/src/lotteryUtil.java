@@ -1,5 +1,4 @@
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,10 +7,12 @@ import java.util.*;
 
 public class lotteryUtil {
 
-    static protected ItemStack getLotteryTicker(moduleLang lang, String senderName, ArrayList<String> loresList) {
+    private static String key = "lottery.util";
+
+    static protected ItemStack getLotteryTicker(langLoader lang, String senderName, ArrayList<String> loresList) {
         ItemStack lottery = new ItemStack(Material.PAPER);
         ItemMeta meta = lottery.getItemMeta();
-        meta.setDisplayName(lang.get("lottery.lore2"));
+        meta.setDisplayName(lang.get(key, "lore2"));
 
         meta.setLore(loresList);
         lottery.setItemMeta(meta);
@@ -38,14 +39,14 @@ public class lotteryUtil {
         return wool;
     }
 
-    static protected ItemStack getWhiteGlass(moduleLang lang, int num) {
+    static protected ItemStack getWhiteGlass(langLoader lang, int num) {
 
         ItemStack glass = new ItemStack(Material.WHITE_STAINED_GLASS);
         ItemMeta meta = glass.getItemMeta();
         meta.setDisplayName(String.valueOf(num));
 
         List<String> loresList = new ArrayList<>();
-        loresList.add(lang.get("lottery.lore1"));
+        loresList.add(lang.get(key, "lore1"));
 
         meta.setLore(loresList);
 

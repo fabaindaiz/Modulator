@@ -40,7 +40,7 @@ public class moduleLoader extends AModule {
         jarLoader loader = new jarLoader();
         for (File file : dir.listFiles((file, name) -> name.endsWith(".jar"))) {
             String name = file.getName().replace(".jar", "");
-            loaded.put(name ,loader.load(file, IModule.class, this.plugin));
+            loaded.put(name, loader.load(file, IModule.class, this.plugin));
         }
         loaded.forEach((name, module) -> module.setJarName(name));
         return loaded;

@@ -1,6 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
-import fabaindaiz.modulator.core.loader.moduleLang;
+import fabaindaiz.modulator.core.config.langLoader;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
@@ -20,7 +19,8 @@ public class zanakikCommand implements CommandExecutor {
     private final boolean ignorebypass;
     private final Modulator plugin;
     private final IModule module;
-    private final moduleLang lang;
+    private final langLoader lang;
+    private final String key = "zanakik.command";
 
     protected zanakikCommand(Modulator modulator, IModule module) {
 
@@ -36,10 +36,10 @@ public class zanakikCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!this.enabled) {
-            sender.sendMessage(lang.get("zanakik.disable1"));
+            sender.sendMessage(lang.get(key, "disable1"));
             return true;
         } else if (this.noplayerzkik && sender instanceof Player) {
-            sender.sendMessage(lang.get("zanakik.error5"));
+            sender.sendMessage(lang.get(key, "error5"));
             return true;
         }
 
@@ -65,7 +65,7 @@ public class zanakikCommand implements CommandExecutor {
                         this.getzkik(sender, Integer.parseInt(args[1]));
                         return true;
                     default:
-                        sender.sendMessage(lang.get("zanakik.error1"));
+                        sender.sendMessage(lang.get(key, "error1"));
                         return true;
                 }
             case 3:
@@ -74,26 +74,26 @@ public class zanakikCommand implements CommandExecutor {
                         this.getzkik(Bukkit.getPlayer(args[2]), Integer.parseInt(args[1]));
                         return true;
                     default:
-                        sender.sendMessage(lang.get("zanakik.error1"));
+                        sender.sendMessage(lang.get(key, "error1"));
                         return true;
                 }
             default:
-                sender.sendMessage(lang.get("zanakik.error1"));
+                sender.sendMessage(lang.get(key, "error1"));
                 return true;
         }
     }
 
     private void help(CommandSender sender) {
-        sender.sendMessage(lang.get("zanakik.help1"));
-        sender.sendMessage(lang.get("zanakik.help2"));
-        sender.sendMessage(lang.get("zanakik.help3"));
+        sender.sendMessage(lang.get(key, "help1"));
+        sender.sendMessage(lang.get(key, "help2"));
+        sender.sendMessage(lang.get(key, "help3"));
     }
 
     private void zkik(CommandSender sender) {
 
         Player[] players = zanakikUtil.getKickablePlayers(plugin);
         if (players.length < 1) {
-            Bukkit.broadcastMessage(lang.get("zanakik.error2"));
+            Bukkit.broadcastMessage(lang.get(key, "error2"));
             return;
         }
 
@@ -112,16 +112,16 @@ public class zanakikCommand implements CommandExecutor {
     private void zkik(CommandSender sender, String playerName) {
 
         if (!isOnlinePlayer(playerName)) {
-            sender.sendMessage(lang.get("zanakik.error3"));
+            sender.sendMessage(lang.get(key, "error3"));
             return;
         }
         Player selP = Bukkit.getPlayer(playerName);
         if (selP.hasPermission("modulator.kickbypass") && !this.ignorebypass) {
-            sender.sendMessage(lang.get("zanakik.error4"));
+            sender.sendMessage(lang.get(key, "error4"));
             return;
         }
 
-        sender.sendMessage(lang.get("zanakik.kikmessage2") + playerName);
+        sender.sendMessage(lang.get(key, "kikmessage2") + playerName);
         kik(selP);
     }
 
@@ -130,7 +130,7 @@ public class zanakikCommand implements CommandExecutor {
         player.getInventory().addItem(zanakikUtil.getZanakik(plugin, 1));
 
         Bukkit.getBanList(Type.NAME).addBan(player.getName(), "Zanakik", zanakikUtil.getZkikExpiresDate(), "zanakik");
-        Bukkit.broadcastMessage(player.getName() + lang.get("zanakik.kikmessage1"));
+        Bukkit.broadcastMessage(player.getName() + lang.get(key, "kikmessage1"));
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> player.kickPlayer("Zanakik"), 300L);
     }

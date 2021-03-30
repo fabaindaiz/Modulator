@@ -1,5 +1,5 @@
-import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.config.langLoader;
+import fabaindaiz.modulator.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -10,8 +10,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class itemchatUtil {
 
-    static void showItemSpecs(Modulator modulator, CommandSender sender, ItemStack item, String interactText, boolean norestriction) {
-        languageLoader lang = modulator.getConfiguration().getMainLang();
+    private static String key = "itemchat.util";
+
+    static void showItemSpecs(IModule module, CommandSender sender, ItemStack item, String interactText, boolean norestriction) {
+        langLoader lang = module.getLang();
         ItemMeta itemMeta = item.getItemMeta();
 
         StringBuilder mainText = new StringBuilder();
@@ -34,13 +36,13 @@ public class itemchatUtil {
         if (itemMeta.hasDisplayName()) {
             attributes++;
 
-            text1.addExtra(lang.get("itemchat.show1"));
+            text1.addExtra(lang.get(key, "show1"));
             text1.addExtra(itemMeta.getDisplayName());
             text1.addExtra("\n");
         }
 
         // Material
-        BaseComponent text2 = new TextComponent(lang.get("itemchat.show2"));
+        BaseComponent text2 = new TextComponent(lang.get(key, "show2"));
         text2.addExtra(item.getType().toString());
         text2.addExtra("\n");
 
@@ -49,7 +51,7 @@ public class itemchatUtil {
         if (itemMeta.hasLore()) {
             attributes++;
 
-            text3.addExtra(lang.get("itemchat.show3"));
+            text3.addExtra(lang.get(key, "show3"));
             itemMeta.getLore().forEach(text3::addExtra);
             text3.addExtra("\n");
         }
@@ -59,7 +61,7 @@ public class itemchatUtil {
         if (item.getEnchantments().size() > 0) {
             attributes++;
 
-            text4.addExtra(lang.get("itemchat.show4"));
+            text4.addExtra(lang.get(key, "show4"));
             item.getEnchantments().forEach((enchantment, integer) -> {
                 text4.addExtra(enchantment.getKey().getKey());
                 text4.addExtra(" ");
@@ -76,10 +78,10 @@ public class itemchatUtil {
         BaseComponent text6 = new TextComponent();
         if (attributes <= 0) {
             if (!norestriction) {
-                sender.sendMessage(lang.get("itemchat.error2"));
+                sender.sendMessage(lang.get(key, "error2"));
                 return;
             }
-            text6.addExtra(lang.get("itemchat.show5"));
+            text6.addExtra(lang.get(key, "show5"));
         }
 
         BaseComponent[] itemText = {text1, text2, text3, text4, text6};

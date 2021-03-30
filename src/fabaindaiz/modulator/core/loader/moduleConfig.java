@@ -1,7 +1,7 @@
 package fabaindaiz.modulator.core.loader;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.languageLoader;
+import fabaindaiz.modulator.core.config.langLoader;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,23 +33,23 @@ public class moduleConfig {
     public void loadConfig() {
         // Carga el archivo de ajustes
         String lang = plugin.getConfiguration().lang;
-        File file = new File(plugin.getDataFolder(), "config/"+pluginName);
+        File file = new File(plugin.getDataFolder(), "config/" + pluginName);
         if (!file.exists()) {
             file.mkdir();
         }
 
-        File configFile = new File(plugin.getDataFolder(), "config/"+pluginName+"/config.yml");
-        File langFile = new File(plugin.getDataFolder(), "config/"+pluginName+"/lang"+lang+".yml");
-        if(!configFile.exists() || !langFile.exists()) {
+        File configFile = new File(plugin.getDataFolder(), "config/" + pluginName + "/config.yml");
+        File langFile = new File(plugin.getDataFolder(), "config/" + pluginName + "/lang" + lang + ".yml");
+        if (!configFile.exists() || !langFile.exists()) {
             try {
-                JarFile jar = new JarFile(new File(plugin.getDataFolder(), "modules/"+jarName+".jar"));
+                JarFile jar = new JarFile(new File(plugin.getDataFolder(), "modules/" + jarName + ".jar"));
                 Enumeration<JarEntry> entries = jar.entries();
                 while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
                     if (entry.isDirectory() || !entry.getName().endsWith(".yml")) {
                         continue;
                     }
-                    File tempFile = new File(plugin.getDataFolder(), "config/"+pluginName+"/"+entry.getName());
+                    File tempFile = new File(plugin.getDataFolder(), "config/" + pluginName + "/" + entry.getName());
                     InputStream inputStream = jar.getInputStream(entry);
                     OutputStream outputStream = new FileOutputStream(tempFile);
                     IOUtils.copy(inputStream, outputStream);
@@ -66,9 +66,11 @@ public class moduleConfig {
             Reader langReader = new InputStreamReader(langStream);
 
             FileConfiguration tempConf = YamlConfiguration.loadConfiguration(configReader);
-            moduleLang tempLang = new moduleLang(YamlConfiguration.loadConfiguration(langReader));
+            langLoader tempLang = new langLoader(YamlConfiguration.loadConfiguration(langReader));
 
-            module.setConfig(tempConf, tempLang);
+            module.setConfig(tempConf);
+            module.setLang(tempLang);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

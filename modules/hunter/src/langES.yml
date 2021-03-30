@@ -1,0 +1,14 @@
+# Modulator plugin spanish language file
+# Delete some key may cause errors
+
+error:
+  nokey: "Clave no encontrada en el idioma"
+  noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
+hunter:
+  command:
+    info1: "\u00A73Hunter \u00A7f- Paga por la cabeza de un jugador"
+    info2: "Revisa la lista de comandos con \u00A73/hunter help "
+    help1: "\u00A76Comandos hunter"
+    help2: "\u00A7e/hunter \u00A7fInfo"
+    help3: "\u00A7e/hunter \u00A7fInfo"
+    error1: "Argumentos incorrectos para hunter"

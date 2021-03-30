@@ -12,7 +12,7 @@ public class Configuration extends AModule {
     private final Modulator plugin;
 
     private FileConfiguration mainConfiguration;
-    private languageLoader languageConfiguration;
+    private langLoader languageConfiguration;
     public String lang;
 
     public Configuration(Modulator modulator) {
@@ -29,7 +29,7 @@ public class Configuration extends AModule {
         // Carga el archivo de idioma
         this.lang = mainConfiguration.getString("language");
         this.lang = Arrays.asList(languages).contains(lang) ? lang : "ES";
-        languageConfiguration = new languageLoader(plugin, "lang" + lang + ".yml");
+        languageConfiguration = new langLoader(plugin, "lang" + lang + ".yml");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Configuration extends AModule {
         return this.mainConfiguration;
     }
 
-    public languageLoader getMainLang() {
+    public langLoader getMainLang() {
         return this.languageConfiguration;
     }
 
