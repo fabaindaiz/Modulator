@@ -25,12 +25,14 @@ public class zanakikTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
+        if (!sender.hasPermission("modulator.zkik")){
+            return emptyList;
+        }
         if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("zkik") && args.length <= 1) {
-                return getPlayerNameList(zanakikUtil.getKickablePlayers(plugin));
-            }
-            if (command.getName().equalsIgnoreCase("zanakik") && args.length <= 1) {
-                return Arrays.asList(modules1);
+            if (args.length <= 1) {
+                List list = getPlayerNameList(zanakikUtil.getKickablePlayers(module));
+                list.addAll(Arrays.asList(modules1));
+                return list;
             }
         }
         return emptyList;

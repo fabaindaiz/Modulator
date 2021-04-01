@@ -24,7 +24,7 @@ public class modinputTabCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("modinput") && args.length <= 1) {
+            if (label.equalsIgnoreCase("modinput") && args.length <= 1) {
             }
 
         }

@@ -13,9 +13,8 @@ public class modtask extends AModule {
 
     @Override
     public void onEnable() {
-        plugin.getCommand("modtask").setExecutor(new modtaskCommand(plugin, this));
-        plugin.getCommand("modtask").setTabCompleter(new modtaskTabCompleter(plugin, this));
-        plugin.getCommand("modtask").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new modtaskCommand(plugin, this));
+        setTabCompleter(new modtaskTabCompleter(plugin, this));
     }
 
     @Override

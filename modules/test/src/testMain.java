@@ -7,16 +7,16 @@ public class testMain extends AModule {
     private moduleConfig moduleConfig;
 
     public testMain(Modulator modulator) {
+        setName("test");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "test", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
-        plugin.getCommand("test").setExecutor(new testCommand(plugin, this));
-        plugin.getCommand("test").setTabCompleter(new testTabCompleter(plugin, this));
-        plugin.getCommand("test").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new testCommand(plugin, this));
+        setTabCompleter(new testTabCompleter(plugin, this));
     }
 
     @Override

@@ -13,12 +13,14 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
 public class Modulator extends JavaPlugin {
 
+    List<String> aliases = new ArrayList<>(Arrays.asList("modulator","md","modinput","modtask"));
+    public final LinkedHashMap<String, IModule> commandList = new LinkedHashMap<>();
     private final LinkedHashMap<String, IModule> modules = new LinkedHashMap<>();
+
     private Configuration configModule;
     private vaultHandler vaultHandler;
     private moduleLoader moduleLoader;
@@ -36,11 +38,19 @@ public class Modulator extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        modules.put("Main", new modulator(this));
-        modules.put("ModInput", new modinput(this));
-        modules.put("ModTask", new modtask(this));
+        IModule modulator = new modulator(this);
+        IModule modinput = new modinput(this);
+        IModule modtask = new modtask(this);
+
+        modules.put("main", modulator);
+        modules.put("modinput", modinput);
+        modules.put("modtask", modtask);
+
+        commandList.put("modinput", modinput);
+        commandList.put("modtask", modtask);
 
         modules.forEach((name, module) -> module.onEnable());
+        getCommand("modulator").setAliases(aliases);
 
         Bukkit.getLogger().info(configModule.getMainLang().get("modulator.info1"));
         Bukkit.getLogger().info(configModule.getMainLang().get("modulator.load1"));
@@ -62,6 +72,11 @@ public class Modulator extends JavaPlugin {
     public void setLoadModules(LinkedHashMap<String, IModule> loadModules) {
         loadModules.forEach((key, value) ->
                 this.modules.merge(key, value, (v1, v2) -> v1.equals(v2) ? v1 : v2)
+        );
+        loadModules.forEach((key, value) -> {
+                this.commandList.merge(value.getName(), value, (v1, v2) -> v1.equals(v2) ? v1 : v2);
+                aliases.add(value.getName());
+            }
         );
     }
 

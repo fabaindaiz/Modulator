@@ -21,17 +21,27 @@ public class updaterCommand implements CommandExecutor {
     private final IModule module;
     private final langLoader lang;
     private final String key = "updater.command";
+    private boolean enabled;
     private Map<String, Object> update;
 
     protected updaterCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
         this.lang = module.getLang();
+        this.enabled = module.getConfig().getBoolean("updater.enable");
         loadConfig();
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!this.enabled) {
+            sender.sendMessage(lang.get(key, "disable1"));
+            return true;
+        }
+        if (!sender.hasPermission("modulator.updater")){
+            sender.sendMessage(lang.get("error.noper"));
+            return true;
+        }
 
         switch (args.length) {
             case 0:

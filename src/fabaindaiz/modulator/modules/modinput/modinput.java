@@ -13,9 +13,8 @@ public class modinput extends AModule {
 
     @Override
     public void onEnable() {
-        plugin.getCommand("modinput").setExecutor(new modinputCommand(plugin, this));
-        plugin.getCommand("modinput").setTabCompleter(new modinputTabCompleter(plugin, this));
-        plugin.getCommand("modinput").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new modinputCommand(plugin, this));
+        setTabCompleter(new modinputTabCompleter(plugin, this));
     }
 
     @Override

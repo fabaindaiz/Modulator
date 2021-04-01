@@ -43,6 +43,11 @@ public class zanakikCommand implements CommandExecutor {
             return true;
         }
 
+        if (!sender.hasPermission("modulator.zkik")){
+            sender.sendMessage(lang.get("error.noper"));
+            return true;
+        }
+
         switch (args.length) {
             case 0:
                 this.zkik(sender);
@@ -91,7 +96,7 @@ public class zanakikCommand implements CommandExecutor {
 
     private void zkik(CommandSender sender) {
 
-        Player[] players = zanakikUtil.getKickablePlayers(plugin);
+        Player[] players = zanakikUtil.getKickablePlayers(module);
         if (players.length < 1) {
             Bukkit.broadcastMessage(lang.get(key, "error2"));
             return;
@@ -105,7 +110,7 @@ public class zanakikCommand implements CommandExecutor {
     private void getzkik(CommandSender sender, int num) {
         String senderName = sender.getName();
         if (isOnlinePlayer(senderName)) {
-            Bukkit.getPlayer(senderName).getInventory().addItem(zanakikUtil.getZanakik(plugin, num < 64 ? num : 64));
+            Bukkit.getPlayer(senderName).getInventory().addItem(zanakikUtil.getZanakik(module, num < 64 ? num : 64));
         }
     }
 
@@ -127,7 +132,7 @@ public class zanakikCommand implements CommandExecutor {
 
 
     protected void kik(Player player) {
-        player.getInventory().addItem(zanakikUtil.getZanakik(plugin, 1));
+        player.getInventory().addItem(zanakikUtil.getZanakik(module, 1));
 
         Bukkit.getBanList(Type.NAME).addBan(player.getName(), "Zanakik", zanakikUtil.getZkikExpiresDate(), "zanakik");
         Bukkit.broadcastMessage(player.getName() + lang.get(key, "kikmessage1"));

@@ -8,17 +8,17 @@ public class lotteryMain extends AModule {
     private lotteryStorage storage;
 
     public lotteryMain(Modulator modulator) {
+        setName("lottery");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "lottery", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
         storage = new lotteryStorage(plugin, this);
-        plugin.getCommand("lottery").setExecutor(new lotteryCommand(plugin, storage, this));
-        plugin.getCommand("lottery").setTabCompleter(new lotteryTabCompleter(plugin, this));
-        plugin.getCommand("lottery").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new lotteryCommand(plugin, storage, this));
+        setTabCompleter(new lotteryTabCompleter(plugin, this));
 
         plugin.getServer().getPluginManager().registerEvents(new lotteryListener(plugin, this, storage), plugin);
     }

@@ -7,16 +7,16 @@ public class hunterMain extends AModule {
     private moduleConfig moduleConfig;
 
     public hunterMain(Modulator modulator) {
+        setName("hunter");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "hunter", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
-        plugin.getCommand("hunter").setExecutor(new hunterCommand(plugin, this));
-        plugin.getCommand("hunter").setTabCompleter(new hunterTabCompleter(plugin, this));
-        plugin.getCommand("hunter").setPermissionMessage(getLang().get("error.nopem"));
+        setExecutor(new hunterCommand(plugin, this));
+        setTabCompleter(new hunterTabCompleter(plugin, this));
     }
 
     @Override

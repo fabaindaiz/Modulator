@@ -1,7 +1,7 @@
-name: modulator
+name: Modulator
 main: fabaindaiz.modulator.Modulator
 description: Load plugin modules in Server
-version: 0.3.2
+version: 0.5.1
 api-version: 1.14
 authors: [ fabaindaiz, benjujo ]
 website: uchilecraft.cl
@@ -15,50 +15,21 @@ commands:
     usage: /<command>
     aliases:
       - modulator
-      - md
-  bettor:
-    description: Bets for events
-    permission: modulator.bettor
-    usage: /<command>
-  democracy:
-    description: Vote a question
-    permission: modulator.democracy
-    usage: /<command>
-  hunter:
-    description: bounty hunt in server
-    permission: modulator.hunter
-    usage: /<command>
-  itemchat:
-    description: Show a item in chat
-    permission: modulator.itemchat
-    usage: /<command>
-  lottery:
-    description: Buy a lottery ticket
-    permission: modulator.lottery
-    usage: /<command>
-  updater:
-    description: Update register plugin
-    permission: modulator.updater
-    usage: /<command>
-  zanakik:
-    description: Zanakik a player
-    permission: modulator.zanakik
-    usage: /<command>
-    aliases:
-      - zanakik
+      - modinput
+      - modtask
+      - bettor
+      - democracy
+      - hunter
+      - itemchat
+      - lottery
+      - updater
       - zkik
-  # Internal commands
-  modinput:
-    description: Introduce a input
-    permission: modulator.modinput
-    usage: /<command>
-  modtask:
-    description: Programed task
-    permission: modulator.modtask
-    usage: /<command>
 permissions:
   #moduleCommand permissions
   modulator.command:
+    description: Grants access any module
+    default: true
+  modulator.main:
     description: Grants access to base command
     default: op
   modulator.bettor:

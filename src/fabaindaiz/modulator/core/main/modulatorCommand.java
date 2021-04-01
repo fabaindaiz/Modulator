@@ -23,6 +23,15 @@ public class modulatorCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+        if (plugin.commandList.containsKey(label.toLowerCase())){
+            return plugin.commandList.get(label).getExecutor().onCommand(sender, command, label, args);
+        }
+
+        if (!sender.hasPermission("modulator.main")) {
+            sender.sendMessage(lang.get("error.noper"));
+            return true;
+        }
+
         switch (args.length) {
             case 0:
                 sender.sendMessage(lang.get("modulator.info1"));

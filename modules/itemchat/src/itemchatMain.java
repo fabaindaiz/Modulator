@@ -7,16 +7,16 @@ public class itemchatMain extends AModule {
     private moduleConfig moduleConfig;
 
     public itemchatMain(Modulator modulator) {
+        setName("itemchat");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "itemchat", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
-        plugin.getCommand("itemchat").setExecutor(new itemchatCommand(plugin, this));
-        plugin.getCommand("itemchat").setTabCompleter(new itemchatTabCompleter(plugin, this));
-        plugin.getCommand("itemchat").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new itemchatCommand(plugin, this));
+        setTabCompleter(new itemchatTabCompleter(plugin, this));
     }
 
     @Override

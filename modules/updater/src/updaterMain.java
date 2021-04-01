@@ -7,16 +7,16 @@ public class updaterMain extends AModule {
     private moduleConfig moduleConfig;
 
     public updaterMain(Modulator modulator) {
+        setName("updater");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "updater", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
-        plugin.getCommand("updater").setExecutor(new updaterCommand(plugin, this));
-        plugin.getCommand("updater").setTabCompleter(new updaterTabCompleter(plugin, this));
-        plugin.getCommand("updater").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new updaterCommand(plugin, this));
+        setTabCompleter(new updaterTabCompleter(plugin, this));
     }
 
     @Override

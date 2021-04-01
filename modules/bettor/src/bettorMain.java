@@ -7,16 +7,16 @@ public class bettorMain extends AModule {
     private moduleConfig moduleConfig;
 
     public bettorMain(Modulator modulator) {
+        setName("bettor");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "bettor", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
-        plugin.getCommand("bettor").setExecutor(new bettorCommand(plugin, this));
-        plugin.getCommand("bettor").setTabCompleter(new bettorTabCompleter(plugin, this));
-        plugin.getCommand("bettor").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new bettorCommand(plugin, this));
+        setTabCompleter(new bettorTabCompleter(plugin, this));
     }
 
     @Override

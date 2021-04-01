@@ -20,6 +20,11 @@ public class bettorCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+        if (!sender.hasPermission("modulator.bettor")){
+            sender.sendMessage(lang.get("error.noper"));
+            return true;
+        }
+
         switch (args.length) {
             case 0:
                 sender.sendMessage(lang.get(key, "info1"));

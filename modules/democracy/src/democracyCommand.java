@@ -50,6 +50,10 @@ public class democracyCommand implements CommandExecutor {
             sender.sendMessage(lang.get(key, "disable1"));
             return true;
         }
+        if (!sender.hasPermission("modulator.democracy")){
+            sender.sendMessage(lang.get("error.noper"));
+            return true;
+        }
 
         switch (args.length) {
             case 0:

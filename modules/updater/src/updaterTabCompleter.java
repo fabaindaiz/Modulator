@@ -11,7 +11,7 @@ import java.util.List;
 
 public class updaterTabCompleter implements TabCompleter {
     static final ArrayList<String> emptyList = new ArrayList<>();
-    final String[] modules1 = {"help"};
+    final String[] modules1 = {"help", "update"};
     private final Modulator plugin;
     private final IModule module;
 
@@ -23,8 +23,11 @@ public class updaterTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
+        if (!sender.hasPermission("modulator.updater")){
+            return emptyList;
+        }
         if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("test") && args.length <= 1) {
+            if (args.length <= 1) {
                 return Arrays.asList(modules1);
             }
 

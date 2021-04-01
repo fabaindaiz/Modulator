@@ -25,8 +25,12 @@ public class modulatorTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
+        if (plugin.commandList.containsKey(label.toLowerCase())){
+            return plugin.commandList.get(label).getTabCompleter().onTabComplete(sender, command, label, args);
+        }
+
         if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("modulator") && args.length <= 1) {
+            if (label.equalsIgnoreCase("modulator") && args.length <= 1) {
                 return Arrays.asList(modules1);
             }
 

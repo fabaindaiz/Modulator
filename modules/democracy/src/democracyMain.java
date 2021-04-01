@@ -10,16 +10,16 @@ public class democracyMain extends AModule {
 
     // Democracy depends on modinput module
     public democracyMain(Modulator modulator) {
+        setName("democracy");
         this.plugin = modulator;
     }
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, "democracy", jarName);
+        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
 
-        plugin.getCommand("democracy").setExecutor(new democracyCommand(plugin, this));
-        plugin.getCommand("democracy").setTabCompleter(new democracyTabCompleter(plugin, this));
-        plugin.getCommand("democracy").setPermissionMessage(getLang().get("error.noper"));
+        setExecutor(new democracyCommand(plugin, this));
+        setTabCompleter(new democracyTabCompleter(plugin, this));
     }
 
     @Override

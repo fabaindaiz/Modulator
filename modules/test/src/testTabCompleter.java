@@ -23,8 +23,11 @@ public class testTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
+        if (!sender.hasPermission("modulator.")){
+            return emptyList;
+        }
         if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("test") && args.length <= 1) {
+            if (args.length <= 1) {
                 return Arrays.asList(modules1);
             }
 
