@@ -1,0 +1,32 @@
+# Modulator plugin spanish language file
+# Delete some key may cause errors
+
+error:
+  nokey: "Clave no encontrada en el idioma"
+  noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
+modulator:
+  version: "0.5.1"
+  info1: "\u00A73Modulator 0.5.1 \u00A7f- Por LtFabin & Benjujo"
+  info2: "\u00A76Revisa los comandos con \u00A73/modulator help"
+  info3: "\u00A73Modulos activados: \u00A7f"
+  reload1: "\u00A73Modulator \u00A7f- Plugin recargado correctamente"
+  help1: "\u00A76Comandos de modulator"
+  # TODO añadir el resto de modulos faltantes
+  help2: "\u00A7e/modulator \u00A7fComandos de administraci\u00f3n"
+  help3: "\u00A7e/bettor \u00A7fSistema de apuestas en eventos"
+  help4: "\u00A7e/democracy \u00A7fCrea tus encuestas rapidas"
+  help5: "\u00A7e/itemchat \u00A7fMuestra tus items en el chat"
+  help6: "\u00A7e/lottery \u00A7fCompra billetes de loter\u00eda"
+  help7: "\u00A7e/zanakik \u00A7fZanakikea a jugadores"
+  error1: "Argumentos incorrectos para Modulator"
+  warn1: "Modulator no pudo ser cargado correctamente"
+  warn2: "Antes de actualizar, debes borrar la carpeta /modulator"
+  load1: "Todos los modulos han sido cargados sin errores"
+  load2: "Desactivando todos los modulos"
+modinput:
+  error1: "No debes usar el comando modinput"
+  error2: "modinput se autogenera internamente"
+modvault:
+  error1: "No debes usar el comando modvault"
+  error2: "modvault se autogenera internamente"
+  novault1: "No se puede encontrar Vault, se desactivar\u00e1 el modulo"

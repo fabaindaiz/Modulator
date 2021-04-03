@@ -4,7 +4,7 @@
 error:
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
-updater:
+test:
   command:
     info1: "\u00A73Test \u00A7f- Info"
     info2: "Revisa la lista de comandos con \u00A73/test help "
@@ -12,7 +12,3 @@ updater:
     help2: "\u00A7e/test \u00A7fInfo"
     help3: "\u00A7e/test \u00A7fInfo"
     error1: "Argumentos incorrectos para test"
-    update1: "Se verificar\u00e1n las actualizaciones"
-    update2: "Recuerde asignar los spigotCode en update.yml"
-    update3: "Actualizaci\u00f3n: "
-    update4: "[Web]"

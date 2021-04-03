@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Configuration extends AModule {
 
-    final String[] languages = {"ES"};
+    final String[] languages = {"ES", "EN"};
     private final Modulator plugin;
 
     private FileConfiguration mainConfiguration;

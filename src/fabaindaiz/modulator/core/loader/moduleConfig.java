@@ -8,13 +8,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class moduleConfig {
 
-    final String[] languages = {"ES"};
+    final String[] languages = {"ES", "EN"};
 
     private final Modulator plugin;
     private final IModule module;
@@ -33,6 +34,7 @@ public class moduleConfig {
     public void loadConfig() {
         // Carga el archivo de ajustes
         String lang = plugin.getConfiguration().lang;
+        lang = Arrays.asList(languages).contains(lang) ? lang : "ES";
         File file = new File(plugin.getDataFolder(), "config/" + pluginName);
         if (!file.exists()) {
             file.mkdir();

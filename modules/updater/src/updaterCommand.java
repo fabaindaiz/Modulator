@@ -1,10 +1,14 @@
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.config.langLoader;
 import fabaindaiz.modulator.modules.IModule;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.yaml.snakeyaml.Yaml;
@@ -29,7 +33,17 @@ public class updaterCommand implements CommandExecutor {
         this.module = module;
         this.lang = module.getLang();
         this.enabled = module.getConfig().getBoolean("updater.enable");
-        loadConfig();
+        try {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    loadConfig();
+                }
+            }.runTaskAsynchronously(plugin);
+        } catch (Exception e) {
+            loadConfig();
+        }
+
     }
 
     @Override
@@ -80,10 +94,10 @@ public class updaterCommand implements CommandExecutor {
     public void update(CommandSender sender) {
         sender.sendMessage(lang.get(key, "update1"));
         sender.sendMessage(lang.get(key, "update2"));
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            String verFile = plugin.getDescription().getVersion();
-            String code = String.valueOf(update.get(plugin.getName()));
-            if (code.equals("SpigotCode")) {
+        for (Plugin tPlugin : Bukkit.getPluginManager().getPlugins()) {
+            String verFile = tPlugin.getDescription().getVersion();
+            String code = String.valueOf(update.get(tPlugin.getName()));
+            if (code.equals("spigotId")) {
                 continue;
             }
             try {
@@ -92,13 +106,21 @@ public class updaterCommand implements CommandExecutor {
                 if (!(verSpigot.contains(verFile) || verFile.contains(verSpigot))) {
                     StringBuffer buffer = new StringBuffer();
                     buffer.append(lang.get(key, "update3"));
-                    buffer.append(plugin.getName());
+                    buffer.append(tPlugin.getName());
                     buffer.append(" (");
                     buffer.append(verFile);
                     buffer.append(" -> ");
                     buffer.append(verSpigot);
-                    buffer.append(" )");
-                    sender.sendMessage(buffer.toString());
+                    buffer.append(" ) ");
+                    buffer.append(lang.get(key, "update4"));
+
+                    if (sender instanceof Player) {
+                        BaseComponent message1 = new TextComponent(buffer.toString());
+                        message1.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/" + code));
+                        sender.spigot().sendMessage(message1);
+                    } else {
+                        sender.sendMessage(buffer.toString());
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -113,7 +135,8 @@ public class updaterCommand implements CommandExecutor {
             if (!file.exists()) {
                 update = new HashMap<>();
                 for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-                    update.put(plugin.getName(), "SpigotCode");
+                    String id = updaterUtil.getId(plugin.getName());
+                    update.put(plugin.getName(), id);
                 }
             } else {
                 InputStream inputStream = new FileInputStream(file);
@@ -121,7 +144,8 @@ public class updaterCommand implements CommandExecutor {
 
                 for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
                     if (!update.containsKey(plugin.getName())) {
-                        update.put(plugin.getName(), "SpigotCode");
+                        String id = updaterUtil.getId(plugin.getName());
+                        update.put(plugin.getName(), id);
                     }
                 }
             }

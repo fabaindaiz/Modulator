@@ -1,0 +1,47 @@
+# Modulator plugin spanish language file
+# Delete some key may cause errors
+
+error:
+  nokey: "Clave no encontrada en el idioma"
+  noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
+democracy:
+  command:
+    info1: "\u00A73Democracy \u00A7f- Crea tus propias encuentas r\u00e1pidas"
+    info2: "Revisa la lista de comandos con \u00A73/democracy help "
+    info3: "\u00A73Votaciones activas: \u00A7f"
+    info4: "Vota haciendo click:  "
+    disable1: "\u00A7eEl m\u00f3dulo democracy esta desactivado"
+    help1: "\u00A76Comandos de democracy"
+    help2: "\u00A7e/democracy create <texto> \u00A7fCrea una nueva votaci\u00f3n"
+    help3: "\u00A7e/democracy done \u00A7fPublica los resultados"
+    help4: "\u00A7e/democracy cancel \u00A7fCancela la votaci\u00f3n"
+    error1: "Argumentos incorrectos para democracy"
+    error2: "No tienes ninguna votaci\u00f3n activa"
+    error3: "Ya tienes una votaci\u00f3n activa"
+    error4: "No puedes volver a votar. Seleccionaste la opci\u00f3n "
+    interact1: "Has creado una votaci\u00f3n"
+    interact2: "Se ha cancelado la votaci\u00f3n"
+    interact3: "\u00A7eUna pregunta de \u00A7f"
+    interact4: "Para cancelar debes usar \u00A73/democracy cancel confirm"
+    interact5: "Votaste por la opci\u00f3n "
+    interact6: "Anonimo"
+    done1: "\u00A73Para la pregunta: \u00A7f"
+    done2: "Los resultados fueron: "
+    done3: "\u00A73Pregunta: \u00A7f"
+    click1: "\u00A76Haz click para seleccionar las respuestas a usar"
+    click2: "Usa \u00A73democracy createConfirm <option> \u00A7f para elegir alternativas"
+  answers:
+    11: " \u00A72[Si] "
+    12: " \u00A74[No] "
+    21: " \u00A72[Yo] "
+    22: " \u00A74[Yo no] "
+    31: " \u00A72[Me gusta] "
+    32: " \u00A74[No me gusta] "
+    41: " \u00A7e[Bien] "
+    42: " \u00A7b[Mal] "
+    51: " \u00A7e[Lo primero] "
+    52: " \u00A7b[Lo segundo] "
+  storage:
+    click0: " persona(s) vot\u00f3. Para terminar la votaci\u00f3n \u00A76[clickea aqu\u00ed]"
+
+
