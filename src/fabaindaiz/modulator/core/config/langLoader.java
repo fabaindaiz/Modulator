@@ -22,7 +22,6 @@ public class langLoader {
         lang = YamlConfiguration.loadConfiguration(configStream);
     }
 
-    // Retorna una clave de idioma
     public String get(String key) {
         return lang.getString(key, lang.getString("error.nokey"));
     }
@@ -30,4 +29,5 @@ public class langLoader {
     public String get(String parentKey, String key) {
         return lang.getString(parentKey + "." + key, lang.getString("error.nokey"));
     }
+
 }

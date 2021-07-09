@@ -1,20 +1,20 @@
-package fabaindaiz.modulator.modules.modtask;
+package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.AModule;
 
-public class modtask extends AModule {
+public class modulator extends AModule {
     private final Modulator plugin;
 
-    public modtask(Modulator modulator) {
+    public modulator(Modulator modulator) {
         this.plugin = modulator;
         setLang(plugin.getConfiguration().getMainLang());
     }
 
     @Override
     public void onEnable() {
-        setExecutor(new modtaskCommand(plugin, this));
-        setTabCompleter(new modtaskTabCompleter(plugin, this));
+        setExecutor(new modulatorCommand(plugin, this));
+        setTabCompleter(new modulatorTabCompleter(plugin, this));
     }
 
     @Override

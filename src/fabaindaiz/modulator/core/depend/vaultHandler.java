@@ -1,10 +1,12 @@
-package fabaindaiz.modulator.core.modvault;
+package fabaindaiz.modulator.core.depend;
 
 import fabaindaiz.modulator.Modulator;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class vaultHandler {
@@ -20,13 +22,13 @@ public class vaultHandler {
 
         this.plugin = modulator;
 
-        if (setupEconomy()) {
-            serverHasVault = true;
-            setupPermissions();
-            setupChat();
-        } else {
+        if (!setupEconomy()) {
             serverHasVault = false;
+            return;
         }
+        serverHasVault = true;
+        setupPermissions();
+        setupChat();
     }
 
     public static Economy getEconomy() {
@@ -39,6 +41,22 @@ public class vaultHandler {
 
     public static Chat getChat() {
         return chat;
+    }
+
+    public boolean depositPlayer(Player player, float amount) {
+        if (!serverHasVault) {
+            return false;
+        }
+        EconomyResponse r = econ.depositPlayer(player, 1.05);
+        return r.transactionSuccess();
+    }
+
+    public boolean withdrawPlayer(Player player, float amount) {
+        if (!serverHasVault) {
+            return false;
+        }
+        EconomyResponse r = econ.withdrawPlayer(player, 1.05);
+        return r.transactionSuccess();
     }
 
     private boolean setupEconomy() {
@@ -66,7 +84,7 @@ public class vaultHandler {
     }
 
     public boolean getServerHasVault() {
-        return this.serverHasVault;
+        return serverHasVault;
     }
 
 }

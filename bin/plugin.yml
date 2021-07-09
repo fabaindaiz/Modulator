@@ -1,78 +1,23 @@
-name: Modulator
 main: fabaindaiz.modulator.Modulator
+name: Modulator
+version: 0.5.2
 description: Load plugin modules in Server
-version: 0.5.1
 api-version: 1.14
-authors: [ fabaindaiz, benjujo ]
-website: uchilecraft.cl
 load: POSTWORLD
+author: fabaindaiz
+website: uchilecraft.cl
 softdepend: [ Vault ]
 loadbefore: [ Vault ]
 commands:
   modulator:
     description: Main command
     permission: modulator.command
-    usage: /<command>
-    aliases:
-      - modulator
-      - modinput
-      - modtask
-      - bettor
-      - democracy
-      - hunter
-      - itemchat
-      - lottery
-      - updater
-      - zkik
 permissions:
-  #moduleCommand permissions
-  modulator.command:
-    description: Grants access any module
-    default: true
-  modulator.main:
-    description: Grants access to base command
-    default: op
-  modulator.bettor:
-    description: Use bettor module
-    default: true
-  modulator.democracy:
-    description: Use democracy module
-    default: true
-  modulator.hunter:
-    description: Use hunter module
-    default: true
-  modulator.itemchat:
-    description: Use itemchat module
-    default: true
-  modulator.lottery:
-    description: Use lottery module
-    default: true
-  modulator.updater:
-    description: Use updater module
-    default: op
-  modulator.zkik:
-    description: Use zanakik module
-    default: op
-  # Internal permissions
-  modulator.modinput:
-    description: Introduce a input
-    default: true
-  modulator.modtask:
-    description: Execute programed task
+  modulator.adm:
     default: false
-  modulator.modvault:
-    description: Vault economy Api
-    default: false
-  # Passive permissions
-  modulator.bettorstate:
-    description: Activate better event
+  modulator.mod:
     default: op
-  modulator.anondemocracy:
-    description: Make questions anonymously
-    default: false
-  modulator.lotteryDraw:
-    description: Draw lottery numbers
+  modulator.don:
     default: op
-  modulator.kickbypass:
-    description: Player Kickeable byPass
-    default: op
+  modulator.use:
+    default: true

@@ -1,12 +1,9 @@
-# Modulator plugin spanish language file
-# Delete some key may cause errors
-
+version: "0.5.2"
 error:
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 modulator:
-  version: "0.5.1"
-  info1: "\u00A73Modulator 0.5.1 \u00A7f- Por LtFabin & Benjujo"
+  info1: "\u00A73Modulator 0.5.2 \u00A7f- Por LtFabin"
   info2: "\u00A76Revisa los comandos con \u00A73/modulator help"
   info3: "\u00A73Modulos activados: \u00A7f"
   reload1: "\u00A73Modulator \u00A7f- Plugin recargado correctamente"
@@ -26,7 +23,3 @@ modulator:
 modinput:
   error1: "No debes usar el comando modinput"
   error2: "modinput se autogenera internamente"
-modvault:
-  error1: "No debes usar el comando modvault"
-  error2: "modvault se autogenera internamente"
-  novault1: "No se puede encontrar Vault, se desactivar\u00e1 el modulo"

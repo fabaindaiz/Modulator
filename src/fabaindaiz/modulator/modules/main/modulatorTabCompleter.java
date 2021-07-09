@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.core.main;
+package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.IModule;
@@ -25,7 +25,7 @@ public class modulatorTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
-        if (plugin.commandList.containsKey(label.toLowerCase())){
+        if (plugin.commandList.containsKey(label.toLowerCase())) {
             return plugin.commandList.get(label).getTabCompleter().onTabComplete(sender, command, label, args);
         }
 

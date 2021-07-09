@@ -1,0 +1,7 @@
+version: 0.5.1
+# Modulator plugin configuration file
+
+# Test settings
+camera:
+  # Enable and disable test module
+  enable: true

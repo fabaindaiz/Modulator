@@ -1,5 +1,3 @@
-package fabaindaiz.modulator.modules.modtask;
-
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.command.Command;
@@ -8,14 +6,16 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class modtaskTabCompleter implements TabCompleter {
+public class cameraTabCompleter implements TabCompleter {
     static final ArrayList<String> emptyList = new ArrayList<>();
+    final String[] modules1 = {"help"};
     private final Modulator plugin;
     private final IModule module;
 
-    protected modtaskTabCompleter(Modulator modulator, IModule module) {
+    protected cameraTabCompleter(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
     }
@@ -23,11 +23,16 @@ public class modtaskTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
+        if (!sender.hasPermission("modulator.camera")){
+            return emptyList;
+        }
         if (sender instanceof Player) {
-            if (label.equalsIgnoreCase("modtask") && args.length <= 1) {
+            if (args.length <= 1) {
+                return Arrays.asList(modules1);
             }
 
         }
         return emptyList;
     }
+
 }

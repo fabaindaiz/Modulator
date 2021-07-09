@@ -8,12 +8,11 @@ import java.util.Arrays;
 
 public class Configuration extends AModule {
 
-    final String[] languages = {"ES", "EN"};
+    final String[] languages = {"ES"};
     private final Modulator plugin;
-
+    public String lang;
     private FileConfiguration mainConfiguration;
     private langLoader languageConfiguration;
-    public String lang;
 
     public Configuration(Modulator modulator) {
         this.plugin = modulator;
@@ -37,11 +36,11 @@ public class Configuration extends AModule {
     }
 
     public FileConfiguration getConfig() {
-        return this.mainConfiguration;
+        return mainConfiguration;
     }
 
     public langLoader getMainLang() {
-        return this.languageConfiguration;
+        return languageConfiguration;
     }
 
 }

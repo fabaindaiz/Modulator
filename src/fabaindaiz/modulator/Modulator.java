@@ -1,30 +1,28 @@
 package fabaindaiz.modulator;
 
 import fabaindaiz.modulator.core.config.Configuration;
+import fabaindaiz.modulator.core.depend.vaultHandler;
 import fabaindaiz.modulator.core.loader.moduleLoader;
-import fabaindaiz.modulator.core.main.modulator;
-import fabaindaiz.modulator.core.modvault.vaultHandler;
 import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.modules.main.modulator;
 import fabaindaiz.modulator.modules.modinput.modinput;
-import fabaindaiz.modulator.modules.modtask.modtask;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Modulator extends JavaPlugin {
 
-    List<String> aliases = new ArrayList<>(Arrays.asList("modulator","md","modinput","modtask"));
     public final LinkedHashMap<String, IModule> commandList = new LinkedHashMap<>();
     private final LinkedHashMap<String, IModule> modules = new LinkedHashMap<>();
-
+    List<String> aliases = new ArrayList<>(Arrays.asList("modulator", "md", "modinput", "modtask"));
     private Configuration configModule;
-    private vaultHandler vaultHandler;
-    private moduleLoader moduleLoader;
-    private static CommandMap cMap;
+    private fabaindaiz.modulator.core.depend.vaultHandler vaultHandler;
+    private fabaindaiz.modulator.core.loader.moduleLoader moduleLoader;
 
     @Override
     public void onLoad() {
@@ -40,17 +38,14 @@ public class Modulator extends JavaPlugin {
     public void onEnable() {
         IModule modulator = new modulator(this);
         IModule modinput = new modinput(this);
-        IModule modtask = new modtask(this);
 
         modules.put("main", modulator);
         modules.put("modinput", modinput);
-        modules.put("modtask", modtask);
 
         commandList.put("modinput", modinput);
-        commandList.put("modtask", modtask);
 
         modules.forEach((name, module) -> module.onEnable());
-        getCommand("modulator").setAliases(aliases);
+        registerCommand(aliases, modulator);
 
         Bukkit.getLogger().info(configModule.getMainLang().get("modulator.info1"));
         Bukkit.getLogger().info(configModule.getMainLang().get("modulator.load1"));
@@ -74,9 +69,9 @@ public class Modulator extends JavaPlugin {
                 this.modules.merge(key, value, (v1, v2) -> v1.equals(v2) ? v1 : v2)
         );
         loadModules.forEach((key, value) -> {
-                this.commandList.merge(value.getName(), value, (v1, v2) -> v1.equals(v2) ? v1 : v2);
-                aliases.add(value.getName());
-            }
+                    this.commandList.merge(value.getName(), value, (v1, v2) -> v1.equals(v2) ? v1 : v2);
+                    aliases.add(value.getName());
+                }
         );
     }
 
@@ -92,18 +87,23 @@ public class Modulator extends JavaPlugin {
         return this.modules.keySet();
     }
 
-    private void setupCommandMap() {
+    private void registerCommand(List<String> aliases, IModule module) {
+        Class<?> cl = PluginCommand.class;
+        Constructor<?> cons = null;
+        PluginCommand plc = null;
         try {
-            Field field = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            field.setAccessible(true);
-            cMap = (CommandMap) field.get(Bukkit.getServer());
-        } catch (Exception e) {
+            cons = cl.getDeclaredConstructor(String.class, Plugin.class);
+            cons.setAccessible(true);
+            plc = (PluginCommand) cons.newInstance("modulator", this);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-    }
-
-    public void registerCommand(Command command) {
-        cMap.register(command.getName(), command);
+        plc.setAliases(aliases);
+        Bukkit.getCommandMap().register("modulator", plc);
+        plc.register(Bukkit.getCommandMap());
+        plc.setExecutor(module.getExecutor());
+        plc.setTabCompleter(module.getTabCompleter());
+        plc.setPermissionMessage(module.getLang().get("error.noper"));
     }
 
 }

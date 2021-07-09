@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.LinkedHashMap;
 
 public class moduleLoader extends AModule {
+
     private final Modulator plugin;
 
     public moduleLoader(Modulator modulator) {
@@ -45,4 +46,5 @@ public class moduleLoader extends AModule {
         loaded.forEach((name, module) -> module.setJarName(name));
         return loaded;
     }
+
 }

@@ -1,7 +1,7 @@
-version: 0.5.1
+version: 0.5.2
 # Modulator plugin configuration file
 
-# Languages: ES, EN
+# Languages: ES
 language: ES
 
 # Modulator settings

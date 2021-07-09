@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.core.main;
+package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.config.langLoader;
@@ -23,7 +23,7 @@ public class modulatorCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (plugin.commandList.containsKey(label.toLowerCase())){
+        if (plugin.commandList.containsKey(label.toLowerCase())) {
             return plugin.commandList.get(label).getExecutor().onCommand(sender, command, label, args);
         }
 
