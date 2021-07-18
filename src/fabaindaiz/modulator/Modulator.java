@@ -1,6 +1,8 @@
 package fabaindaiz.modulator;
 
 import fabaindaiz.modulator.core.config.Configuration;
+import fabaindaiz.modulator.core.depend.libHandler;
+import fabaindaiz.modulator.core.depend.sqlHandler;
 import fabaindaiz.modulator.core.depend.vaultHandler;
 import fabaindaiz.modulator.core.loader.moduleLoader;
 import fabaindaiz.modulator.modules.IModule;
@@ -19,29 +21,41 @@ public class Modulator extends JavaPlugin {
 
     public final LinkedHashMap<String, IModule> commandList = new LinkedHashMap<>();
     private final LinkedHashMap<String, IModule> modules = new LinkedHashMap<>();
-    List<String> aliases = new ArrayList<>(Arrays.asList("modulator", "md", "modinput", "modtask"));
+    private LinkedList<IModule> sysModules = new LinkedList<IModule>();
+    List<String> aliases = new ArrayList<>(Arrays.asList("modulator", "modinput"));
+
+    private IModule modulator;
+    private IModule modinput;
+
     private Configuration configModule;
-    private fabaindaiz.modulator.core.depend.vaultHandler vaultHandler;
-    private fabaindaiz.modulator.core.loader.moduleLoader moduleLoader;
+    private libHandler libHandler;
+    private sqlHandler sqlHandler;
+    private vaultHandler vaultHandler;
+    private moduleLoader moduleLoader;
 
     @Override
     public void onLoad() {
+        libHandler = new libHandler(this);
+        libHandler.onEnable();
+
         // Core modules
         configModule = new Configuration(this);
+        sqlHandler = new sqlHandler(this);
         vaultHandler = new vaultHandler(this);
         moduleLoader = new moduleLoader(this);
-        configModule.onEnable();
-        moduleLoader.onEnable();
+
+        sysModules.addAll(Arrays.asList(configModule, sqlHandler, vaultHandler, moduleLoader));
     }
 
     @Override
     public void onEnable() {
-        IModule modulator = new modulator(this);
-        IModule modinput = new modinput(this);
+        sysModules.forEach((module) -> module.onEnable());
+
+        modulator = new modulator(this);
+        modinput = new modinput(this);
 
         modules.put("main", modulator);
         modules.put("modinput", modinput);
-
         commandList.put("modinput", modinput);
 
         modules.forEach((name, module) -> module.onEnable());
@@ -53,9 +67,11 @@ public class Modulator extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info(configModule.getMainLang().get("modulator.load2"));
+        sysModules.forEach((module) -> module.onDisable());
         modules.forEach((name, module) -> module.onDisable());
         modules.clear();
+
+        Bukkit.getLogger().info(configModule.getMainLang().get("modulator.load2"));
     }
 
     public void reload() {
@@ -77,6 +93,14 @@ public class Modulator extends JavaPlugin {
 
     public Configuration getConfiguration() {
         return this.configModule;
+    }
+
+    public libHandler getLib() {
+        return this.libHandler;
+    }
+
+    public sqlHandler getSql() {
+        return this.sqlHandler;
     }
 
     public vaultHandler getVault() {

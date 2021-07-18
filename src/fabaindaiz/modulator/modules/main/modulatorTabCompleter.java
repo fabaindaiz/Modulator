@@ -1,7 +1,7 @@
 package fabaindaiz.modulator.modules.main;
 
-import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.Modulator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -30,7 +30,7 @@ public class modulatorTabCompleter implements TabCompleter {
         }
 
         if (sender instanceof Player) {
-            if (label.equalsIgnoreCase("modulator") && args.length <= 1) {
+            if (label.equalsIgnoreCase("fabaindaiz/modulator") && args.length <= 1) {
                 return Arrays.asList(modules1);
             }
 

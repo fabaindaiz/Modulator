@@ -4,6 +4,7 @@ import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.AModule;
 
 public class modulator extends AModule {
+
     private final Modulator plugin;
 
     public modulator(Modulator modulator) {

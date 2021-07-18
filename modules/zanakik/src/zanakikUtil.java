@@ -1,4 +1,3 @@
-import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.config.langLoader;
 import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.Bukkit;

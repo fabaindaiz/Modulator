@@ -1,5 +1,6 @@
 package fabaindaiz.modulator.core.depend;
 
+import fabaindaiz.modulator.modules.AModule;
 import fabaindaiz.modulator.Modulator;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -9,19 +10,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class vaultHandler {
+public class vaultHandler extends AModule {
 
     private static Economy econ = null;
     private static Permission perms = null;
     private static Chat chat = null;
 
-    private final boolean serverHasVault;
+    private boolean serverHasVault;
     private final Modulator plugin;
 
     public vaultHandler(Modulator modulator) {
-
         this.plugin = modulator;
+    }
 
+    @Override
+    public void onEnable() {
         if (!setupEconomy()) {
             serverHasVault = false;
             return;
@@ -29,6 +32,11 @@ public class vaultHandler {
         serverHasVault = true;
         setupPermissions();
         setupChat();
+    }
+
+    @Override
+    public void onDisable() {
+
     }
 
     public static Economy getEconomy() {

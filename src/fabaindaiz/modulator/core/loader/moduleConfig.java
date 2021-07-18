@@ -1,8 +1,8 @@
 package fabaindaiz.modulator.core.loader;
 
+import fabaindaiz.modulator.modules.IModule;
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;

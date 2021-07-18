@@ -1,7 +1,7 @@
 package fabaindaiz.modulator.core.config;
 
-import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.AModule;
+import fabaindaiz.modulator.Modulator;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.Arrays;

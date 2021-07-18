@@ -1,8 +1,8 @@
 package fabaindaiz.modulator.core.loader;
 
-import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.modules.AModule;
 import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.Modulator;
 
 import java.io.File;
 import java.util.LinkedHashMap;
