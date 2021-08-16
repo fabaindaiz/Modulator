@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class updaterCommand implements CommandExecutor {
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "updater.command";
     private boolean enabled;
     private Map<String, Object> update;
@@ -30,8 +30,8 @@ public class updaterCommand implements CommandExecutor {
     protected updaterCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
-        this.enabled = module.getConfig().getBoolean("updater.enable");
+        this.lang = module.getLanguageLoader();
+        this.enabled = module.getConfiguration().getBoolean("updater.enable");
         try {
             new BukkitRunnable() {
                 @Override

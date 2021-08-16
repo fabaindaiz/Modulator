@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
@@ -14,14 +14,14 @@ public class lotteryListener implements Listener {
 
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final lotteryStorage storage;
 
     protected lotteryListener(Modulator modulator, IModule module, lotteryStorage storage) {
 
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
+        this.lang = module.getLanguageLoader();
         this.storage = storage;
     }
 

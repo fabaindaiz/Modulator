@@ -1,8 +1,8 @@
-package fabaindaiz.modulator.core.depend;
+package fabaindaiz.modulator.core.dependencies;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.modules.AModule;
-import fabaindaiz.modulator.util.jarUtils;
+import fabaindaiz.modulator.core.modules.AModule;
+import fabaindaiz.modulator.core.util.jarUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class libHandler extends AModule {
             if (!lib.exists()) {
                 return false;
             }
-            addClassPath(lib.toURI().toURL());
+            //addClassPath(lib.toURI().toURL());
 
         } catch (final Exception e) {
             e.printStackTrace();
@@ -52,7 +52,18 @@ public class libHandler extends AModule {
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
 
+    private void addChildClassPath(URL url, String name) throws IOException {
+        try {
+            URLClassLoader child = new URLClassLoader(new URL[] { url }, this.getClass().getClassLoader());
+            Class classToLoad = Class.forName("lib." + name, true, child);
+            Method method = classToLoad.getDeclaredMethod("myMethod");
+            Object instance = classToLoad.newInstance();
+            Object result = method.invoke(instance);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | ClassNotFoundException | InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 
 }

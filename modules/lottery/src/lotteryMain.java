@@ -1,10 +1,10 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.loader.moduleConfig;
-import fabaindaiz.modulator.modules.AModule;
+import fabaindaiz.modulator.core.configuration.ModuleConfiguration;
+import fabaindaiz.modulator.core.modules.AModule;
 
 public class lotteryMain extends AModule {
     private final Modulator plugin;
-    private moduleConfig moduleConfig;
+    private ModuleConfiguration moduleConfiguration;
     private lotteryStorage storage;
 
     public lotteryMain(Modulator modulator) {
@@ -14,7 +14,7 @@ public class lotteryMain extends AModule {
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
+        moduleConfiguration = new ModuleConfiguration(plugin, this, getName(), getJarName());
 
         storage = new lotteryStorage(plugin, this);
         setExecutor(new lotteryCommand(plugin, storage, this));

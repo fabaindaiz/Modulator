@@ -1,5 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static fabaindaiz.modulator.util.playersUtil.getPlayerNameList;
+import static fabaindaiz.modulator.core.util.playersUtil.getPlayerNameList;
 
 public class zanakikTabCompleter implements TabCompleter {
     static final ArrayList<String> emptyList = new ArrayList<>();

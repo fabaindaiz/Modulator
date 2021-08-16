@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.util;
+package fabaindaiz.modulator.core.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

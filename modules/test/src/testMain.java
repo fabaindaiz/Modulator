@@ -1,5 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.loader.moduleConfig;
+import fabaindaiz.modulator.core.loaderOld.moduleConfig;
 import fabaindaiz.modulator.modules.AModule;
 
 public class testMain extends AModule {

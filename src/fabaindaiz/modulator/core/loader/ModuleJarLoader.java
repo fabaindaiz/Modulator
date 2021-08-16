@@ -16,7 +16,7 @@ import java.util.jar.JarFile;
 /**
  * Represents a jar loader
  */
-public class jarLoader {
+public class ModuleJarLoader {
 
     /**
      * Loads the specified file with instance of the super class

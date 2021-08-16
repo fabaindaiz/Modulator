@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static fabaindaiz.modulator.util.playersUtil.isOnlinePlayer;
+import static fabaindaiz.modulator.core.util.playersUtil.isOnlinePlayer;
 
 public class democracyCommand implements CommandExecutor {
     private String[][] answers;
@@ -23,7 +23,7 @@ public class democracyCommand implements CommandExecutor {
     private final boolean noname;
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "democracy.command";
     private final String ansKey = "democracy.answers";
     private final HashMap<String, democracyStorage> consider = new HashMap<>();
@@ -32,9 +32,9 @@ public class democracyCommand implements CommandExecutor {
 
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
-        this.enabled = module.getConfig().getBoolean("democracy.enable");
-        this.noname = module.getConfig().getBoolean("democracy.noname");
+        this.lang = module.getLanguageLoader();
+        this.enabled = module.getConfiguration().getBoolean("democracy.enable");
+        this.noname = module.getConfiguration().getBoolean("democracy.noname");
 
         List<String[]> tempList = new ArrayList<>();
         for (String[] s : new String[][]{{"11", "12"}, {"21", "22"}, {"31", "32"}, {"41", "42"}, {"51", "52"}}) {

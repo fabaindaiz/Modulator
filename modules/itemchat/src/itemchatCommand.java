@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ public class itemchatCommand implements CommandExecutor {
     private final int collect;
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "itemchat.command";
     private boolean usevault;
     private boolean enableOwner = true;
@@ -27,13 +27,13 @@ public class itemchatCommand implements CommandExecutor {
 
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
-        this.norestriction = module.getConfig().getBoolean("itemchat.norestriction");
-        this.usevault = module.getConfig().getBoolean("itemchat.usevault");
-        this.enabled = module.getConfig().getBoolean("itemchat.enable");
-        this.collect = module.getConfig().getInt("itemchat.priceowner");
+        this.lang = module.getLanguageLoader();
+        this.norestriction = module.getConfiguration().getBoolean("itemchat.norestriction");
+        this.usevault = module.getConfiguration().getBoolean("itemchat.usevault");
+        this.enabled = module.getConfiguration().getBoolean("itemchat.enable");
+        this.collect = module.getConfiguration().getInt("itemchat.priceowner");
 
-        if (!plugin.getVault().getServerHasVault()) {
+        if (!plugin.getDependencies().getVaultHandler().getServerHasVault()) {
             if (this.usevault) {
                 Bukkit.getLogger().warning(lang.get(key, "novault1"));
                 enableOwner = false;
@@ -108,7 +108,7 @@ public class itemchatCommand implements CommandExecutor {
         itemMeta.setLore(loresList);
 
         if (this.usevault) {
-            EconomyResponse response = plugin.getVault().getEconomy().withdrawPlayer(Bukkit.getPlayer(sender.getName()), this.collect);
+            EconomyResponse response = plugin.getDependencies().getVaultHandler().getEconomy().withdrawPlayer(Bukkit.getPlayer(sender.getName()), this.collect);
             if (!response.transactionSuccess()) {
                 sender.sendMessage(lang.get(key, "error5"));
                 return;

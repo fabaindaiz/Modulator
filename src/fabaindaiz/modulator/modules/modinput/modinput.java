@@ -1,14 +1,14 @@
 package fabaindaiz.modulator.modules.modinput;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.modules.AModule;
+import fabaindaiz.modulator.core.modules.AModule;
 
 public class modinput extends AModule {
     private final Modulator plugin;
 
     public modinput(Modulator modulator) {
         this.plugin = modulator;
-        setLang(plugin.getConfiguration().getMainLang());
+        setLanguageLoader(plugin.getConfiguration().getLanguageLoader());
     }
 
     @Override

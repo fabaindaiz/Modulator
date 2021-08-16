@@ -1,5 +1,5 @@
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class zanakikUtil {
 
     static protected Player[] getKickablePlayers(IModule module) {
         ArrayList<Player> playerList = new ArrayList<>();
-        boolean ignorebypass = module.getConfig().getBoolean("zanakik.ignorebypass");
+        boolean ignorebypass = module.getConfiguration().getBoolean("zanakik.ignorebypass");
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (ignorebypass || !player.hasPermission("modulator.kickbypass")) {
@@ -29,7 +29,7 @@ public class zanakikUtil {
     }
 
     static protected ItemStack getZanakik(IModule module, int num) {
-        langLoader lang = module.getLang();
+        LanguageLoader lang = module.getLanguageLoader();
 
         ItemStack carrot = new ItemStack(Material.CARROT, num);
         ItemMeta meta = carrot.getItemMeta();

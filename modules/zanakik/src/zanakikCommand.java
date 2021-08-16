@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Random;
 
-import static fabaindaiz.modulator.util.playersUtil.isOnlinePlayer;
+import static fabaindaiz.modulator.core.util.playersUtil.isOnlinePlayer;
 
 public class zanakikCommand implements CommandExecutor {
     final Random rnd = new Random();
@@ -19,17 +19,17 @@ public class zanakikCommand implements CommandExecutor {
     private final boolean ignorebypass;
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "zanakik.command";
 
     protected zanakikCommand(Modulator modulator, IModule module) {
 
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
-        this.enabled = module.getConfig().getBoolean("zanakik.enable");
-        this.noplayerzkik = module.getConfig().getBoolean("zanakik.noplayerzkik");
-        this.ignorebypass = module.getConfig().getBoolean("zanakik.ignorebypass");
+        this.lang = module.getLanguageLoader();
+        this.enabled = module.getConfiguration().getBoolean("zanakik.enable");
+        this.noplayerzkik = module.getConfiguration().getBoolean("zanakik.noplayerzkik");
+        this.ignorebypass = module.getConfiguration().getBoolean("zanakik.ignorebypass");
     }
 
     @Override

@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,13 +8,13 @@ import org.bukkit.command.CommandSender;
 public class bettorCommand implements CommandExecutor {
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "bettor.command";
 
     protected bettorCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
+        this.lang = module.getLanguageLoader();
     }
 
     @Override

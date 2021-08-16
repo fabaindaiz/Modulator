@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -14,7 +14,7 @@ import java.util.List;
 public class lotteryCommand implements CommandExecutor {
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "lottery.command";
     private final boolean usevault;
     private final int price;
@@ -26,15 +26,15 @@ public class lotteryCommand implements CommandExecutor {
 
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
-        this.enabled = module.getConfig().getBoolean("lottery.enable");
-        this.usevault = module.getConfig().getBoolean("lottery.usevault");
-        this.price = module.getConfig().getInt("lottery.pricelottery");
-        this.collect = module.getConfig().getInt("lottery.collect");
+        this.lang = module.getLanguageLoader();
+        this.enabled = module.getConfiguration().getBoolean("lottery.enable");
+        this.usevault = module.getConfiguration().getBoolean("lottery.usevault");
+        this.price = module.getConfiguration().getInt("lottery.pricelottery");
+        this.collect = module.getConfiguration().getInt("lottery.collect");
         this.storage = storage;
 
         storage.setPrice(this.price);
-        if (!plugin.getVault().getServerHasVault()) {
+        if (!plugin.getDependencies().getVaultHandler().getServerHasVault()) {
             Bukkit.getLogger().warning(lang.get(key, "novault1"));
             if (this.usevault) {
                 this.enabled = false;
@@ -116,7 +116,7 @@ public class lotteryCommand implements CommandExecutor {
         }
 
         if (isWinner) {
-            EconomyResponse response = plugin.getVault().getEconomy().depositPlayer(Bukkit.getPlayer(sender.getName()), this.collect);
+            EconomyResponse response = plugin.getDependencies().getVaultHandler().getEconomy().depositPlayer(Bukkit.getPlayer(sender.getName()), this.collect);
 
             if (!response.transactionSuccess()) {
                 sender.sendMessage(lang.get(key, "error5"));

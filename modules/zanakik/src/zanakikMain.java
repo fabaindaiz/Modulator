@@ -1,10 +1,10 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.loader.moduleConfig;
-import fabaindaiz.modulator.modules.AModule;
+import fabaindaiz.modulator.core.configuration.ModuleConfiguration;
+import fabaindaiz.modulator.core.modules.AModule;
 
 public class zanakikMain extends AModule {
     private final Modulator plugin;
-    private moduleConfig moduleConfig;
+    private ModuleConfiguration moduleConfiguration;
 
     public zanakikMain(Modulator modulator) {
         setName("zkik");
@@ -13,7 +13,7 @@ public class zanakikMain extends AModule {
 
     @Override
     public void onEnable() {
-        moduleConfig = new moduleConfig(plugin, this, getName(), jarName);
+        moduleConfiguration = new ModuleConfiguration(plugin, this, getName(), getJarName());
 
         setExecutor(new zanakikCommand(plugin, this));
         setTabCompleter(new zanakikTabCompleter(plugin, this));

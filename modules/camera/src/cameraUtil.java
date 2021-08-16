@@ -107,7 +107,7 @@ public class cameraUtil {
         blocksMap.put(Material.JUNGLE_LEAVES, new Color(60, 141, 24));
         blocksMap.put(Material.OAK_LEAVES, new Color(49, 111, 21));
         blocksMap.put(Material.SPRUCE_LEAVES, new Color(55, 91, 56));
-        blocksMap.put(Material.GRASS_PATH, new Color(170, 148, 89));
+        blocksMap.put(Material.LEGACY_GRASS_PATH, new Color(170, 148, 89));
         blocksMap.put(Material.COARSE_DIRT, new Color(104, 75, 51));
         blocksMap.put(Material.ANDESITE, new Color(136, 136, 138));
         blocksMap.put(Material.DIORITE, new Color(181, 181, 181));

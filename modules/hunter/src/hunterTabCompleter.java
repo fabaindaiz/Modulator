@@ -1,5 +1,5 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

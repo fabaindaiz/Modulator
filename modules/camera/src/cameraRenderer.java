@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
@@ -23,7 +23,7 @@ public class cameraRenderer {
 
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private boolean isLoaded;
 
     private File resourcePackFile;
@@ -34,7 +34,7 @@ public class cameraRenderer {
 
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
+        this.lang = module.getLanguageLoader();
 
         initialize();
     }

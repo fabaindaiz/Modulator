@@ -1,6 +1,6 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,7 @@ public class lotteryStorage implements Listener {
     final HashMap<String, int[]> numbers = new HashMap<>();
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
     private final String key = "lottery.storage";
     private final boolean usevault;
     private final boolean novalid;
@@ -26,11 +26,11 @@ public class lotteryStorage implements Listener {
     String winnerCode = lotteryUtil.arrayToCode(winner);
 
     protected lotteryStorage(Modulator plugin, IModule module) {
-        this.usevault = module.getConfig().getBoolean("lottery.usevault");
-        this.novalid = module.getConfig().getBoolean("lottery.novalid");
         this.plugin = plugin;
         this.module = module;
-        this.lang = module.getLang();
+        this.lang = module.getLanguageLoader();
+        this.usevault = module.getConfiguration().getBoolean("lottery.usevault");
+        this.novalid = module.getConfiguration().getBoolean("lottery.novalid");
     }
 
     protected void drawWinner() {
@@ -117,7 +117,7 @@ public class lotteryStorage implements Listener {
             lore.set(1, lore.get(1) + lang.get(key, "error3"));
         }
         if (this.usevault) {
-            EconomyResponse response = plugin.getVault().getEconomy().withdrawPlayer(player, price);
+            EconomyResponse response = plugin.getDependencies().getVaultHandler().getEconomy().withdrawPlayer(player, price);
             if (!response.transactionSuccess()) {
                 player.sendMessage(lang.get(key, "error4"));
                 return;

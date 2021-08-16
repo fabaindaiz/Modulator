@@ -1,8 +1,8 @@
 package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,20 +12,16 @@ import java.util.Set;
 public class modulatorCommand implements CommandExecutor {
     private final Modulator plugin;
     private final IModule module;
-    private final langLoader lang;
+    private final LanguageLoader lang;
 
     protected modulatorCommand(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
-        this.lang = module.getLang();
+        this.lang = module.getLanguageLoader();
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (plugin.commandList.containsKey(label.toLowerCase())) {
-            return plugin.commandList.get(label).getExecutor().onCommand(sender, command, label, args);
-        }
 
         if (!sender.hasPermission("modulator.main")) {
             sender.sendMessage(lang.get("error.noper"));
@@ -69,7 +65,7 @@ public class modulatorCommand implements CommandExecutor {
     }
 
     private void modules(CommandSender sender) {
-        Set<String> moduleNames = plugin.getModuleNames();
+        Set<String> moduleNames = plugin.getCommand().getModuleNames();
 
         StringBuilder string = new StringBuilder();
         string.append(lang.get("modulator.info3"));

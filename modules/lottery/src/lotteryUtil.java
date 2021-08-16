@@ -1,4 +1,4 @@
-import fabaindaiz.modulator.core.config.langLoader;
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -9,7 +9,7 @@ public class lotteryUtil {
 
     private static String key = "lottery.util";
 
-    static protected ItemStack getLotteryTicker(langLoader lang, String senderName, ArrayList<String> loresList) {
+    static protected ItemStack getLotteryTicker(LanguageLoader lang, String senderName, ArrayList<String> loresList) {
         ItemStack lottery = new ItemStack(Material.PAPER);
         ItemMeta meta = lottery.getItemMeta();
         meta.setDisplayName(lang.get(key, "lore2"));
@@ -39,7 +39,7 @@ public class lotteryUtil {
         return wool;
     }
 
-    static protected ItemStack getWhiteGlass(langLoader lang, int num) {
+    static protected ItemStack getWhiteGlass(LanguageLoader lang, int num) {
 
         ItemStack glass = new ItemStack(Material.WHITE_STAINED_GLASS);
         ItemMeta meta = glass.getItemMeta();

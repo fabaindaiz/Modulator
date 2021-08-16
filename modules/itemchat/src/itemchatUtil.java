@@ -1,5 +1,6 @@
-import fabaindaiz.modulator.core.config.langLoader;
-import fabaindaiz.modulator.modules.IModule;
+
+import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,7 +14,7 @@ public class itemchatUtil {
     private static String key = "itemchat.util";
 
     static void showItemSpecs(IModule module, CommandSender sender, ItemStack item, String interactText, boolean norestriction) {
-        langLoader lang = module.getLang();
+        LanguageLoader lang = module.getLanguageLoader();
         ItemMeta itemMeta = item.getItemMeta();
 
         StringBuilder mainText = new StringBuilder();

@@ -1,7 +1,7 @@
 package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.modules.AModule;
+import fabaindaiz.modulator.core.modules.AModule;
 
 public class modulator extends AModule {
 
@@ -9,7 +9,7 @@ public class modulator extends AModule {
 
     public modulator(Modulator modulator) {
         this.plugin = modulator;
-        setLang(plugin.getConfiguration().getMainLang());
+        setLanguageLoader(plugin.getConfiguration().getLanguageLoader());
     }
 
     @Override

@@ -1,12 +1,6 @@
-package fabaindaiz.modulator.util;
+package fabaindaiz.modulator.core.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Enumeration;
