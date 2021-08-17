@@ -1,4 +1,3 @@
-
 import fabaindaiz.modulator.core.configuration.LanguageLoader;
 import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;

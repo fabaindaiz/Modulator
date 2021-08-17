@@ -33,10 +33,7 @@ public class ModuleJarLoader {
     public <T> T load(File file, Class<T> superClass, Modulator modulator) {
         try {
             Class<? extends T> raw = getRawClass(file, superClass);
-            T instance = raw.getDeclaredConstructor(Modulator.class).newInstance(modulator);
-            if (instance != null) {
-                return instance;
-            }
+            return raw.getDeclaredConstructor(Modulator.class).newInstance(modulator);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

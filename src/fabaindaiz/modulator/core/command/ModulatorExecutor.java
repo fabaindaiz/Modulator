@@ -4,6 +4,7 @@ import fabaindaiz.modulator.Modulator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 public class ModulatorExecutor implements CommandExecutor {
 
@@ -17,7 +18,7 @@ public class ModulatorExecutor implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, String label, String[] args) {
 
         if (modCommand.moduleList.containsKey(label.toLowerCase())) {
             return modCommand.moduleList.get(label).getExecutor().onCommand(sender, command, label, args);

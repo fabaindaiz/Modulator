@@ -7,17 +7,17 @@ import fabaindaiz.modulator.core.dependencies.vaultHandler;
 
 public class ModulatorDependencies {
 
-    private final libHandler libHandler;
+    private /*final*/ libHandler libHandler;
     private final sqlHandler sqlHandler;
     private final vaultHandler vaultHandler;
 
-    private Modulator plugin;
+    private final Modulator plugin;
 
     public ModulatorDependencies(Modulator plugin) {
 
         this.plugin = plugin;
 
-        libHandler = new libHandler(plugin);
+        //libHandler = new libHandler(plugin);
         sqlHandler = new sqlHandler(plugin);
         vaultHandler = new vaultHandler(plugin);
     }

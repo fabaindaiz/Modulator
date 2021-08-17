@@ -24,7 +24,7 @@ public class cameraCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission("modulator.camera")){
+        if (!sender.hasPermission("modulator.camera")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }

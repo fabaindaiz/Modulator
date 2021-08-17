@@ -9,6 +9,16 @@ import java.util.jar.JarFile;
 
 public class jarUtils {
 
+    private static boolean RUNNING_FROM_JAR = false;
+
+    static {
+        final URL resource = jarUtils.class.getClassLoader()
+                .getResource("plugin.yml");
+        if (resource != null) {
+            RUNNING_FROM_JAR = true;
+        }
+    }
+
     public static boolean extractFromJar(final String fileName, final String dest) throws IOException {
         if (getRunningJar() == null) {
             return false;
@@ -41,7 +51,7 @@ public class jarUtils {
         return false;
     }
 
-    private final static void copyInputStream(final InputStream in, final OutputStream out) throws IOException {
+    private static void copyInputStream(final InputStream in, final OutputStream out) throws IOException {
         try {
             final byte[] buff = new byte[4096];
             int n;
@@ -67,16 +77,6 @@ public class jarUtils {
                 .getCodeSource().getLocation().getPath()).getAbsolutePath();
         path = URLDecoder.decode(path, "UTF-8");
         return new JarFile(path);
-    }
-
-    private static boolean RUNNING_FROM_JAR = false;
-
-    static {
-        final URL resource = jarUtils.class.getClassLoader()
-                .getResource("plugin.yml");
-        if (resource != null) {
-            RUNNING_FROM_JAR = true;
-        }
     }
 
 }

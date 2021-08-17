@@ -23,9 +23,8 @@ public class ModulatorCommand {
     private final ModulatorLoader modulatorLoader;
     private final ModulatorExecutor modulatorExecutor;
     private final ModulatorTabCompleter modulatorTabCompleter;
-    private PluginCommand pluginCommand;
-
     private final Modulator plugin;
+    private PluginCommand pluginCommand;
 
     public ModulatorCommand(Modulator plugin) {
 
@@ -35,9 +34,9 @@ public class ModulatorCommand {
         modulatorTabCompleter = new ModulatorTabCompleter(plugin, this);
 
         try {
-            Constructor constructor = (PluginCommand.class).getDeclaredConstructor(String.class, Plugin.class);
+            Constructor<PluginCommand> constructor = (PluginCommand.class).getDeclaredConstructor(String.class, Plugin.class);
             constructor.setAccessible(true);
-            pluginCommand = (PluginCommand) constructor.newInstance("modulator", this);
+            pluginCommand = constructor.newInstance("modulator", plugin);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -65,7 +64,7 @@ public class ModulatorCommand {
     }
 
     public void registerPlugin() {
-        pluginCommand.setAliases(new ArrayList<String>(moduleList.keySet()));
+        pluginCommand.setAliases(new ArrayList<>(moduleList.keySet()));
         Bukkit.getCommandMap().register("modulator", pluginCommand);
         pluginCommand.register(Bukkit.getCommandMap());
         pluginCommand.setExecutor(modulatorExecutor);

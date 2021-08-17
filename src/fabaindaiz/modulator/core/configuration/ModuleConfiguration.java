@@ -12,11 +12,10 @@ import java.util.jar.JarFile;
 
 public class ModuleConfiguration {
 
-    private String name;
-    private String jarName;
-
     private final Modulator plugin;
     private final IModule module;
+    private final String name;
+    private final String jarName;
 
     public ModuleConfiguration(Modulator plugin, IModule module, String name, String jarName) {
         this.name = name;

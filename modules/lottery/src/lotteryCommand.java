@@ -19,8 +19,8 @@ public class lotteryCommand implements CommandExecutor {
     private final boolean usevault;
     private final int price;
     private final int collect;
-    private boolean enabled;
     private final lotteryStorage storage;
+    private boolean enabled;
 
     protected lotteryCommand(Modulator modulator, lotteryStorage storage, IModule module) {
 
@@ -48,7 +48,7 @@ public class lotteryCommand implements CommandExecutor {
             sender.sendMessage(lang.get(key, "disable1"));
             return true;
         }
-        if (!sender.hasPermission("modulator.lottery")){
+        if (!sender.hasPermission("modulator.lottery")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }

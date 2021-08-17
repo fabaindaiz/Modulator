@@ -1,0 +1,5 @@
+main: fabaindaiz.modulator.ModulatorBungee
+name: Modulator
+version: 0.5.2
+description: Load plugin modules in Server
+author: fabaindaiz

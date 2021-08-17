@@ -14,9 +14,8 @@ public class vaultHandler {
     private static Economy econ = null;
     private static Permission perms = null;
     private static Chat chat = null;
-
-    private boolean serverHasVault;
     private final Modulator plugin;
+    private final boolean serverHasVault;
 
     public vaultHandler(Modulator modulator) {
 
@@ -47,7 +46,7 @@ public class vaultHandler {
         if (!serverHasVault) {
             return false;
         }
-        EconomyResponse r = econ.depositPlayer(player, 1.05);
+        EconomyResponse r = econ.depositPlayer(player, amount);
         return r.transactionSuccess();
     }
 
@@ -55,7 +54,7 @@ public class vaultHandler {
         if (!serverHasVault) {
             return false;
         }
-        EconomyResponse r = econ.withdrawPlayer(player, 1.05);
+        EconomyResponse r = econ.withdrawPlayer(player, amount);
         return r.transactionSuccess();
     }
 
@@ -67,20 +66,20 @@ public class vaultHandler {
         if (rsp == null) {
             return false;
         }
-        this.econ = rsp.getProvider();
-        return econ != null;
+        econ = rsp.getProvider();
+        return true;
     }
 
     private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
-        this.perms = rsp.getProvider();
-        return perms != null;
+        perms = rsp.getProvider();
+        return true;
     }
 
     private boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
-        this.chat = rsp.getProvider();
-        return chat != null;
+        chat = rsp.getProvider();
+        return true;
     }
 
     public boolean getServerHasVault() {

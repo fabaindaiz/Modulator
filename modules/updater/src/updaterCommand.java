@@ -51,7 +51,7 @@ public class updaterCommand implements CommandExecutor {
             sender.sendMessage(lang.get(key, "disable1"));
             return true;
         }
-        if (!sender.hasPermission("modulator.updater")){
+        if (!sender.hasPermission("modulator.updater")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }
@@ -116,7 +116,7 @@ public class updaterCommand implements CommandExecutor {
                     if (sender instanceof Player) {
                         BaseComponent message1 = new TextComponent(buffer.toString());
                         message1.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/" + code));
-                        sender.spigot().sendMessage(message1);
+                        sender.sendMessage(message1);
                     } else {
                         sender.sendMessage(buffer.toString());
                     }

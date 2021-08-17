@@ -47,7 +47,7 @@ public class itemchatCommand implements CommandExecutor {
             sender.sendMessage(lang.get(key, "disable1"));
             return true;
         }
-        if (!sender.hasPermission("modulator.itemchat")){
+        if (!sender.hasPermission("modulator.itemchat")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }

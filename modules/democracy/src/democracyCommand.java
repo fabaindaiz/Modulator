@@ -18,7 +18,6 @@ import java.util.List;
 import static fabaindaiz.modulator.core.util.playersUtil.isOnlinePlayer;
 
 public class democracyCommand implements CommandExecutor {
-    private String[][] answers;
     private final boolean enabled;
     private final boolean noname;
     private final Modulator plugin;
@@ -27,6 +26,7 @@ public class democracyCommand implements CommandExecutor {
     private final String key = "democracy.command";
     private final String ansKey = "democracy.answers";
     private final HashMap<String, democracyStorage> consider = new HashMap<>();
+    private String[][] answers;
 
     protected democracyCommand(Modulator modulator, IModule module) {
 
@@ -50,7 +50,7 @@ public class democracyCommand implements CommandExecutor {
             sender.sendMessage(lang.get(key, "disable1"));
             return true;
         }
-        if (!sender.hasPermission("modulator.democracy")){
+        if (!sender.hasPermission("modulator.democracy")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }

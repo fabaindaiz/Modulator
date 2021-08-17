@@ -23,7 +23,7 @@ public class itemchatTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission("modulator.itemchat")){
+        if (!sender.hasPermission("modulator.itemchat")) {
             return emptyList;
         }
         if (sender instanceof Player) {

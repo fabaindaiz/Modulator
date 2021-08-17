@@ -23,7 +23,7 @@ public class cameraTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission("modulator.camera")){
+        if (!sender.hasPermission("modulator.camera")) {
             return emptyList;
         }
         if (sender instanceof Player) {

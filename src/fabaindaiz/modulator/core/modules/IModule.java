@@ -13,36 +13,36 @@ public interface IModule {
 
     void onDisable();
 
-    void setName(String name);
-
-    void setJarName(String jarName);
-
-    void setVersion(String version);
-
-    void setAliases(List<String> aliases);
-
-    void setExecutor(CommandExecutor executor);
-
-    void setTabCompleter(TabCompleter tabCompleter);
-
-    void setConfiguration(FileConfiguration configuration);
-
-    void setLanguageLoader(LanguageLoader languageLoader);
-
     String getName();
+
+    void setName(String name);
 
     String getJarName();
 
+    void setJarName(String jarName);
+
     String getVersion();
+
+    void setVersion(String version);
 
     List<String> getAliases();
 
+    void setAliases(List<String> aliases);
+
     CommandExecutor getExecutor();
+
+    void setExecutor(CommandExecutor executor);
 
     TabCompleter getTabCompleter();
 
+    void setTabCompleter(TabCompleter tabCompleter);
+
     FileConfiguration getConfiguration();
 
+    void setConfiguration(FileConfiguration configuration);
+
     LanguageLoader getLanguageLoader();
+
+    void setLanguageLoader(LanguageLoader languageLoader);
 
 }

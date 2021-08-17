@@ -43,5 +43,4 @@ public class Modulator extends JavaPlugin {
         return modulatorCommand;
     }
 
-
 }

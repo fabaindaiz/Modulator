@@ -7,6 +7,7 @@ public class modinput extends AModule {
     private final Modulator plugin;
 
     public modinput(Modulator modulator) {
+        setName("modinput");
         this.plugin = modulator;
         setLanguageLoader(plugin.getConfiguration().getLanguageLoader());
     }

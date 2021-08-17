@@ -20,10 +20,9 @@ public class lotteryStorage implements Listener {
     private final String key = "lottery.storage";
     private final boolean usevault;
     private final boolean novalid;
-    private int price = 1000;
-
     ArrayList<Integer> winner = lotteryUtil.setWinner();
     String winnerCode = lotteryUtil.arrayToCode(winner);
+    private int price = 1000;
 
     protected lotteryStorage(Modulator plugin, IModule module) {
         this.plugin = plugin;

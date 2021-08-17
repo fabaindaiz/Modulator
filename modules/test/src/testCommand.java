@@ -20,7 +20,7 @@ public class testCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission("modulator.test")){
+        if (!sender.hasPermission("modulator.test")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }

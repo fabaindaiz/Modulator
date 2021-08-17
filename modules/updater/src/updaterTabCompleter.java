@@ -23,7 +23,7 @@ public class updaterTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission("modulator.updater")){
+        if (!sender.hasPermission("modulator.updater")) {
             return emptyList;
         }
         if (sender instanceof Player) {

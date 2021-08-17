@@ -10,11 +10,10 @@ import java.io.Reader;
 
 public class ModulatorConfiguration {
 
+    private final Modulator plugin;
     private FileConfiguration configuration;
     private LanguageLoader languageLoader;
     private String lang;
-
-    private final Modulator plugin;
 
     public ModulatorConfiguration(Modulator plugin) {
         this.plugin = plugin;

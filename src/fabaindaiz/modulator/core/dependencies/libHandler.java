@@ -5,7 +5,6 @@ import fabaindaiz.modulator.core.modules.AModule;
 import fabaindaiz.modulator.core.util.jarUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -36,7 +35,7 @@ public class libHandler extends AModule {
             if (!lib.exists()) {
                 return false;
             }
-            //addClassPath(lib.toURI().toURL());
+            addClassPath(lib.toURI().toURL());
 
         } catch (final Exception e) {
             e.printStackTrace();
@@ -44,20 +43,20 @@ public class libHandler extends AModule {
         return true;
     }
 
-    private void addClassPath(URL url) throws IOException {
+    private void addClassPath(URL url) {
         try {
             final Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
-            method.invoke(ClassLoader.getSystemClassLoader(), new Object[] { url });
+            method.invoke(ClassLoader.getSystemClassLoader(), url);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    private void addChildClassPath(URL url, String name) throws IOException {
+    private void addChildClassPath(URL url, String name) {
         try {
-            URLClassLoader child = new URLClassLoader(new URL[] { url }, this.getClass().getClassLoader());
-            Class classToLoad = Class.forName("lib." + name, true, child);
+            URLClassLoader child = new URLClassLoader(new URL[]{url}, this.getClass().getClassLoader());
+            Class<?> classToLoad = Class.forName("lib." + name, true, child);
             Method method = classToLoad.getDeclaredMethod("myMethod");
             Object instance = classToLoad.newInstance();
             Object result = method.invoke(instance);

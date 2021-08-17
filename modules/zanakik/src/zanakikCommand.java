@@ -43,7 +43,7 @@ public class zanakikCommand implements CommandExecutor {
             return true;
         }
 
-        if (!sender.hasPermission("modulator.zkik")){
+        if (!sender.hasPermission("modulator.zkik")) {
             sender.sendMessage(lang.get("error.noper"));
             return true;
         }

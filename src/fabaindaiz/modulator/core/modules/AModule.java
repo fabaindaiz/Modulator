@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AModule implements IModule {
@@ -12,54 +13,20 @@ public abstract class AModule implements IModule {
     private String name;
     private String jarName;
     private String version;
-    private List<String> aliases;
+    private List<String> aliases = new ArrayList<>();
     private CommandExecutor executor;
     private TabCompleter tabCompleter;
     private FileConfiguration configuration;
     private LanguageLoader languageLoader;
 
     @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void setJarName(String jarName) {
-        this.jarName = jarName;
-    }
-    @Override
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @Override
-    public void setAliases(List<String> aliases) {
-        this.aliases = aliases;
-    }
-
-    @Override
-    public void setExecutor(CommandExecutor executor) {
-        this.executor = executor;
-    }
-
-    @Override
-    public void setTabCompleter(TabCompleter tabCompleter) {
-        this.tabCompleter = tabCompleter;
-    }
-
-    @Override
-    public void setConfiguration(FileConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    @Override
-    public void setLanguageLoader(LanguageLoader languageLoader) {
-        this.languageLoader = languageLoader;
-    }
-
-    @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -68,8 +35,18 @@ public abstract class AModule implements IModule {
     }
 
     @Override
-    public String  getVersion() {
+    public void setJarName(String jarName) {
+        this.jarName = jarName;
+    }
+
+    @Override
+    public String getVersion() {
         return version;
+    }
+
+    @Override
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     @Override
@@ -78,8 +55,18 @@ public abstract class AModule implements IModule {
     }
 
     @Override
+    public void setAliases(List<String> aliases) {
+        this.aliases = aliases;
+    }
+
+    @Override
     public CommandExecutor getExecutor() {
-       return executor;
+        return executor;
+    }
+
+    @Override
+    public void setExecutor(CommandExecutor executor) {
+        this.executor = executor;
     }
 
     @Override
@@ -88,13 +75,28 @@ public abstract class AModule implements IModule {
     }
 
     @Override
+    public void setTabCompleter(TabCompleter tabCompleter) {
+        this.tabCompleter = tabCompleter;
+    }
+
+    @Override
     public FileConfiguration getConfiguration() {
         return configuration;
     }
 
     @Override
+    public void setConfiguration(FileConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
+    @Override
     public LanguageLoader getLanguageLoader() {
         return languageLoader;
+    }
+
+    @Override
+    public void setLanguageLoader(LanguageLoader languageLoader) {
+        this.languageLoader = languageLoader;
     }
 
 }

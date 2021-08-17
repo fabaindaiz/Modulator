@@ -28,7 +28,8 @@ public class cameraRenderer {
 
     private File resourcePackFile;
     private HashMap<Material, BufferedImage> imageHashMap = new HashMap<>();
-    private Map<Material, Color> blocksMap = new HashMap<Material, Color>();;
+    private Map<Material, Color> blocksMap = new HashMap<Material, Color>();
+    ;
 
     protected cameraRenderer(Modulator modulator, IModule module) {
 
@@ -95,23 +96,22 @@ public class cameraRenderer {
                     } else {
                         color = colorFromType(liquidResult.getHitBlock(), dye);
                     }
-                    image.setRGB(x,y,color.getRGB());
+                    image.setRGB(x, y, color.getRGB());
                 } else if (liquidResult != null) {
                     // set map pixel to color of liquid block found
                     Color color = colorFromType(liquidResult.getHitBlock(), new double[]{1, 1, 1});
-                    image.setRGB(x,y,color.getRGB());
+                    image.setRGB(x, y, color.getRGB());
                 } else {
                     // no block was hit, so we will assume we are looking at the sky
                     Color color = new Color(135, 206, 235);
-                    image.setRGB(x,y,color.getRGB());
+                    image.setRGB(x, y, color.getRGB());
                 }
             }
         }
         try {
-            File output = new File(plugin.getDataFolder(),"Example.jpg");
+            File output = new File(plugin.getDataFolder(), "Example.jpg");
             ImageIO.write(image, "jpg", output);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -125,9 +125,9 @@ public class cameraRenderer {
             int greenColor = (int) (color.getGreen() * dye[1]);
             int blueColor = (int) (color.getBlue() * dye[2]);
 
-            if(redColor > 255) redColor = 255;
-            if(greenColor > 255) greenColor = 255;
-            if(blueColor > 255) blueColor = 255;
+            if (redColor > 255) redColor = 255;
+            if (greenColor > 255) greenColor = 255;
+            if (blueColor > 255) blueColor = 255;
             return new Color(redColor, greenColor, blueColor);
         }
         if (imageHashMap.containsKey(block.getType())) {
@@ -144,9 +144,9 @@ public class cameraRenderer {
                 int greenColor = (int) (color.getGreen() * dye[1]);
                 int blueColor = (int) (color.getBlue() * dye[2]);
 
-                if(redColor > 255) redColor = 255;
-                if(greenColor > 255) greenColor = 255;
-                if(blueColor > 255) blueColor = 255;
+                if (redColor > 255) redColor = 255;
+                if (greenColor > 255) greenColor = 255;
+                if (blueColor > 255) blueColor = 255;
                 return new Color(redColor, greenColor, blueColor);
             }
         }
@@ -159,12 +159,12 @@ public class cameraRenderer {
         if (!mapDir.exists()) {
             mapDir.mkdir();
         }
-        if(mapDir.listFiles().length == 0) {
+        if (mapDir.listFiles().length == 0) {
             Bukkit.getLogger().info("No resource pack found, downloading... (this may take a while)");
             cameraUtil.downloadResourcePack(plugin);
         }
-        for(File file : mapDir.listFiles()) {
-            if(!file.getName().endsWith(".zip")) {
+        for (File file : mapDir.listFiles()) {
+            if (!file.getName().endsWith(".zip")) {
                 this.resourcePackFile = file;
             } else {
                 file.delete();
