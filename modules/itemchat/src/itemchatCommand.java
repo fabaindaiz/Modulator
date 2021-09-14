@@ -1,10 +1,8 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,26 +10,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class itemchatCommand implements CommandExecutor {
+public class itemchatCommand extends CommandDispatcher {
     private final boolean norestriction;
-    private final boolean enabled;
     private final int collect;
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
     private final String key = "itemchat.command";
     private boolean usevault;
     private boolean enableOwner = true;
 
     protected itemchatCommand(Modulator modulator, IModule module) {
+        super(modulator, module);
 
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
         this.norestriction = module.getConfiguration().getBoolean("itemchat.norestriction");
         this.usevault = module.getConfiguration().getBoolean("itemchat.usevault");
-        this.enabled = module.getConfiguration().getBoolean("itemchat.enable");
         this.collect = module.getConfiguration().getInt("itemchat.priceowner");
+        setEnabled(module.getConfiguration().getBoolean("itemchat.enable"));
 
         if (!plugin.getDependencies().getVaultHandler().getServerHasVault()) {
             if (this.usevault) {
@@ -39,56 +31,46 @@ public class itemchatCommand implements CommandExecutor {
                 enableOwner = false;
             }
         }
+
+        setPermission("modulator.use");
+        register("", this::info);
+        register("help", this::help);
+        register("show", this::show);
+        register("owner", this::owner);
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.enabled) {
-            sender.sendMessage(lang.get(key, "disable1"));
-            return true;
-        }
-        if (!sender.hasPermission("modulator.itemchat")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
-        }
-
-        switch (args.length) {
-            case 0:
-                sender.sendMessage(lang.get(key, "info1"));
-                sender.sendMessage(lang.get(key, "info2"));
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    case "owner":
-                        this.owner(sender);
-                        return true;
-                    case "show":
-                        this.show(sender);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            default:
-                sender.sendMessage(lang.get(key, "error1"));
-                return true;
-
-        }
+    private boolean info() {
+        CommandSender sender = getSender();
+        sender.sendMessage(lang.get(key, "info1"));
+        sender.sendMessage(lang.get(key, "info2"));
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private boolean help() {
+        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
+        return true;
     }
 
-    private void owner(CommandSender sender) {
+    private boolean show() {
+        CommandSender sender = getSender();
+        ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
+        if (item.getType().isAir()) {
+            sender.sendMessage(lang.get(key, "error4"));
+            return true;
+        }
+
+        itemchatUtil.showItemSpecs(module, sender, item, lang.get(key, "interact1"), norestriction);
+        return true;
+    }
+
+    private boolean owner() {
+        CommandSender sender = getSender();
         if (!this.enableOwner) {
             sender.sendMessage(lang.get(key, "disable2"));
-            return;
+            return true;
         }
 
         ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
@@ -96,11 +78,11 @@ public class itemchatCommand implements CommandExecutor {
 
         if (item.getType().isAir()) {
             sender.sendMessage(lang.get(key, "error4"));
-            return;
+            return true;
         }
         if (itemMeta.hasLore()) {
             sender.sendMessage(lang.get(key, "error3"));
-            return;
+            return true;
         }
 
         List<String> loresList = new ArrayList<>();
@@ -111,7 +93,7 @@ public class itemchatCommand implements CommandExecutor {
             EconomyResponse response = plugin.getDependencies().getVaultHandler().getEconomy().withdrawPlayer(Bukkit.getPlayer(sender.getName()), this.collect);
             if (!response.transactionSuccess()) {
                 sender.sendMessage(lang.get(key, "error5"));
-                return;
+                return true;
             }
         }
 
@@ -119,18 +101,7 @@ public class itemchatCommand implements CommandExecutor {
         sender.sendMessage(lang.get(key, "owner1"));
         itemchatUtil.showItemSpecs(module, sender, item, lang.get(key, "interact2"), true);
 
+        return true;
     }
-
-    private void show(CommandSender sender) {
-        ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
-        if (item.getType().isAir()) {
-            sender.sendMessage(lang.get(key, "error4"));
-            return;
-        }
-
-        itemchatUtil.showItemSpecs(module, sender, item, lang.get(key, "interact1"), norestriction);
-
-    }
-
 
 }

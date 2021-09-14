@@ -1,84 +1,72 @@
 package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class modulatorCommand implements CommandExecutor {
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
+public class modulatorCommand extends CommandDispatcher {
 
     protected modulatorCommand(Modulator modulator, IModule module) {
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
+        super(modulator, module);
+
+        setPermission("modulator.op");
+        register("", this::info);
+        register("help", this::help);
+        register("modules", this::modules);
+        register("reload", this::reload);
     }
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-
-        if (!sender.hasPermission("modulator.main")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
+    private Boolean info() {
+        if (getArgs().size() != 1) {
+            return error();
         }
-
-        switch (args.length) {
-            case 0:
-                sender.sendMessage(lang.get("modulator.info1"));
-                sender.sendMessage(lang.get("modulator.info2"));
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    case "modules":
-                        this.modules(sender);
-                        return true;
-                    case "reload":
-                        this.reload(sender);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get("modulator.error1"));
-                        return true;
-                }
-            default:
-                sender.sendMessage(lang.get("modulator.error1"));
-                return true;
-        }
+        CommandSender sender = getSender();
+        sender.sendMessage(lang.get("modulator.info1"));
+        sender.sendMessage(lang.get("modulator.info2"));
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private Boolean help() {
+        if (getArgs().size() != 2) {
+            return error();
+        }
+        CommandSender sender = getSender();
         sender.sendMessage(lang.get("modulator.help1"));
         sender.sendMessage(lang.get("modulator.help2"));
-        sender.sendMessage(lang.get("modulator.help3"));
-        sender.sendMessage(lang.get("modulator.help4"));
-        sender.sendMessage(lang.get("modulator.help5"));
-        sender.sendMessage(lang.get("modulator.help6"));
-        sender.sendMessage(lang.get("modulator.help7"));
+        plugin.getCommand().getModules().forEach((name, module)->{
+            if (module.getDescription() != null) {
+                sender.sendMessage(module.getDescription());
+            }
+        });
+        return true;
     }
 
-    private void modules(CommandSender sender) {
+    private Boolean modules() {
+        if (getArgs().size() != 2) {
+            return error();
+        }
+        CommandSender sender = getSender();
         Set<String> moduleNames = plugin.getCommand().getModuleNames();
 
         StringBuilder string = new StringBuilder();
         string.append(lang.get("modulator.info3"));
 
         moduleNames.forEach((name) -> string.append(name).append(", "));
-
         sender.sendMessage(string.toString());
+        return true;
     }
 
-    private void reload(CommandSender sender) {
+    private boolean reload() {
+        if (getArgs().size() != 2) {
+            return error();
+        }
+        CommandSender sender = getSender();
         plugin.reload();
         sender.sendMessage(lang.get("modulator.reload1"));
+        return true;
     }
 
 }

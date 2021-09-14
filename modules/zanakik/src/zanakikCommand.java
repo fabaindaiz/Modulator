@@ -1,135 +1,116 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static fabaindaiz.modulator.core.util.playersUtil.isOnlinePlayer;
 
-public class zanakikCommand implements CommandExecutor {
+public class zanakikCommand extends CommandDispatcher {
     final Random rnd = new Random();
-    private final boolean enabled;
+
     private final boolean noplayerzkik;
     private final boolean ignorebypass;
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
     private final String key = "zanakik.command";
 
     protected zanakikCommand(Modulator modulator, IModule module) {
+        super(modulator, module);
 
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
-        this.enabled = module.getConfiguration().getBoolean("zanakik.enable");
         this.noplayerzkik = module.getConfiguration().getBoolean("zanakik.noplayerzkik");
         this.ignorebypass = module.getConfiguration().getBoolean("zanakik.ignorebypass");
+        setEnabled(module.getConfiguration().getBoolean("zanakik.enable"));
+
+        setPermission("modulator.op");
+        register("", this::zkik);
+        register("help", this::help);
+        register("player", this::zkikPlayer);
+        register("get", this::getzkik);
+
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (!this.enabled) {
-            sender.sendMessage(lang.get(key, "disable1"));
-            return true;
-        } else if (this.noplayerzkik && sender instanceof Player) {
+    public boolean conditions() {
+        CommandSender sender = getSender();
+        if (this.noplayerzkik && sender instanceof Player) {
             sender.sendMessage(lang.get(key, "error5"));
-            return true;
+            return false;
         }
-
-        if (!sender.hasPermission("modulator.zkik")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
-        }
-
-        switch (args.length) {
-            case 0:
-                this.zkik(sender);
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    case "getzkik":
-                        this.getzkik(sender, 1);
-                        return true;
-                    default:
-                        this.zkik(sender, args[0]);
-                        return true;
-                }
-            case 2:
-                switch (args[0]) {
-                    case "getzkik":
-                        this.getzkik(sender, Integer.parseInt(args[1]));
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            case 3:
-                switch (args[0]) {
-                    case "getzkik":
-                        this.getzkik(Bukkit.getPlayer(args[2]), Integer.parseInt(args[1]));
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            default:
-                sender.sendMessage(lang.get(key, "error1"));
-                return true;
-        }
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private boolean help() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
+        return true;
     }
 
-    private void zkik(CommandSender sender) {
-
+    private boolean zkik() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         Player[] players = zanakikUtil.getKickablePlayers(module);
         if (players.length < 1) {
             Bukkit.broadcastMessage(lang.get(key, "error2"));
-            return;
+            return true;
         }
 
         int rndindex = rnd.nextInt(players.length);
         Player rndplayer = players[rndindex];
         kik(rndplayer);
+        return true;
     }
 
-    private void getzkik(CommandSender sender, int num) {
-        String senderName = sender.getName();
-        if (isOnlinePlayer(senderName)) {
-            Bukkit.getPlayer(senderName).getInventory().addItem(zanakikUtil.getZanakik(module, num < 64 ? num : 64));
+    private boolean zkikPlayer() {
+        if (getArgs().size() != 2) {
+            return error();
         }
-    }
-
-    private void zkik(CommandSender sender, String playerName) {
+        CommandSender sender = getSender();
+        ArrayList<String> args = getArgs();
+        String playerName = args.get(1);
 
         if (!isOnlinePlayer(playerName)) {
             sender.sendMessage(lang.get(key, "error3"));
-            return;
+            return true;
         }
         Player selP = Bukkit.getPlayer(playerName);
         if (selP.hasPermission("modulator.kickbypass") && !this.ignorebypass) {
             sender.sendMessage(lang.get(key, "error4"));
-            return;
+            return true;
         }
 
         sender.sendMessage(lang.get(key, "kikmessage2") + playerName);
         kik(selP);
+        return true;
     }
 
+    private boolean getzkik() {
+        if (getArgs().size() > 2) {
+            return error();
+        }
+        CommandSender sender = getSender();
+        ArrayList<String> args = getArgs();
+
+        int num = 1;
+        if (args.size() == 2) {
+            num  = Integer.parseInt(args.get(1));
+        }
+        String senderName = sender.getName();
+        if (isOnlinePlayer(senderName)) {
+            Bukkit.getPlayer(senderName).getInventory().addItem(zanakikUtil.getZanakik(module, num < 64 ? num : 64));
+        }
+        return true;
+    }
 
     protected void kik(Player player) {
         player.getInventory().addItem(zanakikUtil.getZanakik(module, 1));

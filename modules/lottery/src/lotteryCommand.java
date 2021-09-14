@@ -1,99 +1,76 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class lotteryCommand implements CommandExecutor {
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
+public class lotteryCommand extends CommandDispatcher {
     private final String key = "lottery.command";
     private final boolean usevault;
     private final int price;
     private final int collect;
     private final lotteryStorage storage;
-    private boolean enabled;
 
     protected lotteryCommand(Modulator modulator, lotteryStorage storage, IModule module) {
+        super(modulator, module);
 
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
-        this.enabled = module.getConfiguration().getBoolean("lottery.enable");
         this.usevault = module.getConfiguration().getBoolean("lottery.usevault");
         this.price = module.getConfiguration().getInt("lottery.pricelottery");
         this.collect = module.getConfiguration().getInt("lottery.collect");
-        this.storage = storage;
-
         storage.setPrice(this.price);
+        this.storage = storage;
+        setEnabled(module.getConfiguration().getBoolean("lottery.enable"));
+
         if (!plugin.getDependencies().getVaultHandler().getServerHasVault()) {
             Bukkit.getLogger().warning(lang.get(key, "novault1"));
             if (this.usevault) {
-                this.enabled = false;
+                setEnabled(false);
             }
         }
+
+        setPermission("modulator.use");
+        register("", this::info);
+        register("help", this::help);
+        register("buy", this::buy);
+        register("draw", this::draw);
+        register("collect", this::collect);
+        register("results", this::results);
+
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.enabled) {
-            sender.sendMessage(lang.get(key, "disable1"));
-            return true;
+    private boolean info() {
+        if (getArgs().size() != 1) {
+            return error();
         }
-        if (!sender.hasPermission("modulator.lottery")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
-        }
-
-        switch (args.length) {
-            case 0:
-                sender.sendMessage(lang.get(key, "info1"));
-                sender.sendMessage(lang.get(key, "collect4") + collect);
-                sender.sendMessage(lang.get(key, "info2"));
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    case "buy":
-                        this.buy(sender);
-                        return true;
-                    case "draw":
-                        this.draw(sender);
-                        return true;
-                    case "collect":
-                        this.collect(sender);
-                        return true;
-                    case "results":
-                        this.results(sender);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            default:
-                sender.sendMessage(lang.get(key, "error1"));
-                return true;
-        }
+        CommandSender sender = getSender();
+        sender.sendMessage(lang.get(key, "info1"));
+        sender.sendMessage(lang.get(key, "collect4") + collect);
+        sender.sendMessage(lang.get(key, "info2"));
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private boolean help() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
         sender.sendMessage(lang.get(key, "help4"));
+        return true;
     }
 
-    private void buy(CommandSender sender) {
+    private boolean buy() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         String senderName = sender.getName();
 
         if (!storage.containsPlayer(senderName)) {
@@ -101,9 +78,14 @@ public class lotteryCommand implements CommandExecutor {
         }
 
         storage.openInventory(Bukkit.getPlayer(senderName));
+        return true;
     }
 
-    private void collect(CommandSender sender) {
+    private boolean collect() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
         List<String> itemLore;
         Boolean isWinner = false;
@@ -125,7 +107,7 @@ public class lotteryCommand implements CommandExecutor {
                 meta.getLore().set(1, meta.getLore().get(1) + lang.get(key, "collect3"));
 
                 Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand().setItemMeta(meta);
-                return;
+                return true;
             }
             Bukkit.getPlayer(sender.getName()).getInventory().remove(item);
             sender.sendMessage(lang.get(key, "collect1"));
@@ -134,16 +116,30 @@ public class lotteryCommand implements CommandExecutor {
         } else {
             sender.sendMessage(lang.get(key, "collect2"));
         }
+        return true;
     }
 
-    private void draw(CommandSender sender) {
-        if (sender.hasPermission("modulator.lotteryDraw")) {
+    private boolean draw() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
+        if (sender.hasPermission("modulator.adm")) {
             this.storage.drawWinner();
             Bukkit.broadcastMessage(lang.get(key, "draw1"));
 
             Bukkit.getOnlinePlayers().forEach(player -> results(player));
         }
         sender.sendMessage(lang.get(key, "error.pem"));
+        return true;
+    }
+
+    private boolean results() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        results(getSender());
+        return true;
     }
 
     private void results(CommandSender sender) {
@@ -158,7 +154,7 @@ public class lotteryCommand implements CommandExecutor {
     }
 
     protected void noVaultDisable() {
-        this.enabled = false;
+        setEnabled(false);
     }
 
 

@@ -8,6 +8,7 @@ public class bettorMain extends AModule {
 
     public bettorMain(Modulator modulator) {
         setName("bettor");
+        setDescription("\u00A7e/bettor \u00A7fSistema de apuestas en eventos");
         this.plugin = modulator;
     }
 

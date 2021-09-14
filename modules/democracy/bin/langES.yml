@@ -2,6 +2,8 @@
 # Delete some key may cause errors
 
 error:
+  error: "Argumentos incorrectos para democracy"
+  disabled: "\u00A7eEl m\u00f3dulo democracy esta desactivado"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 democracy:
@@ -10,12 +12,10 @@ democracy:
     info2: "Revisa la lista de comandos con \u00A73/democracy help "
     info3: "\u00A73Votaciones activas: \u00A7f"
     info4: "Vota haciendo click:  "
-    disable1: "\u00A7eEl m\u00f3dulo democracy esta desactivado"
     help1: "\u00A76Comandos de democracy"
     help2: "\u00A7e/democracy create <texto> \u00A7fCrea una nueva votaci\u00f3n"
     help3: "\u00A7e/democracy done \u00A7fPublica los resultados"
     help4: "\u00A7e/democracy cancel \u00A7fCancela la votaci\u00f3n"
-    error1: "Argumentos incorrectos para democracy"
     error2: "No tienes ninguna votaci\u00f3n activa"
     error3: "Ya tienes una votaci\u00f3n activa"
     error4: "No puedes volver a votar. Seleccionaste la opci\u00f3n "

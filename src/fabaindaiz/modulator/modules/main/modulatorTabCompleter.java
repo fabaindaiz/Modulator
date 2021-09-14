@@ -8,12 +8,11 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class modulatorTabCompleter implements TabCompleter {
-    static final ArrayList<String> emptyList = new ArrayList<>();
     final String[] modules1 = {"help", "modules", "reload"};
     private final Modulator plugin;
     private final IModule module;
@@ -32,7 +31,7 @@ public class modulatorTabCompleter implements TabCompleter {
             }
 
         }
-        return emptyList;
+        return Collections.emptyList();
     }
 
 }

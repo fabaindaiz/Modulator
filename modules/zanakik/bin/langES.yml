@@ -2,17 +2,17 @@
 # Delete some key may cause errors
 
 error:
+  error: "Argumentos incorrectos para zkik"
+  disabled: "\u00A7eEl m\u00f3dulo zkik esta desactivado"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 zanakik:
   command:
     kikmessage1: " ser\u00e1 zanakikeadx. El kick durar\u00e1 30 segundos"
     kikmessage2: "Zanakikeaste a "
-    disable1: "\u00A7eEl m\u00f3dulo zkik esta desactivado"
     help1: "\u00A76Comandos zanakik"
     help2: "\u00A7e/zkik \u00A7fZanakikea un jugador aleatorio"
-    help3: "\u00A7e/zkik <player> \u00A7fZanakikea un jugador"
-    error1: "Argumentos incorrectos para zkik"
+    help3: "\u00A7e/zkik player <player> \u00A7fZanakikea un jugador"
     error2: "Ning\u00fan jugador puede ser zanakikeadx"
     error3: "El jugador no existe o no esta conectado"
     error4: "El jugador no puede ser zanakikeado"

@@ -2,19 +2,19 @@
 # Delete some key may cause errors
 
 error:
+  error: "Argumentos incorrectos para itemchat"
+  disabled: "\u00A7eEl m\u00f3dulo itemchat esta desactivado"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 itemchat:
   command:
     info1: "\u00A73ItemChat \u00A7f- Muestrales a todos tus items por el chat"
     info2: "Revisa la lista de comandos con \u00A73/itemchat help "
-    disable1: "\u00A7eEl m\u00f3dulo itemchat esta desactivado"
     disable2: "\u00A7eEl m\u00f3dulo itemchat owner esta desactivado"
     help1: "\u00A76Comandos de itemchat"
     help2: "\u00A7e/itemchat owner \u00A7fPonle tu nombre a un objeto por $500"
     help3: "\u00A7e/itemchat show \u00A7fMuesta en el chat el item que sostienes"
     owner1: "El objeto ahora esta marcado como tuyo (pagaste $500)"
-    error1: "Argumentos incorrectos para itemchat"
     error3: "No puedes ponerle tu nombre a este objeto"
     error4: "No estas sosteniendo un objeto v\u00e1lido"
     error5: "No tienes dinero suficiente para hacer esto"

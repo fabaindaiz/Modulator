@@ -1,13 +1,11 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,23 +15,16 @@ import java.util.List;
 
 import static fabaindaiz.modulator.core.util.playersUtil.isOnlinePlayer;
 
-public class democracyCommand implements CommandExecutor {
-    private final boolean enabled;
+public class democracyCommand extends CommandDispatcher {
     private final boolean noname;
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
     private final String key = "democracy.command";
     private final String ansKey = "democracy.answers";
     private final HashMap<String, democracyStorage> consider = new HashMap<>();
     private String[][] answers;
 
     protected democracyCommand(Modulator modulator, IModule module) {
+        super(modulator, module);
 
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
-        this.enabled = module.getConfiguration().getBoolean("democracy.enable");
         this.noname = module.getConfiguration().getBoolean("democracy.noname");
 
         List<String[]> tempList = new ArrayList<>();
@@ -42,95 +33,52 @@ public class democracyCommand implements CommandExecutor {
         }
         this.answers = new String[tempList.size()][2];
         this.answers = tempList.toArray(answers);
+        setEnabled(module.getConfiguration().getBoolean("democracy.enable"));
+
+        setPermission("modulator.use");
+        register("", this::info);
+        register("help", this::help);
+        register("done", this::done);
+        register("cancel", this::cancel);
+        register("vote", this::vote);
+        register("create", this::create);
+        register("createConfirm", this::createConfirm);
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.enabled) {
-            sender.sendMessage(lang.get(key, "disable1"));
-            return true;
+    private boolean info() {
+        if (getArgs().size() != 1) {
+            return error();
         }
-        if (!sender.hasPermission("modulator.democracy")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
-        }
-
-        switch (args.length) {
-            case 0:
-                sender.sendMessage(lang.get(key, "info1"));
-                sender.sendMessage(lang.get(key, "info2"));
-                sender.sendMessage(lang.get(key, "info3"));
-                // TODO Complete this method
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    case "done":
-                        this.done(sender);
-                        return true;
-                    case "cancel":
-                        sender.sendMessage(lang.get(key, "interact4"));
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            case 2:
-                switch (args[0]) {
-                    case "createConfirm":
-                        this.createConfirm(sender, Integer.parseInt(args[1]));
-                        return true;
-                    case "cancel":
-                        if (args[1].equals("confirm")) {
-                            this.cancel(sender);
-                            return true;
-                        }
-                        sender.sendMessage(lang.get(key, "interact4"));
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            case 4:
-                switch (args[0]) {
-                    case "vote":
-                        this.vote(args);
-                        return true;
-                    case "create":
-                        this.create(sender, args);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            default:
-                switch (args[0]) {
-                    case "create":
-                        this.create(sender, args);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-        }
+        CommandSender sender = getSender();
+        sender.sendMessage(lang.get(key, "info1"));
+        sender.sendMessage(lang.get(key, "info2"));
+        sender.sendMessage(lang.get(key, "info3"));
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private boolean help() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
         sender.sendMessage(lang.get(key, "help4"));
+        return true;
     }
 
-    private void done(CommandSender sender) {
+    private boolean done() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         String senderName = sender.getName();
         StringBuilder text = new StringBuilder();
 
         if (!consider.containsKey(senderName)) {
             sender.sendMessage(lang.get(key, "error2"));
-            return;
+            return true;
         }
 
         democracyStorage storage = consider.get(senderName);
@@ -145,52 +93,71 @@ public class democracyCommand implements CommandExecutor {
         Bukkit.broadcastMessage(lang.get(key, "done1") + storage.getQuestion());
         Bukkit.broadcastMessage(text.toString());
         consider.remove(senderName);
+        return true;
     }
 
-    private void cancel(CommandSender sender) {
+    private boolean cancel() {
+        if (getArgs().size() > 2) {
+            return error();
+        }
+        CommandSender sender = getSender();
+        ArrayList<String> args = getArgs();
         String senderName = sender.getName();
+
+        if (getArgs().size() == 1 || !args.get(1).equals("confirm")) {
+            sender.sendMessage(lang.get(key, "interact4"));
+        }
 
         if (consider.containsKey(senderName)) {
             consider.remove(senderName);
             Bukkit.broadcastMessage(lang.get(key, "interact2"));
-            return;
+            return true;
         }
         sender.sendMessage(lang.get(key, "error2"));
+        return true;
     }
 
-    private void vote(String[] args) {
-        Player player = Bukkit.getPlayer(args[2]);
-        int vote = Integer.parseInt(args[3]);
+    private boolean vote() {
+        if (getArgs().size() != 4) {
+            return error();
+        }
+        CommandSender sender = getSender();
+        ArrayList<String> args = getArgs();
+        Player player = Bukkit.getPlayer(args.get(2));
+        int vote = Integer.parseInt(args.get(3));
 
         if (consider.size() == 0) {
             player.sendMessage(lang.get(key, "error2"));
-            return;
+            return true;
         }
 
-        if (!consider.containsKey(args[1]) || vote >= 2) {
+        if (!consider.containsKey(args.get(1)) || vote >= 2) {
             player.sendMessage(lang.get(key, "error1"));
-            return;
+            return true;
         }
 
-        democracyStorage storage = consider.get(args[1]);
+        democracyStorage storage = consider.get(args.get(1));
         if (storage.vote(player.getName(), vote)) {
             player.sendMessage(lang.get(key, "interact5") + answers[storage.getAnswers()][vote]);
-            return;
+            return true;
         }
         player.sendMessage(lang.get(key, "error4") + answers[storage.getAnswers()][vote]);
+        return true;
     }
 
-    private void create(CommandSender sender, String[] args) {
+    private boolean create() {
+        CommandSender sender = getSender();
+        ArrayList<String> args = getArgs();
         String senderName = sender.getName();
 
         if (consider.containsKey(senderName)) {
             sender.sendMessage(lang.get(key, "error3"));
-            return;
+            return true;
         }
 
         StringBuilder text = new StringBuilder();
-        for (int i = 1; i < args.length; i++) {
-            text.append(args[i]).append(" ");
+        for (int i = 1; i < args.size(); i++) {
+            text.append(args.get(i)).append(" ");
         }
 
         consider.put(senderName, new democracyStorage(sender, text.toString(), lang));
@@ -221,14 +188,20 @@ public class democracyCommand implements CommandExecutor {
             sender.sendMessage(message4.toPlainText());
             sender.sendMessage(message5.toPlainText());
         }
+        return true;
     }
 
-    private void createConfirm(CommandSender sender, int option) {
+    private boolean createConfirm() {
+        CommandSender sender = getSender();
+        if (getArgs().size() != 2) {
+            return error();
+        }
+        int option = Integer.parseInt(getArgs().get(1));
         String senderName = sender.getName();
         democracyStorage storage = consider.get(senderName);
 
         if (storage.getAnswers() != -1) {
-            return;
+            return true;
         }
         storage.setAnswers(option);
 
@@ -250,6 +223,7 @@ public class democracyCommand implements CommandExecutor {
 
         Bukkit.broadcastMessage(lang.get(key, "done3") + consider.get(senderName).getQuestion());
         Bukkit.getOnlinePlayers().forEach(player -> player.spigot().sendMessage(message3.create()));
+        return true;
     }
 
 

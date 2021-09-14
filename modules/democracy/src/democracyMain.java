@@ -11,6 +11,7 @@ public class democracyMain extends AModule {
     // Democracy depends on modinput module
     public democracyMain(Modulator modulator) {
         setName("democracy");
+        setDescription("\u00A7e/democracy \u00A7fCrea tus encuestas rapidas");
         this.plugin = modulator;
     }
 

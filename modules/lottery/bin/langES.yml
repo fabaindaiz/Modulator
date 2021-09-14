@@ -2,6 +2,8 @@
 # Delete some key may cause errors
 
 error:
+  error: "Argumentos incorrectos para lottery"
+  disabled: "\u00A7eEl m\u00f3dulo lottery esta desactivado"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 lottery:
@@ -10,8 +12,6 @@ lottery:
     info2: "Revisa la lista de comandos con \u00A73/lottery help "
     info4: "Los numeros ganadores de hoy son: "
     draw1: "Se han sorteado los numeros de la loter\u00eda"
-    disable1: "\u00A7eEl m\u00f3dulo lottery esta desactivado"
-    error1: "Argumentos incorrectos para lottery"
     error5: "Ha ocurrido un error al cobrar tu premio, consulta con un Admin"
     help1: "\u00A76Comandos lottery"
     help2: "\u00A7e/lottery buy \u00A7fCompra un boleto de loter\u00eda por $1000"

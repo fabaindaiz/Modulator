@@ -13,12 +13,14 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
 public class ModulatorCommand {
 
-    protected final LinkedHashMap<String, IModule> moduleList = new LinkedHashMap<>();
+    protected final HashMap<String, IModule> modules = new LinkedHashMap<>();
+    protected final HashMap<String, IModule> moduleList = new LinkedHashMap<>();
 
     private final ModulatorLoader modulatorLoader;
     private final ModulatorExecutor modulatorExecutor;
@@ -45,7 +47,11 @@ public class ModulatorCommand {
     }
 
     public Set<String> getModuleNames() {
-        return moduleList.keySet();
+        return modules.keySet();
+    }
+
+    public HashMap<String, IModule> getModules() {
+        return modules;
     }
 
     public void addCoreModule() {
@@ -72,6 +78,7 @@ public class ModulatorCommand {
     }
 
     private void registerModule(IModule module) {
+        modules.put(module.getName(), module);
         moduleList.put(module.getName(), module);
         module.getAliases().forEach(alias -> moduleList.put(alias, module));
     }

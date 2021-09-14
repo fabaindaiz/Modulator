@@ -11,6 +11,7 @@ import java.util.List;
 public abstract class AModule implements IModule {
 
     private String name;
+    private String description;
     private String jarName;
     private String version;
     private List<String> aliases = new ArrayList<>();
@@ -27,6 +28,16 @@ public abstract class AModule implements IModule {
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

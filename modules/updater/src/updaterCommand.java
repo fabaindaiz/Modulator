@@ -1,12 +1,10 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -19,19 +17,16 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class updaterCommand implements CommandExecutor {
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
+public class updaterCommand extends CommandDispatcher {
+
     private final String key = "updater.command";
     private boolean enabled;
     private Map<String, Object> update;
 
     protected updaterCommand(Modulator modulator, IModule module) {
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
-        this.enabled = module.getConfiguration().getBoolean("updater.enable");
+        super(modulator, module);
+
+        setEnabled(module.getConfiguration().getBoolean("updater.enable"));
         try {
             new BukkitRunnable() {
                 @Override
@@ -43,54 +38,48 @@ public class updaterCommand implements CommandExecutor {
             loadConfig();
         }
 
+        setPermission("modulator.op");
+        register("", this::info);
+        register("help", this::help);
+        register("update", this::update);
+
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.enabled) {
-            sender.sendMessage(lang.get(key, "disable1"));
-            return true;
+    private boolean info() {
+        if (getArgs().size() != 1) {
+            return error();
         }
-        if (!sender.hasPermission("modulator.updater")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
-        }
-
-        switch (args.length) {
-            case 0:
-                sender.sendMessage(lang.get(key, "info1"));
-                sender.sendMessage(lang.get(key, "info2"));
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    case "update":
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                update(sender);
-                            }
-                        }.runTaskAsynchronously(plugin);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            default:
-                sender.sendMessage(lang.get(key, "error1"));
-                return true;
-        }
+        CommandSender sender = getSender();
+        sender.sendMessage(lang.get(key, "info1"));
+        sender.sendMessage(lang.get(key, "info2"));
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private boolean help() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
+        return true;
     }
 
-    public void update(CommandSender sender) {
+    private boolean update() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                update(getSender());
+            }
+        }.runTaskAsynchronously(plugin);
+        return true;
+    }
+
+    private void update(CommandSender sender) {
         sender.sendMessage(lang.get(key, "update1"));
         sender.sendMessage(lang.get(key, "update2"));
         for (Plugin tPlugin : Bukkit.getPluginManager().getPlugins()) {
@@ -127,7 +116,7 @@ public class updaterCommand implements CommandExecutor {
         }
     }
 
-    public void loadConfig() {
+    private void loadConfig() {
         File file = new File(plugin.getDataFolder(), "config/updater/update.yml");
         Yaml yaml = new Yaml();
         try {

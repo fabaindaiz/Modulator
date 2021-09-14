@@ -17,6 +17,10 @@ public interface IModule {
 
     void setName(String name);
 
+    String getDescription();
+
+    void setDescription(String description);
+
     String getJarName();
 
     void setJarName(String jarName);
