@@ -2,6 +2,7 @@ import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.dispatcher.TabCompleterDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,11 +21,11 @@ public class democracyTabCompleter extends TabCompleterDispatcher {
         register("create", this::create);
     }
 
-    private List<String> info() {
+    private List<String> info(ArrayList<String> args) {
         return info;
     }
 
-    private List<String> create() {
+    private List<String> create(ArrayList<String> args) {
         return create;
     }
 

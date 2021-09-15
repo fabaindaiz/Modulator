@@ -8,6 +8,9 @@ public class testMain extends AModule {
 
     public testMain(Modulator modulator) {
         setName("test");
+        setDescription("\u00A7e/Test \u00A7fTest");
+        setPermission("modulator.adm");
+
         this.plugin = modulator;
     }
 

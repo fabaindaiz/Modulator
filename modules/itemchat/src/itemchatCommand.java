@@ -38,32 +38,29 @@ public class itemchatCommand extends CommandDispatcher {
         register("owner", this::owner);
     }
 
-    private boolean info() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean info(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "info1"));
         sender.sendMessage(lang.get(key, "info2"));
         return true;
     }
 
-    private boolean help() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
         return true;
     }
 
-    private boolean show() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean show(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
         if (item.getType().isAir()) {
             sender.sendMessage(lang.get(key, "error4"));
@@ -74,11 +71,10 @@ public class itemchatCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean owner() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean owner(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         if (!this.enableOwner) {
             sender.sendMessage(lang.get(key, "disable2"));
             return true;

@@ -11,18 +11,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Callable;
+import java.util.function.BiFunction;
 
 public class CommandDispatcher implements CommandExecutor {
 
     public final Modulator plugin;
     public final IModule module;
     public final LanguageLoader lang;
+    private final HashMap<String, BiFunction<CommandSender, ArrayList<String>, Boolean>> dispatcher = new HashMap<>();
 
     private boolean enabled = true;
-    private final HashMap<String, Callable<Boolean>> dispatcher = new HashMap<>();
     private ArrayList<String> args;
-    private CommandSender sender;
 
     public CommandDispatcher(Modulator modulator, IModule module) {
         this.plugin = modulator;
@@ -42,13 +41,12 @@ public class CommandDispatcher implements CommandExecutor {
             return true;
         }
 
-        this.sender = sender;
-        this.args = Lists.newArrayList(args);
-        if (args.length == 0){
-            this.args.add("");
+        ArrayList<String> argsList = Lists.newArrayList(args);
+        if (args.length == 0) {
+            argsList.add("");
         }
         try {
-            return dispatcher.getOrDefault(this.args.get(0), this::error).call();
+            return dispatcher.getOrDefault(argsList.get(0), this::error).apply(sender, argsList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,23 +57,15 @@ public class CommandDispatcher implements CommandExecutor {
         return true;
     }
 
-    public void register(String command, Callable<Boolean> method) {
+    public void register(String command, BiFunction<CommandSender, ArrayList<String>, Boolean> method) {
         dispatcher.put(command, method);
     }
 
-    public void setEnabled (Boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
-    public CommandSender getSender() {
-        return sender;
-    }
-
-    public ArrayList<String> getArgs() {
-        return args;
-    }
-
-    public boolean error() {
+    public boolean error(CommandSender sender, ArrayList<String> args) {
         sender.sendMessage(lang.get("error.error"));
         return true;
     }

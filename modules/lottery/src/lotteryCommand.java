@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class lotteryCommand extends CommandDispatcher {
@@ -42,22 +43,20 @@ public class lotteryCommand extends CommandDispatcher {
 
     }
 
-    private boolean info() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean info(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "info1"));
         sender.sendMessage(lang.get(key, "collect4") + collect);
         sender.sendMessage(lang.get(key, "info2"));
         return true;
     }
 
-    private boolean help() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
@@ -65,11 +64,10 @@ public class lotteryCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean buy() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean buy(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         String senderName = sender.getName();
 
         if (!storage.containsPlayer(senderName)) {
@@ -80,11 +78,10 @@ public class lotteryCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean collect() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean collect(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
         List<String> itemLore;
         Boolean isWinner = false;
@@ -118,11 +115,10 @@ public class lotteryCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean draw() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean draw(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         if (sender.hasPermission("modulator.adm")) {
             this.storage.drawWinner();
             Bukkit.broadcastMessage(lang.get(key, "draw1"));
@@ -133,11 +129,11 @@ public class lotteryCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean results() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean results(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        results(getSender());
+        results(sender);
         return true;
     }
 

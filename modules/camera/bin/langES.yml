@@ -2,6 +2,8 @@
 # Delete some key may cause errors
 
 error:
+  error: "Argumentos incorrectos para camera"
+  disabled: "\u00A7eEl m\u00f3dulo camera esta desactivado"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 camera:
@@ -11,4 +13,4 @@ camera:
     help1: "\u00A76Comandos camera"
     help2: "\u00A7e/test \u00A7fInfo"
     help3: "\u00A7e/test \u00A7fInfo"
-    error1: "Argumentos incorrectos para camera"
+    error2: "Este comando solo sirve con jugadores"

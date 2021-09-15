@@ -4,7 +4,6 @@ import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.loader.ModulatorLoader;
 import fabaindaiz.modulator.core.modules.IModule;
 import fabaindaiz.modulator.modules.main.modulator;
-import fabaindaiz.modulator.modules.modinput.modinput;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
@@ -56,7 +55,6 @@ public class ModulatorCommand {
 
     public void addCoreModule() {
         registerModule(new modulator(plugin));
-        registerModule(new modinput(plugin));
     }
 
     public void enableModules() {

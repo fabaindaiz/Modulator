@@ -8,15 +8,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.concurrent.Callable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Function;
 
 public class TabCompleterDispatcher implements TabCompleter {
 
     public final Modulator plugin;
     public final IModule module;
 
-    private final HashMap<String, Callable<List<String>>> dispatcher = new HashMap<>();
+    private final HashMap<String, Function<ArrayList<String>, List<String>>> dispatcher = new HashMap<>();
     private ArrayList<String> args;
 
     public TabCompleterDispatcher(Modulator modulator, IModule module) {
@@ -30,31 +33,27 @@ public class TabCompleterDispatcher implements TabCompleter {
             return Collections.emptyList();
         }
 
-        this.args = Lists.newArrayList(args);
-        if (args.length == 0){
-            this.args.add("");
+        ArrayList<String> argsList = Lists.newArrayList(args);
+        if (args.length == 0) {
+            argsList.add("");
         }
         try {
-            return dispatcher.getOrDefault(this.args.get(0), this::defaultList).call();
+            return dispatcher.getOrDefault(argsList.get(0), this::defaultList).apply(argsList);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    public void register(String command, Callable<List<String>> method) {
+    public void register(String command, Function<ArrayList<String>, List<String>> method) {
         dispatcher.put(command, method);
     }
 
-    public ArrayList<String> getArgs() {
-        return args;
+    private List<String> defaultList(ArrayList<String> args) {
+        return dispatcher.get("").apply(args);
     }
 
-    private List<String> defaultList() throws Exception {
-        return dispatcher.get("").call();
-    }
-
-    public List<String> emptyList() {
+    public List<String> emptyList(ArrayList<String> args) {
         return Collections.emptyList();
     }
 

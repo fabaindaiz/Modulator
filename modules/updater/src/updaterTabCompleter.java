@@ -2,6 +2,7 @@ import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.dispatcher.TabCompleterDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class updaterTabCompleter extends TabCompleterDispatcher {
         register("update", super::emptyList);
     }
 
-    private List<String> info() {
+    private List<String> info(ArrayList<String> args) {
         return info;
     }
 

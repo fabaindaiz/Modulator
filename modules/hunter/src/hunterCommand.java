@@ -1,54 +1,38 @@
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class hunterCommand implements CommandExecutor {
-    private final Modulator plugin;
-    private final IModule module;
-    private final LanguageLoader lang;
+import java.util.ArrayList;
+
+public class hunterCommand extends CommandDispatcher {
+
     private final String key = "hunter.command";
 
     protected hunterCommand(Modulator modulator, IModule module) {
-        this.plugin = modulator;
-        this.module = module;
-        this.lang = module.getLanguageLoader();
+        super(modulator, module);
+
+        register("", this::info);
+        register("help", this::help);
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (!sender.hasPermission("modulator.hunter")) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
+    private boolean info(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-
-        switch (args.length) {
-            case 0:
-                sender.sendMessage(lang.get(key, "info1"));
-                sender.sendMessage(lang.get(key, "info2"));
-                return true;
-            case 1:
-                switch (args[0]) {
-                    case "help":
-                        this.help(sender);
-                        return true;
-                    default:
-                        sender.sendMessage(lang.get(key, "error1"));
-                        return true;
-                }
-            default:
-                sender.sendMessage(lang.get(key, "error1"));
-                return true;
-        }
+        sender.sendMessage(lang.get(key, "info1"));
+        sender.sendMessage(lang.get(key, "info2"));
+        return true;
     }
 
-    private void help(CommandSender sender) {
+    private boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
+        }
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
+        return true;
     }
 
 

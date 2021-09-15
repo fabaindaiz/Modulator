@@ -1,6 +1,6 @@
 main: fabaindaiz.modulator.Modulator
 name: Modulator
-version: 0.5.3
+version: 0.5.4
 description: Load plugin modules in Server
 api-version: 1.14
 load: POSTWORLD

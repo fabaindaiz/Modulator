@@ -8,6 +8,9 @@ public class hunterMain extends AModule {
 
     public hunterMain(Modulator modulator) {
         setName("hunter");
+        setDescription("\u00A7e/hunter \u00A7fOfrece dinero por matar jugadores");
+        setPermission("modulator.use");
+
         this.plugin = modulator;
     }
 

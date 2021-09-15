@@ -2,6 +2,8 @@
 # Delete some key may cause errors
 
 error:
+  error: "Argumentos incorrectos para hunter"
+  disabled: "\u00A7eEl m\u00f3dulo hunter esta desactivado"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 hunter:
@@ -11,4 +13,3 @@ hunter:
     help1: "\u00A76Comandos hunter"
     help2: "\u00A7e/hunter \u00A7fInfo"
     help3: "\u00A7e/hunter \u00A7fInfo"
-    error1: "Argumentos incorrectos para hunter"

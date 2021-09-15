@@ -14,13 +14,13 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class updaterCommand extends CommandDispatcher {
 
     private final String key = "updater.command";
-    private boolean enabled;
     private Map<String, Object> update;
 
     protected updaterCommand(Modulator modulator, IModule module) {
@@ -44,35 +44,33 @@ public class updaterCommand extends CommandDispatcher {
 
     }
 
-    private boolean info() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean info(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "info1"));
         sender.sendMessage(lang.get(key, "info2"));
         return true;
     }
 
-    private boolean help() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
         return true;
     }
 
-    private boolean update() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean update(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
         new BukkitRunnable() {
             @Override
             public void run() {
-                update(getSender());
+                update(sender);
             }
         }.runTaskAsynchronously(plugin);
         return true;

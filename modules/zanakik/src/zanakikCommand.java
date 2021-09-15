@@ -32,22 +32,20 @@ public class zanakikCommand extends CommandDispatcher {
 
     }
 
-    private boolean help() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
         return true;
     }
 
-    private boolean zkik() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean zkik(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         if (this.noplayerzkik && sender instanceof Player) {
             sender.sendMessage(lang.get(key, "error5"));
             return true;
@@ -64,12 +62,10 @@ public class zanakikCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean zkikPlayer() {
-        if (getArgs().size() != 2) {
-            return error();
+    private boolean zkikPlayer(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 2) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
-        ArrayList<String> args = getArgs();
         String playerName = args.get(1);
 
         if (!isOnlinePlayer(playerName)) {
@@ -87,16 +83,14 @@ public class zanakikCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean getzkik() {
-        if (getArgs().size() > 2) {
-            return error();
+    private boolean getzkik(CommandSender sender, ArrayList<String> args) {
+        if (args.size() > 2) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
-        ArrayList<String> args = getArgs();
 
         int num = 1;
         if (args.size() == 2) {
-            num  = Integer.parseInt(args.get(1));
+            num = Integer.parseInt(args.get(1));
         }
         String senderName = sender.getName();
         if (isOnlinePlayer(senderName)) {

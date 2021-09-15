@@ -14,19 +14,21 @@ public class democracyStorage {
     private final int[] votes = {0, 0};
     private final ArrayList<String> voteName = new ArrayList<>();
     private final CommandSender sender;
+    private final String valCode;
     private int answers = -1;
 
-    protected democracyStorage(CommandSender sender, String question, LanguageLoader lang) {
+    protected democracyStorage(CommandSender sender, String question, LanguageLoader lang, String valCode) {
         this.question = question;
         this.sender = sender;
         this.lang = lang;
+        this.valCode = valCode;
     }
 
     protected boolean vote(String voteName, int option) {
         if (this.voteName.contains(voteName)) {
             return false;
         }
-        if (option >= 5) {
+        if (option >= 2) {
             return false;
         }
         votes[option]++;
@@ -53,6 +55,10 @@ public class democracyStorage {
 
     protected int[] getVotes() {
         return votes;
+    }
+
+    protected String getValCode() {
+        return valCode;
     }
 
 }

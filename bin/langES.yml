@@ -1,10 +1,10 @@
-version: "0.5.3"
+version: "0.5.4"
 error:
   error: "Argumentos incorrectos para Modulator"
   nokey: "Clave no encontrada en el idioma"
   noper: "\u00A73Modulator \u00A7f- No tienes permiso para hacer esto"
 modulator:
-  info1: "\u00A73Modulator 0.5.3 \u00A7f- Por LtFabin"
+  info1: "\u00A73Modulator 0.5.4 \u00A7f- Por LtFabin"
   info2: "\u00A76Revisa los comandos con \u00A73/modulator help"
   info3: "\u00A73Modulos activados: \u00A7f"
   reload1: "\u00A73Modulator \u00A7f- Plugin recargado correctamente"

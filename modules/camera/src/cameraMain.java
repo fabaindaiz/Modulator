@@ -9,6 +9,9 @@ public class cameraMain extends AModule {
 
     public cameraMain(Modulator modulator) {
         setName("camera");
+        setDescription("\u00A7e/camera \u00A7fCaptura im\u00e1genes desde el servidor");
+        setPermission("modulator.adm");
+
         this.plugin = modulator;
     }
 

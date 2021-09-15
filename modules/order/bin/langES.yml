@@ -13,5 +13,4 @@ order:
     help1: "\u00A76Comandos order"
     help2: "\u00A7e/order inv \u00A7fOrdena el inventario"
     help3: "\u00A7e/order \u00A7fInfo"
-    error1: "Argumentos incorrectos para order"
     error2: "Este comando solo sirve con jugadores"

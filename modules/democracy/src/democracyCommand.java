@@ -12,10 +12,13 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import static fabaindaiz.modulator.core.util.playersUtil.isOnlinePlayer;
 
 public class democracyCommand extends CommandDispatcher {
+    final Random rnd = new Random();
+
     private final boolean noname;
     private final String key = "democracy.command";
     private final String ansKey = "democracy.answers";
@@ -44,22 +47,20 @@ public class democracyCommand extends CommandDispatcher {
         register("createConfirm", this::createConfirm);
     }
 
-    private boolean info() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean info(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "info1"));
         sender.sendMessage(lang.get(key, "info2"));
         sender.sendMessage(lang.get(key, "info3"));
         return true;
     }
 
-    private boolean help() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
@@ -67,11 +68,10 @@ public class democracyCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean done() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean done(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         String senderName = sender.getName();
         StringBuilder text = new StringBuilder();
 
@@ -95,16 +95,15 @@ public class democracyCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean cancel() {
-        if (getArgs().size() > 2) {
-            return error();
+    private boolean cancel(CommandSender sender, ArrayList<String> args) {
+        if (args.size() > 2) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
-        ArrayList<String> args = getArgs();
         String senderName = sender.getName();
 
-        if (getArgs().size() == 1 || !args.get(1).equals("confirm")) {
+        if (args.size() == 1 || !args.get(1).equals("confirm")) {
             sender.sendMessage(lang.get(key, "interact4"));
+            return true;
         }
 
         if (consider.containsKey(senderName)) {
@@ -116,26 +115,26 @@ public class democracyCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean vote() {
-        if (getArgs().size() != 4) {
-            return error();
+    private boolean vote(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 4) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
-        ArrayList<String> args = getArgs();
-        Player player = Bukkit.getPlayer(args.get(2));
-        int vote = Integer.parseInt(args.get(3));
+        Player player = Bukkit.getPlayer(sender.getName());
+        int vote = Integer.parseInt(args.get(2));
 
         if (consider.size() == 0) {
             player.sendMessage(lang.get(key, "error2"));
             return true;
         }
-
         if (!consider.containsKey(args.get(1)) || vote >= 2) {
-            player.sendMessage(lang.get(key, "error1"));
-            return true;
+            return error(sender, args);
+        }
+        democracyStorage storage = consider.get(args.get(1));
+
+        if (!storage.getValCode().equals(args.get(3))) {
+            return error(sender, args);
         }
 
-        democracyStorage storage = consider.get(args.get(1));
         if (storage.vote(player.getName(), vote)) {
             player.sendMessage(lang.get(key, "interact5") + answers[storage.getAnswers()][vote]);
             return true;
@@ -144,9 +143,7 @@ public class democracyCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean create() {
-        CommandSender sender = getSender();
-        ArrayList<String> args = getArgs();
+    private boolean create(CommandSender sender, ArrayList<String> args) {
         String senderName = sender.getName();
 
         if (consider.containsKey(senderName)) {
@@ -159,7 +156,8 @@ public class democracyCommand extends CommandDispatcher {
             text.append(args.get(i)).append(" ");
         }
 
-        consider.put(senderName, new democracyStorage(sender, text.toString(), lang));
+        String valCode = String.valueOf(rnd.nextInt());
+        consider.put(senderName, new democracyStorage(sender, text.toString(), lang, valCode));
 
         BaseComponent message1 = new TextComponent("option '0': " + lang.get(ansKey, "11") + lang.get(ansKey, "12"));
         BaseComponent message2 = new TextComponent("option '1': " + lang.get(ansKey, "21") + lang.get(ansKey, "22"));
@@ -181,6 +179,7 @@ public class democracyCommand extends CommandDispatcher {
             Bukkit.getPlayer(senderName).spigot().sendMessage(message5);
         } else {
             sender.sendMessage(lang.get(key, "click2"));
+            sender.sendMessage("Validation Code: " + valCode);
             sender.sendMessage(message1.toPlainText());
             sender.sendMessage(message2.toPlainText());
             sender.sendMessage(message3.toPlainText());
@@ -190,12 +189,11 @@ public class democracyCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean createConfirm() {
-        CommandSender sender = getSender();
-        if (getArgs().size() != 2) {
-            return error();
+    private boolean createConfirm(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 2) {
+            return error(sender, args);
         }
-        int option = Integer.parseInt(getArgs().get(1));
+        int option = Integer.parseInt(args.get(1));
         String senderName = sender.getName();
         democracyStorage storage = consider.get(senderName);
 
@@ -204,10 +202,12 @@ public class democracyCommand extends CommandDispatcher {
         }
         storage.setAnswers(option);
 
+        String valCode = storage.getValCode();
+
         BaseComponent message1 = new TextComponent(answers[option][0]);
         BaseComponent message2 = new TextComponent(answers[option][1]);
-        message1.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/modinput vote " + senderName + " 0"));
-        message2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/modinput vote " + senderName + " 1"));
+        message1.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/democracy vote " + senderName + " 0 " + valCode));
+        message2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/democracy vote " + senderName + " 1 " + valCode));
 
         ComponentBuilder message3 = new ComponentBuilder();
         message3.append(lang.get(key, "info4"));
@@ -224,6 +224,5 @@ public class democracyCommand extends CommandDispatcher {
         Bukkit.getOnlinePlayers().forEach(player -> player.spigot().sendMessage(message3.create()));
         return true;
     }
-
 
 }

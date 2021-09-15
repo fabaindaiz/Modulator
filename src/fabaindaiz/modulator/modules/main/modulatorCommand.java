@@ -5,6 +5,7 @@ import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class modulatorCommand extends CommandDispatcher {
@@ -18,24 +19,22 @@ public class modulatorCommand extends CommandDispatcher {
         register("reload", this::reload);
     }
 
-    private Boolean info() {
-        if (getArgs().size() != 1) {
-            return error();
+    private Boolean info(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get("modulator.info1"));
         sender.sendMessage(lang.get("modulator.info2"));
         return true;
     }
 
-    private Boolean help() {
-        if (getArgs().size() != 1) {
-            return error();
+    private Boolean help(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         sender.sendMessage(lang.get("modulator.help1"));
         sender.sendMessage(lang.get("modulator.help2"));
-        plugin.getCommand().getModules().forEach((name, module)->{
+        plugin.getCommand().getModules().forEach((name, module) -> {
             if (module.getDescription() != null) {
                 sender.sendMessage(module.getDescription());
             }
@@ -43,11 +42,10 @@ public class modulatorCommand extends CommandDispatcher {
         return true;
     }
 
-    private Boolean modules() {
-        if (getArgs().size() != 1) {
-            return error();
+    private Boolean modules(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         Set<String> moduleNames = plugin.getCommand().getModuleNames();
 
         StringBuilder string = new StringBuilder();
@@ -58,11 +56,10 @@ public class modulatorCommand extends CommandDispatcher {
         return true;
     }
 
-    private boolean reload() {
-        if (getArgs().size() != 1) {
-            return error();
+    private boolean reload(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
         }
-        CommandSender sender = getSender();
         plugin.reload();
         sender.sendMessage(lang.get("modulator.reload1"));
         return true;
