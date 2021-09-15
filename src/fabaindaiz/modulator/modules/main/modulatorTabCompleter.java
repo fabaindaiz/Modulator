@@ -1,37 +1,29 @@
 package fabaindaiz.modulator.modules.main;
 
 import fabaindaiz.modulator.Modulator;
+import fabaindaiz.modulator.core.dispatcher.TabCompleterDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class modulatorTabCompleter implements TabCompleter {
-    final String[] modules1 = {"help", "modules", "reload"};
-    private final Modulator plugin;
-    private final IModule module;
+public class modulatorTabCompleter extends TabCompleterDispatcher {
+
+    final List<String> info = Arrays.asList(new String[]{"help", "modules", "reload"});
 
     protected modulatorTabCompleter(Modulator modulator, IModule module) {
-        this.plugin = modulator;
-        this.module = module;
+        super(modulator, module);
+
+        register("", this::info);
+        register("help", super::emptyList);
+        register("modules", super::emptyList);
+        register("reload", super::emptyList);
     }
 
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-
-        if (sender instanceof Player) {
-            if (label.equalsIgnoreCase("modulator") && args.length <= 1) {
-                return Arrays.asList(modules1);
-            }
-
-        }
-        return Collections.emptyList();
+    private List<String> info() {
+        return info;
     }
+
+
 
 }

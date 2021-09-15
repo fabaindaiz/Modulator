@@ -1,38 +1,31 @@
 import fabaindaiz.modulator.Modulator;
+import fabaindaiz.modulator.core.dispatcher.TabCompleterDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class democracyTabCompleter implements TabCompleter {
-    static final ArrayList<String> emptyList = new ArrayList<>();
-    final String[] modules1 = {"help", "create", "done", "cancel"};
-    private final Modulator plugin;
-    private final IModule module;
+public class democracyTabCompleter extends TabCompleterDispatcher {
+
+    final List<String> info = Arrays.asList(new String[]{"help", "done", "cancel", "create"});
+    final List<String> create = Arrays.asList(new String[]{"<question>"});
 
     protected democracyTabCompleter(Modulator modulator, IModule module) {
-        this.plugin = modulator;
-        this.module = module;
+        super(modulator, module);
+
+        register("", this::info);
+        register("help", super::emptyList);
+        register("done", super::emptyList);
+        register("cancel", super::emptyList);
+        register("create", this::create);
     }
 
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    private List<String> info() {
+        return info;
+    }
 
-        if (!sender.hasPermission("modulator.democracy")) {
-            return emptyList;
-        }
-        if (sender instanceof Player) {
-            if (args.length <= 1) {
-                return Arrays.asList(modules1);
-            }
-
-        }
-        return emptyList;
+    private List<String> create() {
+        return create;
     }
 
 }

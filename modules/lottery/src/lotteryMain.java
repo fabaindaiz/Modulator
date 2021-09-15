@@ -10,6 +10,8 @@ public class lotteryMain extends AModule {
     public lotteryMain(Modulator modulator) {
         setName("lottery");
         setDescription("\u00A7e/lottery \u00A7fCompra billetes de loter\u00eda");
+        setPermission("modulator.use");
+
         this.plugin = modulator;
     }
 

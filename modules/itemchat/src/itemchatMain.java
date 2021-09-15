@@ -9,6 +9,8 @@ public class itemchatMain extends AModule {
     public itemchatMain(Modulator modulator) {
         setName("itemchat");
         setDescription("\u00A7e/itemchat \u00A7fMuestra tus items en el chat");
+        setPermission("modulator.use");
+
         this.plugin = modulator;
     }
 

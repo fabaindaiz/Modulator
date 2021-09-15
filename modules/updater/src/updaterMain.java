@@ -9,6 +9,8 @@ public class updaterMain extends AModule {
     public updaterMain(Modulator modulator) {
         setName("updater");
         setDescription("\u00A7e/updater \u00A7fActualiza plugins del servidor");
+        setPermission("modulator.op");
+
         this.plugin = modulator;
     }
 

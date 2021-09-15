@@ -8,6 +8,8 @@ public class modinput extends AModule {
 
     public modinput(Modulator modulator) {
         setName("modinput");
+        setPermission("modulator.use");
+
         this.plugin = modulator;
         setLanguageLoader(plugin.getConfiguration().getLanguageLoader());
     }

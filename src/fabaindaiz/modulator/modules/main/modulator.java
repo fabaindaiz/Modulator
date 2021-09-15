@@ -9,6 +9,8 @@ public class modulator extends AModule {
 
     public modulator(Modulator modulator) {
         setName("modulator");
+        setPermission("modulator.op");
+
         this.plugin = modulator;
         setLanguageLoader(plugin.getConfiguration().getLanguageLoader());
     }

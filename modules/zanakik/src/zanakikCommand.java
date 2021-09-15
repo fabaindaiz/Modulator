@@ -25,22 +25,11 @@ public class zanakikCommand extends CommandDispatcher {
         this.ignorebypass = module.getConfiguration().getBoolean("zanakik.ignorebypass");
         setEnabled(module.getConfiguration().getBoolean("zanakik.enable"));
 
-        setPermission("modulator.op");
         register("", this::zkik);
         register("help", this::help);
         register("player", this::zkikPlayer);
         register("get", this::getzkik);
 
-    }
-
-    @Override
-    public boolean conditions() {
-        CommandSender sender = getSender();
-        if (this.noplayerzkik && sender instanceof Player) {
-            sender.sendMessage(lang.get(key, "error5"));
-            return false;
-        }
-        return true;
     }
 
     private boolean help() {
@@ -59,6 +48,10 @@ public class zanakikCommand extends CommandDispatcher {
             return error();
         }
         CommandSender sender = getSender();
+        if (this.noplayerzkik && sender instanceof Player) {
+            sender.sendMessage(lang.get(key, "error5"));
+            return true;
+        }
         Player[] players = zanakikUtil.getKickablePlayers(module);
         if (players.length < 1) {
             Bukkit.broadcastMessage(lang.get(key, "error2"));

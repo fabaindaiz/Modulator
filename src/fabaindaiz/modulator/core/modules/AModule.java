@@ -12,6 +12,7 @@ public abstract class AModule implements IModule {
 
     private String name;
     private String description;
+    private String permission = "modulator.adm";
     private String jarName;
     private String version;
     private List<String> aliases = new ArrayList<>();
@@ -38,6 +39,16 @@ public abstract class AModule implements IModule {
     @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
+    }
+
+    @Override
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     @Override

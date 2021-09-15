@@ -32,7 +32,6 @@ public class itemchatCommand extends CommandDispatcher {
             }
         }
 
-        setPermission("modulator.use");
         register("", this::info);
         register("help", this::help);
         register("show", this::show);
@@ -40,6 +39,9 @@ public class itemchatCommand extends CommandDispatcher {
     }
 
     private boolean info() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
         CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "info1"));
         sender.sendMessage(lang.get(key, "info2"));
@@ -47,6 +49,9 @@ public class itemchatCommand extends CommandDispatcher {
     }
 
     private boolean help() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
         CommandSender sender = getSender();
         sender.sendMessage(lang.get(key, "help1"));
         sender.sendMessage(lang.get(key, "help2"));
@@ -55,6 +60,9 @@ public class itemchatCommand extends CommandDispatcher {
     }
 
     private boolean show() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
         CommandSender sender = getSender();
         ItemStack item = Bukkit.getPlayer(sender.getName()).getInventory().getItemInMainHand();
         if (item.getType().isAir()) {
@@ -67,6 +75,9 @@ public class itemchatCommand extends CommandDispatcher {
     }
 
     private boolean owner() {
+        if (getArgs().size() != 1) {
+            return error();
+        }
         CommandSender sender = getSender();
         if (!this.enableOwner) {
             sender.sendMessage(lang.get(key, "disable2"));

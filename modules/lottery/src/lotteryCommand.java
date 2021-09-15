@@ -33,7 +33,6 @@ public class lotteryCommand extends CommandDispatcher {
             }
         }
 
-        setPermission("modulator.use");
         register("", this::info);
         register("help", this::help);
         register("buy", this::buy);

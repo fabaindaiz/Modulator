@@ -13,7 +13,6 @@ public class modinputCommand extends CommandDispatcher {
     public modinputCommand(Modulator modulator, IModule module) {
         super(modulator, module);
 
-        setPermission("modulator.use");
         register("vote", this::vote);
     }
 

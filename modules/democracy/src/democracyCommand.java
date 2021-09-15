@@ -35,7 +35,6 @@ public class democracyCommand extends CommandDispatcher {
         this.answers = tempList.toArray(answers);
         setEnabled(module.getConfiguration().getBoolean("democracy.enable"));
 
-        setPermission("modulator.use");
         register("", this::info);
         register("help", this::help);
         register("done", this::done);

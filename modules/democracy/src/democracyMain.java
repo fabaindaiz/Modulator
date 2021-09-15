@@ -12,6 +12,8 @@ public class democracyMain extends AModule {
     public democracyMain(Modulator modulator) {
         setName("democracy");
         setDescription("\u00A7e/democracy \u00A7fCrea tus encuestas rapidas");
+        setPermission("modulator.use");
+
         this.plugin = modulator;
     }
 

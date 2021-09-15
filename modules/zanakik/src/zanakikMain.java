@@ -9,6 +9,8 @@ public class zanakikMain extends AModule {
     public zanakikMain(Modulator modulator) {
         setName("zkik");
         setDescription("\u00A7e/zanakik \u00A7fZanakikea a jugadores");
+        setPermission("modulator.op");
+
         this.plugin = modulator;
     }
 

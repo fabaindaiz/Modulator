@@ -12,7 +12,6 @@ public class modulatorCommand extends CommandDispatcher {
     protected modulatorCommand(Modulator modulator, IModule module) {
         super(modulator, module);
 
-        setPermission("modulator.op");
         register("", this::info);
         register("help", this::help);
         register("modules", this::modules);
@@ -30,7 +29,7 @@ public class modulatorCommand extends CommandDispatcher {
     }
 
     private Boolean help() {
-        if (getArgs().size() != 2) {
+        if (getArgs().size() != 1) {
             return error();
         }
         CommandSender sender = getSender();
@@ -45,7 +44,7 @@ public class modulatorCommand extends CommandDispatcher {
     }
 
     private Boolean modules() {
-        if (getArgs().size() != 2) {
+        if (getArgs().size() != 1) {
             return error();
         }
         CommandSender sender = getSender();
@@ -60,7 +59,7 @@ public class modulatorCommand extends CommandDispatcher {
     }
 
     private boolean reload() {
-        if (getArgs().size() != 2) {
+        if (getArgs().size() != 1) {
             return error();
         }
         CommandSender sender = getSender();

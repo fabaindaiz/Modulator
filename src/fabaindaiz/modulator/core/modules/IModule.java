@@ -21,6 +21,10 @@ public interface IModule {
 
     void setDescription(String description);
 
+    String getPermission();
+
+    void setPermission(String permission);
+
     String getJarName();
 
     void setJarName(String jarName);

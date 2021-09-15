@@ -38,7 +38,6 @@ public class updaterCommand extends CommandDispatcher {
             loadConfig();
         }
 
-        setPermission("modulator.op");
         register("", this::info);
         register("help", this::help);
         register("update", this::update);
