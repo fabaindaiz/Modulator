@@ -1,0 +1,16 @@
+version: "0.5.4"
+error:
+  error: "Wrong arguments for Modulator"
+  nokey: "Key not found in language"
+  noper: "\u00A73Modulator \u00A7f- You dont have permission to do this"
+modulator:
+  info1: "\u00A73Modulator 0.5.4 \u00A7f- By LtFabin"
+  info2: "\u00A76Command list: \u00A73/modulator help"
+  info3: "\u00A73Enabled modules: \u00A7f"
+  reload1: "\u00A73Modulator \u00A7f- Plugin reloaded"
+  help1: "\u00A76Modulator commands"
+  help2: "\u00A7e/modulator \u00A7fAdministration commands"
+  warn1: "Modulator could not be loaded"
+  warn2: "Before updating, you must delete folder /modulator"
+  load1: "All modules have been loaded without errors"
+  load2: "Deactivating all modules"

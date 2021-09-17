@@ -18,4 +18,5 @@ public class LanguageLoader {
         String path = parent + "." + key;
         return language.getString(path, language.getString("error.nokey") + path);
     }
+
 }

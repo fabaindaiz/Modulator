@@ -27,6 +27,6 @@ public class zanakikListener implements Listener {
         if (onlineplayers < maxplayers) return;
 
         Bukkit.broadcastMessage(lang.get(key, "fullserver"));
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "zkik");
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "zanakik");
     }
 }

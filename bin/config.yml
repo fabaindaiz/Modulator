@@ -1,10 +1,10 @@
 version: 0.5.4
 # Modulator plugin configuration file
 
-# Languages: ES
+# Languages: ES, EN
 language: ES
 
 # Modulator settings
 modulator:
-  # modulator command alias (default: md)
-  alias: md
+  # modulator command alias
+  alias: [ mod ]

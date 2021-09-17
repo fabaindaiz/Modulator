@@ -9,6 +9,7 @@ import java.util.List;
 public class democracyTabCompleter extends TabCompleterDispatcher {
 
     final List<String> info = Arrays.asList(new String[]{"help", "done", "cancel", "create"});
+    final List<String> cancel = Arrays.asList(new String[]{"confirm"});
     final List<String> create = Arrays.asList(new String[]{"<question>"});
 
     protected democracyTabCompleter(Modulator modulator, IModule module) {
@@ -17,12 +18,16 @@ public class democracyTabCompleter extends TabCompleterDispatcher {
         register("", this::info);
         register("help", super::emptyList);
         register("done", super::emptyList);
-        register("cancel", super::emptyList);
+        register("cancel", this::cancel);
         register("create", this::create);
     }
 
     private List<String> info(ArrayList<String> args) {
         return info;
+    }
+
+    private List<String> cancel(ArrayList<String> args) {
+        return cancel;
     }
 
     private List<String> create(ArrayList<String> args) {

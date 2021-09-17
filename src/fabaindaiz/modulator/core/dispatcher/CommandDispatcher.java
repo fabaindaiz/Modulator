@@ -21,7 +21,6 @@ public class CommandDispatcher implements CommandExecutor {
     private final HashMap<String, BiFunction<CommandSender, ArrayList<String>, Boolean>> dispatcher = new HashMap<>();
 
     private boolean enabled = true;
-    private ArrayList<String> args;
 
     public CommandDispatcher(Modulator modulator, IModule module) {
         this.plugin = modulator;
@@ -45,12 +44,7 @@ public class CommandDispatcher implements CommandExecutor {
         if (args.length == 0) {
             argsList.add("");
         }
-        try {
-            return dispatcher.getOrDefault(argsList.get(0), this::error).apply(sender, argsList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+        return dispatcher.getOrDefault(argsList.get(0), this::error).apply(sender, argsList);
     }
 
     public boolean conditions() {

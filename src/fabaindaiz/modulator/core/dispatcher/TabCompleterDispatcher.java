@@ -20,7 +20,6 @@ public class TabCompleterDispatcher implements TabCompleter {
     public final IModule module;
 
     private final HashMap<String, Function<ArrayList<String>, List<String>>> dispatcher = new HashMap<>();
-    private ArrayList<String> args;
 
     public TabCompleterDispatcher(Modulator modulator, IModule module) {
         this.plugin = modulator;
@@ -37,12 +36,7 @@ public class TabCompleterDispatcher implements TabCompleter {
         if (args.length == 0) {
             argsList.add("");
         }
-        try {
-            return dispatcher.getOrDefault(argsList.get(0), this::defaultList).apply(argsList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Collections.emptyList();
+        return dispatcher.getOrDefault(argsList.get(0), this::defaultList).apply(argsList);
     }
 
     public void register(String command, Function<ArrayList<String>, List<String>> method) {

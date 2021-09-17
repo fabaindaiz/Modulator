@@ -21,10 +21,6 @@ public interface IModule {
 
     void setDescription(String description);
 
-    String getPermission();
-
-    void setPermission(String permission);
-
     String getJarName();
 
     void setJarName(String jarName);
@@ -32,6 +28,10 @@ public interface IModule {
     String getVersion();
 
     void setVersion(String version);
+
+    String getPermission();
+
+    void setPermission(String permission);
 
     List<String> getAliases();
 

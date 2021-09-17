@@ -1,5 +1,6 @@
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
+import fabaindaiz.modulator.core.dispatcher.SubCommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
@@ -18,6 +19,8 @@ public class zanakikCommand extends CommandDispatcher {
     private final boolean ignorebypass;
     private final String key = "zanakik.command";
 
+    private final SubCommandDispatcher getzkikDispatcher = new SubCommandDispatcher(this);
+
     protected zanakikCommand(Modulator modulator, IModule module) {
         super(modulator, module);
 
@@ -29,6 +32,10 @@ public class zanakikCommand extends CommandDispatcher {
         register("help", this::help);
         register("player", this::zkikPlayer);
         register("get", this::getzkik);
+
+        getzkikDispatcher.register(1, this::getzkik1);
+        getzkikDispatcher.register(2, this::getzkik2);
+        getzkikDispatcher.register(3, this::getzkik3);
 
     }
 
@@ -84,17 +91,29 @@ public class zanakikCommand extends CommandDispatcher {
     }
 
     private boolean getzkik(CommandSender sender, ArrayList<String> args) {
-        if (args.size() > 2) {
-            return error(sender, args);
-        }
+        return getzkikDispatcher.dispatch(sender, args).apply(sender, args);
+    }
 
-        int num = 1;
-        if (args.size() == 2) {
-            num = Integer.parseInt(args.get(1));
+    private boolean getzkik1(CommandSender sender, ArrayList<String> args) {
+        if (isOnlinePlayer(sender.getName())) {
+            Bukkit.getPlayer(sender.getName()).getInventory().addItem(zanakikUtil.getZanakik(module, 1));
         }
-        String senderName = sender.getName();
-        if (isOnlinePlayer(senderName)) {
-            Bukkit.getPlayer(senderName).getInventory().addItem(zanakikUtil.getZanakik(module, num < 64 ? num : 64));
+        return true;
+    }
+
+    private boolean getzkik2(CommandSender sender, ArrayList<String> args) {
+        int num = Integer.parseInt(args.get(1));
+        if (isOnlinePlayer(sender.getName())) {
+            Bukkit.getPlayer(sender.getName()).getInventory().addItem(zanakikUtil.getZanakik(module, num < 64 ? num : 64));
+        }
+        return true;
+    }
+
+    private boolean getzkik3(CommandSender sender, ArrayList<String> args) {
+        String name = args.get(2);
+        int num = Integer.parseInt(args.get(1));
+        if (isOnlinePlayer(name)) {
+            Bukkit.getPlayer(name).getInventory().addItem(zanakikUtil.getZanakik(module, num < 64 ? num : 64));
         }
         return true;
     }

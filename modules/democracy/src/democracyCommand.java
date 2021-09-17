@@ -1,5 +1,6 @@
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.dispatcher.CommandDispatcher;
+import fabaindaiz.modulator.core.dispatcher.SubCommandDispatcher;
 import fabaindaiz.modulator.core.modules.IModule;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -25,6 +26,8 @@ public class democracyCommand extends CommandDispatcher {
     private final HashMap<String, democracyStorage> consider = new HashMap<>();
     private String[][] answers;
 
+    private final SubCommandDispatcher cancelDispatcher = new SubCommandDispatcher(this);
+
     protected democracyCommand(Modulator modulator, IModule module) {
         super(modulator, module);
 
@@ -45,6 +48,10 @@ public class democracyCommand extends CommandDispatcher {
         register("vote", this::vote);
         register("create", this::create);
         register("createConfirm", this::createConfirm);
+
+        cancelDispatcher.register(1, this::cancel1);
+        cancelDispatcher.register(2, this::cancel2);
+
     }
 
     private boolean info(CommandSender sender, ArrayList<String> args) {
@@ -96,16 +103,19 @@ public class democracyCommand extends CommandDispatcher {
     }
 
     private boolean cancel(CommandSender sender, ArrayList<String> args) {
-        if (args.size() > 2) {
+        return cancelDispatcher.dispatch(sender, args).apply(sender, args);
+    }
+
+    private boolean cancel1(CommandSender sender, ArrayList<String> args) {
+        sender.sendMessage(lang.get(key, "interact4"));
+        return true;
+    }
+
+    private boolean cancel2(CommandSender sender, ArrayList<String> args) {
+        if (!args.get(1).equals("confirm")) {
             return error(sender, args);
         }
         String senderName = sender.getName();
-
-        if (args.size() == 1 || !args.get(1).equals("confirm")) {
-            sender.sendMessage(lang.get(key, "interact4"));
-            return true;
-        }
-
         if (consider.containsKey(senderName)) {
             consider.remove(senderName);
             Bukkit.broadcastMessage(lang.get(key, "interact2"));

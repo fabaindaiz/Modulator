@@ -9,8 +9,8 @@ public class ModulatorDependencies {
 
     private final sqlHandler sqlHandler;
     private final vaultHandler vaultHandler;
-    private final Modulator plugin;
     private /*final*/ libHandler libHandler;
+    private final Modulator plugin;
 
     public ModulatorDependencies(Modulator plugin) {
 

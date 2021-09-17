@@ -12,9 +12,9 @@ public abstract class AModule implements IModule {
 
     private String name;
     private String description;
-    private String permission = "modulator.adm";
     private String jarName;
     private String version;
+    private String permission = "modulator.adm";
     private List<String> aliases = new ArrayList<>();
     private CommandExecutor executor;
     private TabCompleter tabCompleter;
@@ -42,16 +42,6 @@ public abstract class AModule implements IModule {
     }
 
     @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    @Override
     public String getJarName() {
         return jarName;
     }
@@ -69,6 +59,16 @@ public abstract class AModule implements IModule {
     @Override
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
+    }
+
+    @Override
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     @Override
