@@ -1,0 +1,10 @@
+unnamed package
+fabaindaiz.modulator
+fabaindaiz.modulator.core.command
+fabaindaiz.modulator.core.configuration
+fabaindaiz.modulator.core.dependencies
+fabaindaiz.modulator.core.dispatcher
+fabaindaiz.modulator.core.loader
+fabaindaiz.modulator.core.modules
+fabaindaiz.modulator.core.util
+fabaindaiz.modulator.modules.main

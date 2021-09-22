@@ -9,7 +9,7 @@ public class orderMain extends AModule {
     public orderMain(Modulator modulator) {
         setName("order");
         setDescription("\u00A7e/order \u00A7fOrdena tu inventario");
-        setPermission("modulator.don");
+        setPermission("modulator.use");
 
         this.plugin = modulator;
     }

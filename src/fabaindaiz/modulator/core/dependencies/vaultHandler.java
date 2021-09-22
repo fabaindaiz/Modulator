@@ -9,6 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+/**
+ * Represents a class which manage vault economy operations
+ */
 public class vaultHandler {
 
     private static Economy econ = null;
@@ -17,9 +20,11 @@ public class vaultHandler {
     private final Modulator plugin;
     private final boolean serverHasVault;
 
-    public vaultHandler(Modulator modulator) {
-
-        this.plugin = modulator;
+    /**
+     * @param plugin Modulator main class
+     */
+    public vaultHandler(Modulator plugin) {
+        this.plugin = plugin;
 
         if (!setupEconomy()) {
             serverHasVault = false;
@@ -30,18 +35,36 @@ public class vaultHandler {
         setupChat();
     }
 
+    /**
+     * Gets vault economy for Modulator
+     * @return Vault economy
+     */
     public static Economy getEconomy() {
         return econ;
     }
 
+    /**
+     * Gets vault permissions for Modulator
+     * @return Vault permission
+     */
     public static Permission getPermissions() {
         return perms;
     }
 
+    /**
+     * Gets vault chat for Modulator
+     * @return Vault chat
+     */
     public static Chat getChat() {
         return chat;
     }
 
+    /**
+     * Deposit money to player
+     * @param player Target player
+     * @param amount Transaction amount
+     * @return true if successful transaction
+     */
     public boolean depositPlayer(Player player, float amount) {
         if (!serverHasVault) {
             return false;
@@ -50,6 +73,12 @@ public class vaultHandler {
         return r.transactionSuccess();
     }
 
+    /**
+     * Withdraw money from player
+     * @param player Target player
+     * @param amount Transaction amount
+     * @return true if successful transaction
+     */
     public boolean withdrawPlayer(Player player, float amount) {
         if (!serverHasVault) {
             return false;
@@ -58,6 +87,10 @@ public class vaultHandler {
         return r.transactionSuccess();
     }
 
+    /**
+     * Setup vault economy for Modulator
+     * @return true if setup economy
+     */
     private boolean setupEconomy() {
         if (Bukkit.getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -70,18 +103,30 @@ public class vaultHandler {
         return true;
     }
 
+    /**
+     * Setup vault permissions for Modulator
+     * @return true if setup permissions
+     */
     private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return true;
     }
 
+    /**
+     * Setup vault chat for Modulator
+     * @return true if chat setup
+     */
     private boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
         return true;
     }
 
+    /**
+     * Gets server vault status
+     * @return true if server has vault
+     */
     public boolean getServerHasVault() {
         return serverHasVault;
     }

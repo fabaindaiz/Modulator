@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * Represents a class which can suggest tab completions for modules
+ */
 public class TabCompleterDispatcher implements TabCompleter {
 
     public final Modulator plugin;
@@ -21,11 +24,23 @@ public class TabCompleterDispatcher implements TabCompleter {
 
     private final HashMap<String, Function<ArrayList<String>, List<String>>> dispatcher = new HashMap<>();
 
+    /**
+     * @param modulator Modulator main class
+     * @param module Module main class
+     */
     public TabCompleterDispatcher(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
     }
 
+    /**
+     * Requests a list of possible completions for modules
+     * @param sender Source of the command
+     * @param command Command which was executed
+     * @param label Alias of the command which was used
+     * @param args Passed command arguments
+     * @return A List of possible completions for the final argument
+     */
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!sender.hasPermission(module.getPermission())) {
@@ -39,14 +54,29 @@ public class TabCompleterDispatcher implements TabCompleter {
         return dispatcher.getOrDefault(argsList.get(0), this::defaultList).apply(argsList);
     }
 
+    /**
+     * Register a command tab completer for modules
+     * @param command Command which was executed
+     * @param method Method to dispatch
+     */
     public void register(String command, Function<ArrayList<String>, List<String>> method) {
         dispatcher.put(command, method);
     }
 
+    /**
+     * Gets the default commands list
+     * @param args Passed command arguments
+     * @return The default comands list
+     */
     private List<String> defaultList(ArrayList<String> args) {
         return dispatcher.get("").apply(args);
     }
 
+    /**
+     * Gets an empty list
+     * @param args Passed command arguments
+     * @return An empty list
+     */
     public List<String> emptyList(ArrayList<String> args) {
         return Collections.emptyList();
     }

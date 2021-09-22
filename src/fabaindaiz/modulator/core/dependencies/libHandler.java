@@ -1,7 +1,6 @@
 package fabaindaiz.modulator.core.dependencies;
 
 import fabaindaiz.modulator.Modulator;
-import fabaindaiz.modulator.core.modules.AModule;
 import fabaindaiz.modulator.core.util.jarUtils;
 
 import java.io.File;
@@ -10,20 +9,18 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-public class libHandler extends AModule {
+/**
+ * Represents a class which can manage modules libraries
+ */
+public class libHandler {
 
     private final Modulator plugin;
 
-    public libHandler(Modulator modulator) {
-        this.plugin = modulator;
-    }
-
-    @Override
-    public void onEnable() {
-    }
-
-    @Override
-    public void onDisable() {
+    /**
+     * @param plugin Modulator main class
+     */
+    public libHandler(Modulator plugin) {
+        this.plugin = plugin;
     }
 
     public boolean loadLib(String name) {

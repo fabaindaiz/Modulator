@@ -10,6 +10,9 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * Represents a class which load modules configuration
+ */
 public class ModuleConfiguration {
 
     private final Modulator plugin;
@@ -17,6 +20,12 @@ public class ModuleConfiguration {
     private final String name;
     private final String jarName;
 
+    /**
+     * @param plugin Modulator main class
+     * @param module Module main class
+     * @param name Module name
+     * @param jarName Module jar name
+     */
     public ModuleConfiguration(Modulator plugin, IModule module, String name, String jarName) {
         this.name = name;
         this.jarName = jarName;
@@ -27,6 +36,9 @@ public class ModuleConfiguration {
         loadConfiguration();
     }
 
+    /**
+     * Prepare all configuration files for a module
+     */
     private void loadConfiguration() {
         String lang = plugin.getConfiguration().getLang();
         File file = new File(plugin.getDataFolder(), "config/" + name);

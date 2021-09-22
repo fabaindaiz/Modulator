@@ -8,6 +8,11 @@ import java.util.List;
 
 public class playersUtil {
 
+    /**
+     * Return if player name corresponds a online player
+     * @param playerName Player name
+     * @return true if a online player
+     */
     static public boolean isOnlinePlayer(String playerName) {
         ArrayList<String> onlinePlayers = new ArrayList<>();
 
@@ -16,6 +21,11 @@ public class playersUtil {
         return onlinePlayers.contains(playerName);
     }
 
+    /**
+     * Return a player list from a player array
+     * @param players Player array
+     * @return Player list
+     */
     static public List<String> getPlayerNameList(Player[] players) {
         List<String> playerNameList = new ArrayList<>();
 

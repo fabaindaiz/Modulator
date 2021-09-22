@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 
+/**
+ * Represents a class which dispatch commands for modules
+ */
 public class CommandDispatcher implements CommandExecutor {
 
     public final Modulator plugin;
@@ -21,18 +24,33 @@ public class CommandDispatcher implements CommandExecutor {
     private final HashMap<String, BiFunction<CommandSender, ArrayList<String>, Boolean>> dispatcher = new HashMap<>();
 
     private boolean enabled = true;
+    private boolean reqperm = true;
 
+    /**
+     * @param modulator Modulator main class
+     * @param module Module main class
+     */
     public CommandDispatcher(Modulator modulator, IModule module) {
         this.plugin = modulator;
         this.module = module;
         this.lang = module.getLanguageLoader();
     }
 
+    /**
+     * Dispatch the given command for modules, returning its success
+     * @param sender Source of the command
+     * @param command Command which was executed
+     * @param label Alias of the command which was used
+     * @param args Passed command arguments
+     * @return true if a valid command, otherwise false
+     */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!sender.hasPermission(module.getPermission())) {
-            sender.sendMessage(lang.get("error.noper"));
-            return true;
+        if (reqperm) {
+            if (!sender.hasPermission(module.getPermission())) {
+                sender.sendMessage(lang.get("error.noper"));
+                return true;
+            }
         } else if (!this.enabled) {
             sender.sendMessage(lang.get("error.disabled"));
             return true;
@@ -47,18 +65,45 @@ public class CommandDispatcher implements CommandExecutor {
         return dispatcher.getOrDefault(argsList.get(0), this::error).apply(sender, argsList);
     }
 
+    /**
+     * An overridable method which represent command condition
+     * @return true if a valid conditional case, otherwise false
+     */
     public boolean conditions() {
         return true;
     }
 
+    /**
+     * Register a command dispatch for modules
+     * @param command Command which was executed
+     * @param method Method to dispatch
+     */
     public void register(String command, BiFunction<CommandSender, ArrayList<String>, Boolean> method) {
         dispatcher.put(command, method);
     }
 
-    public void setEnabled(Boolean enabled) {
+    /**
+     * Sets enabled condition for a module
+     * @param enabled true if an enabled module
+     */
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
+    /**
+     * Sets if a module require permissions
+     * @param reqperm true if a permission require module
+     */
+    public void setReqPerm(boolean reqperm) {
+        this.reqperm = reqperm;
+    }
+
+    /**
+     * Return default error for command dispatch
+     * @param sender Source of the command
+     * @param args Passed command arguments
+     * @return true if a valid command
+     */
     public boolean error(CommandSender sender, ArrayList<String> args) {
         sender.sendMessage(lang.get("error.error"));
         return true;

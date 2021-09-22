@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+/**
+ * Represents a class which register all modules and commands for Modulator
+ */
 public class ModulatorCommand {
 
     protected final HashMap<String, IModule> modules = new LinkedHashMap<>();
@@ -27,6 +30,9 @@ public class ModulatorCommand {
     private final Modulator plugin;
     private PluginCommand pluginCommand;
 
+    /**
+     * @param plugin Modulator main class
+     */
     public ModulatorCommand(Modulator plugin) {
 
         this.plugin = plugin;
@@ -42,31 +48,44 @@ public class ModulatorCommand {
             e.printStackTrace();
         }
 
-        addCoreModule();
+        registerModule(new modulator(plugin));
     }
 
+    /**
+     * Gets modules key set
+     * @return A String key set
+     */
     public Set<String> getModuleNames() {
         return modules.keySet();
     }
 
+    /**
+     * Gets modules lists
+     * @return A map with all modules
+     */
     public HashMap<String, IModule> getModules() {
         return modules;
     }
 
-    public void addCoreModule() {
-        registerModule(new modulator(plugin));
-    }
-
+    /**
+     * Enable all loaded modules
+     */
     public void enableModules() {
         File file = new File(plugin.getDataFolder(), "modules");
         modulatorLoader.loadAll(file).forEach((name, module) -> registerModule(module));
         moduleList.forEach((name, module) -> module.onEnable());
     }
 
+    /**
+     * Disable all loaded modules
+     */
     public void disableModules() {
         moduleList.forEach((name, module) -> module.onDisable());
     }
 
+    /**
+     * Register all aliases for loaded modules
+     */
     public void registerPlugin() {
         pluginCommand.setAliases(new ArrayList<>(moduleList.keySet()));
         Bukkit.getCommandMap().register("modulator", pluginCommand);
@@ -75,6 +94,10 @@ public class ModulatorCommand {
         pluginCommand.setTabCompleter(modulatorTabCompleter);
     }
 
+    /**
+     * Register a user module
+     * @param module User module main class
+     */
     private void registerModule(IModule module) {
         modules.put(module.getName(), module);
         moduleList.put(module.getName(), module);

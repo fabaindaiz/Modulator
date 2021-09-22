@@ -6,10 +6,16 @@ import fabaindaiz.modulator.core.modules.IModule;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * Represents a class which can load modules from jar files
+ */
 public class ModulatorLoader {
 
     private final Modulator plugin;
 
+    /**
+     * @param plugin Modulator main class
+     */
     public ModulatorLoader(Modulator plugin) {
         this.plugin = plugin;
 
@@ -23,6 +29,11 @@ public class ModulatorLoader {
         }
     }
 
+    /**
+     * Load all jar modules from a directory
+     * @param dir Module files main directory
+     * @return A map with all modules
+     */
     public HashMap<String, IModule> loadAll(File dir) {
         HashMap<String, IModule> modules = new HashMap<>();
         if (!dir.isDirectory() || !dir.exists()) {

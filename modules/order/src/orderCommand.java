@@ -21,6 +21,7 @@ public class orderCommand extends CommandDispatcher {
     protected orderCommand(Modulator modulator, IModule module) {
         super(modulator, module);
 
+        setReqPerm(false);
         register("", this::info);
         register("help", this::help);
         register("inv", this::order);
