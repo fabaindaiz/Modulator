@@ -1,6 +1,6 @@
 main: fabaindaiz.modulator.Modulator
 name: Modulator
-version: 0.5.4
+version: 0.5.5
 description: Load plugin modules in Server
 api-version: 1.14
 load: POSTWORLD
@@ -11,7 +11,7 @@ loadbefore: [ Vault ]
 commands:
   modulator:
     description: Main command
-    permission: modulator.command
+    permission: modulator.use
 permissions:
   modulator.adm:
     default: false

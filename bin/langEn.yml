@@ -1,10 +1,10 @@
-version: "0.5.4"
+version: "0.5.5"
 error:
   error: "Wrong arguments for Modulator"
   nokey: "Key not found in language"
   noper: "\u00A73Modulator \u00A7f- You dont have permission to do this"
 modulator:
-  info1: "\u00A73Modulator 0.5.4 \u00A7f- By LtFabin"
+  info1: "\u00A73Modulator 0.5.5 \u00A7f- By LtFabin"
   info2: "\u00A76Command list: \u00A73/modulator help"
   info3: "\u00A73Enabled modules: \u00A7f"
   reload1: "\u00A73Modulator \u00A7f- Plugin reloaded"

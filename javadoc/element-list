@@ -1,5 +1,6 @@
 unnamed package
 fabaindaiz.modulator
+fabaindaiz.modulator.core.bungee
 fabaindaiz.modulator.core.command
 fabaindaiz.modulator.core.configuration
 fabaindaiz.modulator.core.dependencies

@@ -92,7 +92,7 @@ public class CommandDispatcher implements CommandExecutor {
 
     /**
      * Sets if a module require permissions
-     * @param reqperm true if a permission require module
+     * @param reqperm true if a module require permission
      */
     public void setReqPerm(boolean reqperm) {
         this.reqperm = reqperm;

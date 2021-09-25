@@ -27,7 +27,8 @@ public class ModulatorBungee extends Plugin {
      * Called when this plugin is reloaded
      */
     public void reload() {
-
+        onDisable();
+        onEnable();
     }
 
 }
