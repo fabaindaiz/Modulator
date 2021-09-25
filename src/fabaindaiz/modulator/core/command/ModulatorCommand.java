@@ -73,7 +73,7 @@ public class ModulatorCommand {
     public void enableModules() {
         File file = new File(plugin.getDataFolder(), "modules");
         modulatorLoader.loadAll(file).forEach((name, module) -> registerModule(module));
-        moduleList.forEach((name, module) -> module.onEnable());
+        modules.forEach((name, module) -> module.onEnable());
     }
 
     /**
