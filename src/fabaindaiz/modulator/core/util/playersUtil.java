@@ -6,6 +6,9 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Some useful methods for handling players
+ */
 public class playersUtil {
 
     /**
@@ -15,9 +18,7 @@ public class playersUtil {
      */
     static public boolean isOnlinePlayer(String playerName) {
         ArrayList<String> onlinePlayers = new ArrayList<>();
-
         Bukkit.getOnlinePlayers().forEach(player -> onlinePlayers.add(player.getName()));
-
         return onlinePlayers.contains(playerName);
     }
 
@@ -28,11 +29,9 @@ public class playersUtil {
      */
     static public List<String> getPlayerNameList(Player[] players) {
         List<String> playerNameList = new ArrayList<>();
-
         for (Player p : players) {
             playerNameList.add(p.getName());
         }
-
         return playerNameList;
     }
 }

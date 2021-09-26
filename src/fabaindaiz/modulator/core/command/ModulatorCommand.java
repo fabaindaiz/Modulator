@@ -1,6 +1,7 @@
 package fabaindaiz.modulator.core.command;
 
 import fabaindaiz.modulator.Modulator;
+import fabaindaiz.modulator.core.handler.ModuleException;
 import fabaindaiz.modulator.core.loader.ModulatorLoader;
 import fabaindaiz.modulator.core.modules.IModule;
 import fabaindaiz.modulator.modules.main.modulator;
@@ -73,7 +74,7 @@ public class ModulatorCommand {
     public void enableModules() {
         File file = new File(plugin.getDataFolder(), "modules");
         modulatorLoader.loadAll(file).forEach((name, module) -> registerModule(module));
-        modules.forEach((name, module) -> module.onEnable());
+        modules.forEach(this::enableModules);
     }
 
     /**
@@ -102,6 +103,22 @@ public class ModulatorCommand {
         modules.put(module.getName(), module);
         moduleList.put(module.getName(), module);
         module.getAliases().forEach(alias -> moduleList.put(alias, module));
+    }
+
+    /**
+     * Enable a module
+     * @param name Module name
+     * @param module Module main class
+     */
+    private void enableModules(String name, IModule module) {
+        try {
+            module.onEnable();
+        } catch (Exception e) {
+            module.getAliases().forEach((alias) -> moduleList.remove(alias));
+            moduleList.remove(name, module);
+            modules.remove(name, module);
+            throw new ModuleException.ModuleLoadException(name, e);
+        }
     }
 
 }

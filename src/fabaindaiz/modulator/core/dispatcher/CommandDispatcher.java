@@ -3,6 +3,7 @@ package fabaindaiz.modulator.core.dispatcher;
 import com.google.common.collect.Lists;
 import fabaindaiz.modulator.Modulator;
 import fabaindaiz.modulator.core.configuration.LanguageLoader;
+import fabaindaiz.modulator.core.handler.ModuleException;
 import fabaindaiz.modulator.core.modules.IModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,6 +26,7 @@ public class CommandDispatcher implements CommandExecutor {
 
     private boolean enabled = true;
     private boolean reqperm = true;
+    private boolean disableOnException = false;
 
     /**
      * @param modulator Modulator main class
@@ -46,23 +48,28 @@ public class CommandDispatcher implements CommandExecutor {
      */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (reqperm) {
-            if (!sender.hasPermission(module.getPermission())) {
+        try {
+            if (reqperm && !sender.hasPermission(module.getPermission())) {
                 sender.sendMessage(lang.get("error.noper"));
                 return true;
+            } else if (!this.enabled) {
+                sender.sendMessage(lang.get("error.disabled"));
+                return true;
+            } else if (!conditions()) {
+                return true;
             }
-        } else if (!this.enabled) {
-            sender.sendMessage(lang.get("error.disabled"));
-            return true;
-        } else if (!conditions()) {
-            return true;
-        }
 
-        ArrayList<String> argsList = Lists.newArrayList(args);
-        if (args.length == 0) {
-            argsList.add("");
+            ArrayList<String> argsList = Lists.newArrayList(args);
+            if (args.length == 0) {
+                argsList.add("");
+            }
+            return dispatcher.getOrDefault(argsList.get(0), this::error).apply(sender, argsList);
+        } catch (Exception e) {
+            if (disableOnException) {
+                setEnabled(false);
+            }
+            throw new ModuleException.ModuleCommandException(module.getName(), e);
         }
-        return dispatcher.getOrDefault(argsList.get(0), this::error).apply(sender, argsList);
     }
 
     /**
@@ -96,6 +103,14 @@ public class CommandDispatcher implements CommandExecutor {
      */
     public void setReqPerm(boolean reqperm) {
         this.reqperm = reqperm;
+    }
+
+    /**
+     * Sets if a module is deactivated in case of an exception
+     * @param disableonexception true if a module requires deactivation
+     */
+    public void setDisableOnException(boolean disableonexception) {
+        this.disableOnException = disableonexception;
     }
 
     /**

@@ -2,6 +2,7 @@ package fabaindaiz.modulator;
 
 import fabaindaiz.modulator.core.command.ModulatorCommand;
 import fabaindaiz.modulator.core.configuration.ModulatorConfiguration;
+import fabaindaiz.modulator.core.handler.ModulatorException;
 import fabaindaiz.modulator.core.loader.ModulatorDependencies;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,12 +20,16 @@ public class Modulator extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        modulatorConfiguration = new ModulatorConfiguration(this);
-        modulatorDependencies = new ModulatorDependencies(this);
-        modulatorCommand = new ModulatorCommand(this);
+        try {
+            modulatorConfiguration = new ModulatorConfiguration(this);
+            modulatorDependencies = new ModulatorDependencies(this);
+            modulatorCommand = new ModulatorCommand(this);
 
-        modulatorCommand.enableModules();
-        modulatorCommand.registerPlugin();
+            modulatorCommand.enableModules();
+            modulatorCommand.registerPlugin();
+        } catch (Exception e) {
+            throw new ModulatorException.ModulatorLoadException(e);
+        }
     }
 
     /**

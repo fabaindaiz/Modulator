@@ -7,6 +7,9 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * Some useful methods for handling jar files
+ */
 public class jarUtils {
 
     private static boolean RUNNING_FROM_JAR = false;

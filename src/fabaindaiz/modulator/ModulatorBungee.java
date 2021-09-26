@@ -1,5 +1,6 @@
 package fabaindaiz.modulator;
 
+import fabaindaiz.modulator.core.handler.ModulatorException;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
@@ -12,7 +13,11 @@ public class ModulatorBungee extends Plugin {
      */
     @Override
     public void onEnable() {
+        try {
 
+        } catch (Exception e) {
+            throw new ModulatorException.ModulatorLoadException(e);
+        }
     }
 
     /**
