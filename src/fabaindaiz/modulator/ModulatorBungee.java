@@ -1,6 +1,5 @@
 package fabaindaiz.modulator;
 
-import fabaindaiz.modulator.core.handler.ModulatorException;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
