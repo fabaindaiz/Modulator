@@ -12,11 +12,6 @@ public class ModulatorBungee extends Plugin {
      */
     @Override
     public void onEnable() {
-        try {
-
-        } catch (Exception e) {
-            throw new ModulatorException.ModulatorLoadException(e);
-        }
     }
 
     /**

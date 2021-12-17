@@ -6,6 +6,14 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.libs.org.apache.http.HttpEntity;
+import org.bukkit.craftbukkit.libs.org.apache.http.HttpResponse;
+import org.bukkit.craftbukkit.libs.org.apache.http.NameValuePair;
+import org.bukkit.craftbukkit.libs.org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.bukkit.craftbukkit.libs.org.apache.http.client.methods.HttpPost;
+import org.bukkit.craftbukkit.libs.org.apache.http.impl.client.CloseableHttpClient;
+import org.bukkit.craftbukkit.libs.org.apache.http.impl.client.HttpClients;
+import org.bukkit.craftbukkit.libs.org.apache.http.message.BasicNameValuePair;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,6 +24,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class updaterCommand extends CommandDispatcher {
@@ -40,6 +49,7 @@ public class updaterCommand extends CommandDispatcher {
 
         register("", this::info);
         register("help", this::help);
+        register("plugin", this::plugin);
         register("update", this::update);
 
     }
@@ -61,6 +71,47 @@ public class updaterCommand extends CommandDispatcher {
         sender.sendMessage(lang.get(key, "help2"));
         sender.sendMessage(lang.get(key, "help3"));
         return true;
+    }
+
+    private boolean plugin(CommandSender sender, ArrayList<String> args) {
+        if (args.size() != 1) {
+            return error(sender, args);
+        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    plugin(sender);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.runTaskAsynchronously(plugin);
+        return true;
+    }
+
+    private void plugin(CommandSender sender) throws IOException {
+        String server_id = module.getConfiguration().getString("updater.enable");
+        String apikey = module.getConfiguration().getString("updater.apikey");
+        if (server_id.equals("none")) {
+            return;
+        }
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("plugin.uchilecraft.cl");
+
+        List<NameValuePair> params = new ArrayList<>(2);
+        params.add(new BasicNameValuePair("server", server_id));
+        params.add(new BasicNameValuePair("key", apikey));
+        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+        HttpResponse response = httpclient.execute(httppost);
+        HttpEntity entity = response.getEntity();
+
+        if (entity != null) {
+            try (InputStream instream = entity.getContent()) {
+                sender.sendMessage(instream.toString());
+            }
+        }
     }
 
     private boolean update(CommandSender sender, ArrayList<String> args) {

@@ -42,7 +42,12 @@ public class ModulatorLoader {
         ModuleJarLoader jarLoader = new ModuleJarLoader();
         for (File file : dir.listFiles((file, name) -> name.endsWith(".jar"))) {
             String name = file.getName().replace(".jar", "");
-            modules.put(name, jarLoader.load(file, IModule.class, plugin));
+            try {
+                modules.put(name, jarLoader.load(file, IModule.class, plugin));
+            } catch (Exception e) {
+                System.out.println("Error al cargar el archivo: "+name+".jar");
+                e.printStackTrace();
+            }
         }
         modules.forEach((name, module) -> module.setJarName(name));
         return modules;

@@ -31,9 +31,10 @@ public class zanakikUtil {
     static protected ItemStack getZanakik(IModule module, int num) {
         LanguageLoader lang = module.getLanguageLoader();
 
-        ItemStack carrot = new ItemStack(Material.CARROT, num);
-        ItemMeta meta = carrot.getItemMeta();
-        meta.setDisplayName("Zanakik");
+        ItemStack item = new ItemStack(Material.HONEY_BOTTLE, num);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("&9Lágrima de estudiante");
+        meta.setCustomModelData(1);
 
         List<String> loresList = new ArrayList<>();
         loresList.add(lang.get(key, "lore1"));
@@ -41,10 +42,11 @@ public class zanakikUtil {
         loresList.add(lang.get(key, "lore3"));
         loresList.add(lang.get(key, "lore4"));
         loresList.add(lang.get(key, "lore5"));
+        loresList.add(lang.get(key, "lore6"));
         meta.setLore(loresList);
 
-        carrot.setItemMeta(meta);
-        return carrot;
+        item.setItemMeta(meta);
+        return item;
     }
 
     static protected Date getZkikExpiresDate() {

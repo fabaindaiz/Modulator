@@ -20,8 +20,9 @@ zanakik:
   listener:
     fullserver: "¡Servidor lleno! Proceder\u00e1 un zanakik"
   util:
-    lore1: "Fuiste seleccionadx aleatoriamente"
-    lore2: "para ser kickeadx."
-    lore3: "Nada personal..."
-    lore4: "Guarda este ítem para poder canjearlo."
-    lore5: "Ve a \u00A74/warp dinero \u00A75para más info."
+    lore1: "\u00A7eTe has echado un ramo por jugar Minecraft, as\u00ed"
+    lore2: "\u00A7eque te saldr\u00e1s un ratito del server para estudiar."
+    lore3: ""
+    lore4: "\u00A76\u00A7o(Espero no echarme m\u00e1s ramos T_T)"
+    lore5: "\u00A7e\u00A7oItem sucesor de la \u00A76\u00A7ozanakik"
+    lore6: "\u00A7e\u00A7oPuedes canjear este objeto en \u00A76\u00A7o/spawn"

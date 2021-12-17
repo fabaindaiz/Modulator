@@ -5,3 +5,7 @@ version: 0.5.5
 updater:
   # Enable and disable updater module
   enable: true
+  # Server name for update
+  server: none
+  # Api key for connection
+  apikey: none
