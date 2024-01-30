@@ -1,7 +1,0 @@
-version: 0.5.5
-# Modulator plugin configuration file
-
-# Order settings
-order:
-  # Enable and disable order module
-  enable: true

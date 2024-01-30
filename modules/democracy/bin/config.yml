@@ -1,9 +1,0 @@
-version: 0.5.5
-# Modulator plugin configuration file
-
-# Democracy settings
-democracy:
-  # Enable and disable democracy module
-  enable: true
-  # Make questions anonymously
-  noname: false

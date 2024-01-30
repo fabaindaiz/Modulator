@@ -1,0 +1,4 @@
+name: Modulator
+version: '${project.version}'
+main: cl.fabaindaiz.modulator.Modulator
+api-version: '1.18'
