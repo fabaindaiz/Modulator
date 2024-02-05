@@ -1,4 +1,22 @@
 name: Modulator
 version: '${project.version}'
-main: cl.fabaindaiz.modulator.Modulator
+main: fabaindaiz.modulator.Modulator
 api-version: '1.18'
+description: Minecraft Plugin to load .jar Modules
+load: POSTWORLD
+author: fabaindaiz
+softdepend: [ Vault ]
+loadbefore: [ Vault ]
+commands:
+  modulator:
+    description: Main command
+    permission: modulator.use
+permissions:
+  modulator.adm:
+    default: false
+  modulator.mod:
+    default: op
+  modulator.don:
+    default: op
+  modulator.use:
+    default: true

@@ -1,6 +1,6 @@
-package cl.fabaindaiz.modulator
+package fabaindaiz.modulator
 
-import cl.fabaindaiz.modulator.core.command.ModulatorCommand
+import fabaindaiz.modulator.core.command.ModulatorCommand
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -9,6 +9,8 @@ class Modulator: JavaPlugin() {
         var instance: Modulator? = null
         private set;
     }
+
+    val command = ModulatorCommand()
 
     override fun onEnable() {
         val command =  ModulatorCommand()
@@ -19,6 +21,5 @@ class Modulator: JavaPlugin() {
 
     override fun onDisable() {
     }
-
 
 }

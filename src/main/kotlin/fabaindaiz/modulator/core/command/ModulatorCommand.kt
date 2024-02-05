@@ -1,6 +1,7 @@
-package cl.fabaindaiz.modulator.core.command
+package fabaindaiz.modulator.core.command
 
-import cl.fabaindaiz.modulator.modules.zkik.ZkikExecutor
+import fabaindaiz.modulator.Modulator
+import fabaindaiz.modulator.modules.zkik.ZanakikExecutor
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandMap
 import org.bukkit.command.PluginCommand
@@ -24,7 +25,7 @@ class ModulatorCommand {
     fun registerCommand() {
         pluginCommand.setAliases(mutableListOf("zkik"))
         commandMap.register("modulator", pluginCommand)
-        pluginCommand.setExecutor(ZkikExecutor)
+        pluginCommand.setExecutor(ZanakikExecutor)
         pluginCommand.setTabCompleter(ModulatorTabCompleter)
     }
 }

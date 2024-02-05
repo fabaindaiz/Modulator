@@ -1,4 +1,4 @@
-package cl.fabaindaiz.modulator.core.command
+package fabaindaiz.modulator.core.command
 
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
