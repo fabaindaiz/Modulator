@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.modules.zkik
+package fabaindaiz.modulator.modules.zanakik
 
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender

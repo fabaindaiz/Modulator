@@ -4,15 +4,17 @@ import fabaindaiz.modulator.Modulator
 import fabaindaiz.modulator.core.module.BaseModule
 import fabaindaiz.modulator.core.module.ModuleLoader
 import org.bukkit.Bukkit
+import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandMap
 import org.bukkit.command.PluginCommand
 import org.bukkit.plugin.Plugin
 
-class ModulatorCommand (val modulator: Modulator) {
+object ModulatorCommand {
     private val pluginCommand: PluginCommand
     private val commandMap: CommandMap
 
     private val modules = mutableListOf<BaseModule>()
+    private val aliases = mutableMapOf<String, BaseModule>()
 
     init {
         val commandMapField = Bukkit.getServer().javaClass.getDeclaredField("commandMap")
@@ -21,24 +23,32 @@ class ModulatorCommand (val modulator: Modulator) {
 
         val constructor = PluginCommand::class.java.getDeclaredConstructor(String::class.java, Plugin::class.java)
         constructor.trySetAccessible()
-        pluginCommand = constructor.newInstance("modulator", modulator)
-    }
+        pluginCommand = constructor.newInstance("modulator", Modulator.instance)
 
-    fun registerModule(module: BaseModule) {
-        modules.add(module)
+        pluginCommand.setExecutor(ModulatorExecutor)
+        pluginCommand.setTabCompleter(ModulatorTabCompleter)
     }
 
     fun registerLoader(loader: ModuleLoader) {
+        loader.modules.forEach { module ->
+            module.aliases.forEach { alias ->
+                aliases.putIfAbsent(alias, module)
+            }
+        }
         modules.addAll(loader.modules)
     }
 
-    fun registerCommand() {
-        val aliases = modules.flatMap { it.aliases }.toMutableList()
+    fun unregisterLoader() {
+        modules.clear()
+    }
 
-        pluginCommand.setAliases(aliases)
-        pluginCommand.setExecutor(ModulatorExecutor)
-        pluginCommand.setTabCompleter(ModulatorTabCompleter)
+    fun registerCommand() {
+        pluginCommand.setAliases(modules.flatMap { it.aliases }.toMutableList())
         commandMap.register("modulator", pluginCommand)
+    }
+
+    fun getModule(alias: String) : BaseModule? {
+        return aliases[alias]
     }
 
 }

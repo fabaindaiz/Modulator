@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.modules.zkik
+package fabaindaiz.modulator.modules.zanakik
 
 import fabaindaiz.modulator.Modulator
 import org.bukkit.Bukkit
@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin
 fun kikPlayer(player: Player, num: Int) {
     player.inventory.addItem(getZanakik(num))
     Bukkit.broadcastMessage("$player será zanakikeadx.")
-    Bukkit.getScheduler().scheduleSyncDelayedTask(Modulator.instance as Plugin, fun () = player.kickPlayer("Zanakik"), 300L)
+    Bukkit.getScheduler().scheduleSyncDelayedTask(Modulator.instance as Plugin, fun() = player.kickPlayer("Zanakik"), 300L)
 }
 
 private fun getZanakik(num: Int): ItemStack {

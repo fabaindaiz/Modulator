@@ -1,7 +1,7 @@
 package fabaindaiz.modulator.core.module
 
 import fabaindaiz.modulator.Modulator
-import fabaindaiz.modulator.modules.zkik.Zanakik
+import fabaindaiz.modulator.modules.zanakik.Zanakik
 
 class ModuleLoader (val modulator: Modulator) {
     var modules: List<BaseModule>

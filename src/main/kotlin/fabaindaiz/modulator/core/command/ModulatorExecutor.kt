@@ -3,10 +3,9 @@ package fabaindaiz.modulator.core.command
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import java.util.*
 
 object ModulatorExecutor: CommandExecutor {
-
-    var executors: MutableMap<String, CommandExecutor> = mutableMapOf()
 
     override fun onCommand(
         sender: CommandSender,
@@ -14,11 +13,9 @@ object ModulatorExecutor: CommandExecutor {
         label: String,
         args: Array<out String>
     ): Boolean {
-        sender.sendMessage(args.joinToString(separator = " "))
-        return true
+        val alias = label.lowercase(Locale.getDefault())
+        val module = ModulatorCommand.getModule(alias)
+        return module?.executor?.onCommand(sender, command, label, args) ?: true
     }
 
-    fun registerCommand() {
-
-    }
 }

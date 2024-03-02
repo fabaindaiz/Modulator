@@ -8,14 +8,17 @@ import org.bukkit.plugin.java.JavaPlugin
 class Modulator: JavaPlugin() {
     companion object {
         var instance: Modulator? = null
-        private set;
+            private set
     }
 
-    private val command = ModulatorCommand(this)
+    private val command: ModulatorCommand
+
+    init {
+        instance = this
+        command = ModulatorCommand
+    }
 
     override fun onEnable() {
-        instance = this
-
         val loader = ModuleLoader(this)
         command.registerLoader(loader)
         command.registerCommand()
@@ -24,7 +27,8 @@ class Modulator: JavaPlugin() {
     }
 
     override fun onDisable() {
-        instance = null
+        command.unregisterLoader()
+        command.registerCommand()
 
         Bukkit.getLogger().info("Disabled!")
     }

@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.modules.zkik
+package fabaindaiz.modulator.modules.zanakik
 
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -13,24 +13,28 @@ object ZanakikExecutor : CommandExecutor {
         label: String,
         args: Array<out String>
     ): Boolean {
-        when (args[0]) {
+        when (label) {
             "zkik" -> zanakik(sender, args)
         }
-
-        sender.sendMessage(args.joinToString(separator = " "))
         return true
     }
 
     private fun zanakik(sender: CommandSender, args: Array<out String>) {
         when (args.size) {
-            1 -> {
-                val player = Bukkit.getOnlinePlayers().random()
-                kikPlayer(player, 1)
-            }
-            2 -> {
-                val player = Bukkit.getPlayer(args[1])
+            0 -> {
+                val player = Bukkit.getOnlinePlayers().randomOrNull()
                 if (player != null && player.isOnline) {
                     kikPlayer(player, 1)
+                } else {
+                    sender.sendMessage("No se pudo zanakikear")
+                }
+            }
+            1 -> {
+                val player = Bukkit.getPlayer(args[0])
+                if (player != null && player.isOnline) {
+                    kikPlayer(player, 1)
+                } else {
+                    sender.sendMessage("No se pudo zanakikear")
                 }
             }
             else -> sender.sendMessage("Error en el comando")

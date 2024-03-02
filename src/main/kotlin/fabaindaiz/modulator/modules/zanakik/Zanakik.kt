@@ -1,4 +1,4 @@
-package fabaindaiz.modulator.modules.zkik
+package fabaindaiz.modulator.modules.zanakik
 
 import fabaindaiz.modulator.core.module.BaseModule
 import fabaindaiz.modulator.core.module.Configuration
