@@ -3,7 +3,7 @@ package fabaindaiz.modulator.core.module
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.TabCompleter
 
-interface Module {
+interface BaseModule {
 
     val name: String
     val description: String

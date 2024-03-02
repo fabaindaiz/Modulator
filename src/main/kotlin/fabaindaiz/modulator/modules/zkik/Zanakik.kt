@@ -1,9 +1,9 @@
 package fabaindaiz.modulator.modules.zkik
 
-import fabaindaiz.modulator.core.module.Module
+import fabaindaiz.modulator.core.module.BaseModule
 import fabaindaiz.modulator.core.module.Configuration
 
-object Zanakik : Module {
+object Zanakik : BaseModule {
     override val name = "Zanakik"
     override val description = "Kick players when server is full"
     override val aliases = listOf("zkik")
