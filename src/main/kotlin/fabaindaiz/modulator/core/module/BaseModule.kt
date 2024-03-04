@@ -14,7 +14,6 @@ interface BaseModule {
     val configuration: Configuration
 
     fun onEnable()
-
     fun onDisable()
 
 }

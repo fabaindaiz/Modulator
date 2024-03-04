@@ -5,4 +5,5 @@ class Configuration {
     fun injectConfiguration() {
 
     }
+
 }

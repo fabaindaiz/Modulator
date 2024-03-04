@@ -22,13 +22,9 @@ object ItemchatExecutor : CommandExecutor {
     private fun itemchat(sender: CommandSender, args: Array<out String>) {
         when (args.size) {
             0 -> {
-                sender.sendMessage("No se pudo zanakikear")
-            }
-            1 -> {
                 val player = Bukkit.getPlayer(sender.name)
                 if (player != null && player.isOnline) {
-                    val item = player.inventory.itemInMainHand
-                    showItem(sender, item)
+                    showItem(sender, player.inventory.itemInMainHand)
                 }
             }
             else -> sender.sendMessage("Error en el comando")

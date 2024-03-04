@@ -11,7 +11,8 @@ fun showItem(sender: CommandSender, item: ItemStack) {
     val name = if (meta.hasDisplayName()) meta.displayName else item.type.toString()
 
     val message = TextComponent("${sender.name} quiere que veas su [$name]")
-    message.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_ITEM, item.ge)
-    val metaInfo = TextComponent()
-    Bukkit.broadcastMessage(message)
+    val metaInfo = arrayOf(TextComponent())
+    message.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, metaInfo)
+
+    Bukkit.getOnlinePlayers().forEach { it.spigot().sendMessage(message) }
 }
